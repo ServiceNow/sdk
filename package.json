@@ -14,7 +14,6 @@
     "@monaco-editor/react": "^4.7.0",
     "@pigment-css/react": "^0.0.30",
     "@servicenow/sdk": "3.0.0",
-    "@servicenow/fluent-memfs": "file:./servicenow-fluent-memfs-3.0.0.tgz",
     "jotai": "^2.12.1",
     "monaco-themes": "^0.4.4",
     "react": "^19.0.0",
