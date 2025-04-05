@@ -16,6 +16,10 @@ const theme = extendTheme({
 // https://vite.dev/config/
 export default defineConfig({
   base: "",
+  build: {
+    outDir: "dist",
+    emptyOutDir: true,
+  },
   plugins: [
     pigment({
       theme,
