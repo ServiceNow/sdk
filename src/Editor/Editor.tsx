@@ -8,10 +8,14 @@ import { Project } from "@servicenow/sdk/api/browser";
 import { useEffect, useRef, useState } from "react";
 import { useSetAtom } from "jotai";
 import { compressStringGzip, decompressStringGzip } from "../utils/compression";
+import CodeSamplesList from "./CodeSamples/CodeSamplesList";
+import * as monaco from 'monaco-editor';
 
 function Editor() {
   const isDesktop = useMediaQuery("(min-width: 1024px)");
   const setOutput = useSetAtom(outputAtom);
+  const [defaultValue, setDefaultValue] = useState<string | undefined>();
+  const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
   const proj = useRef(() => {
     return new Project({
       config: {
@@ -37,39 +41,46 @@ function Editor() {
     },
   };
 
-  const handleChange = useDebounceCallback(
-    async (value: string | undefined) => {
-      console.info("handleChange", value);
-      if (!value) return;
+  const handleChange = async (value: string | undefined) => {
+    console.info("handleChange", value);
+    if (!value) return;
 
-      const sf = proj.current().addSourceFile("content.now.ts", value);
+    const sf = proj.current().addSourceFile("content.now.ts", value);
 
-      const content = sf.getContent();
-      const output = await sf.getOutput();
+    const content = sf.getContent();
+    const output = await sf.getOutput();
 
-      const diagnostics = sf.getASTDiagnostics();
-      diagnostics.forEach((d) => d.print(console));
+    const diagnostics = sf.getASTDiagnostics();
+    diagnostics.forEach((d) => d.print(console));
 
-      setOutput(output);
+    setOutput(output);
+    setDefaultValue(value);
 
-      proj.current().removeSourceFile(sf);
+    proj.current().removeSourceFile(sf);
 
-      const code = await compressStringGzip(content, true);
+    const code = await compressStringGzip(content, true);
+    const encodedCode = encodeURIComponent(code as string);
 
-      const encodedCode = encodeURIComponent(code as string);
+    console.info({ code, encodedCode });
 
-      console.info({ code, encodedCode });
+    history.replaceState(
+      { code: encodedCode },
+      "ServiceNow Fluent Playground",
+      `?code=${encodedCode}`
+    );
+  }
 
-      history.replaceState(
-        { code: encodedCode },
-        "ServiceNow Fluent Playground",
-        `?code=${encodedCode}`
-      );
-    },
-    250
+  const debouncedHandleChange = useDebounceCallback(
+    handleChange,
+    400
   );
 
-  const [defaultValue, setDefaultValue] = useState<string | undefined>();
+  const handleSampleSelect = (code: string) => {
+    if (editorRef.current) {
+      editorRef.current.setValue(code);
+      handleChange(code);
+    }
+  };
 
   useEffect(() => {
     async function init(urlCode: string | undefined | null) {
@@ -99,13 +110,21 @@ function Editor() {
     return (
       <Container>
         <PanelGroup direction="horizontal">
+          <Panel defaultSize={20} minSize={15}>
+            <CodeSamplesList onSelect={handleSampleSelect} selectedCode={defaultValue} />
+          </Panel>
+          <PanelResizeHandle
+            className="resize-handle"
+            hitAreaMargins={{ fine: 5, coarse: 5 }}
+          />
           <Panel>
             <EditorContainer>
               <MonacoEditor
                 {...editorProps}
                 defaultValue={defaultValue}
-                onChange={handleChange}
-                onMount={(_, m) => {
+                onChange={debouncedHandleChange}
+                onMount={(editor, m) => {
+                  editorRef.current = editor;
                   m.languages.typescript.typescriptDefaults.setCompilerOptions({
                     ...m.languages.typescript.typescriptDefaults.getCompilerOptions(),
                     allowJs: false,
