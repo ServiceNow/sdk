@@ -110,7 +110,7 @@ function Editor() {
     return (
       <Container>
         <PanelGroup direction="horizontal">
-          <Panel defaultSize={20} minSize={15}>
+          <Panel defaultSize={20} minSize={15} maxSize={35}>
             <CodeSamplesList onSelect={handleSampleSelect} selectedCode={defaultValue} />
           </Panel>
           <PanelResizeHandle
