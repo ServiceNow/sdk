@@ -6,7 +6,6 @@ const Container = styled("div")(({ theme }) => ({
   backgroundColor: "#1e1e1e",
   borderRight: "1px solid #333",
   minWidth: "200px",
-  maxWidth: "300px",
 }));
 
 const Title = styled("h3")(({ theme }) => ({
