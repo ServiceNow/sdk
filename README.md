@@ -4,6 +4,11 @@ The ServiceNow IDE and ServiceNow SDK support developing applications in source 
 
 This respository currently does not contain the source code for the SDK
 
+### Support, Questions, and Announcements
+Visit the [discussions](https://github.com/ServiceNow/sdk/discussions) section!
+
+### Links
+
 [NPM Package](https://www.npmjs.com/package/@servicenow/sdk)
 
 [Documentation](https://www.servicenow.com/docs/bundle/yokohama-application-development/page/build/servicenow-sdk/concept/servicenow-sdk-landing.html)
