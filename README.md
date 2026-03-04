@@ -11,7 +11,7 @@ Visit the [discussions](https://github.com/ServiceNow/sdk/discussions) section!
 
 [NPM Package](https://www.npmjs.com/package/@servicenow/sdk)
 
-[Documentation](https://www.servicenow.com/docs/bundle/yokohama-application-development/page/build/servicenow-sdk/concept/servicenow-sdk-landing.html)
+[Documentation](https://www.servicenow.com/docs/r/application-development/servicenow-sdk/servicenow-sdk-landing.html)
 
 [Release Notes](https://github.com/servicenow/sdk/releases)
 
