@@ -1,0 +1,3477 @@
+# ServiceNow SDK — Full API Reference
+
+> TypeScript SDK for developing ServiceNow applications in source code using ServiceNow Fluent. Import functions from `@servicenow/sdk/core` to define platform records that are deployed to ServiceNow instances.
+
+---
+
+
+# Function: Acl(config)
+
+Creates an Access Control List (ACL) record that secure parts of an application (`sys_security_acl`).
+
+## Usage
+
+```ts
+Acl({
+    $id: Now.ID['incident_read'],
+    type: 'record',
+    table: 'incident',
+    operation: 'read',
+})
+```
+## Parameters
+
+### config
+
+`Acl<T>`
+
+Configuration for the ACL record
+
+**Properties:**
+
+- **$id** (required): `string | number | ExplicitKey<string>`
+
+- **operation** (required): `'read' | 'delete' | 'create' | 'execute' | 'write' | 'conditional_table_query_range' | 'data_fabric' | 'query_match' | 'query_range' | 'edit_task_relations' | 'edit_ci_relations' | 'save_as_template' | 'add_to_list' | 'report_on' | 'list_edit' | 'report_view' | 'personalize_choices'`
+  The operation this ACL rule secures
+
+- **type** (required): `'ui_page' | 'rest_endpoint' | 'pd_action' | 'record' | 'ux_data_broker' | 'ux_route' | 'ux_page' | 'client_callable_flow_object' | 'client_callable_script_include' | 'processor' | 'graphql'`
+  Type of the named resource being secured
+
+- **$meta** (optional): `object`
+  - **installMethod**: `'first install' | 'demo'`
+    Map a record to an output folder that loads only in specific circumstances.
+    'first install' - > 'unload',
+    'demo' -> 'unload.demo'
+
+
+- **active** (optional): `boolean`
+  Whether the ACL rule is enabled or not
+
+- **adminOverrides** (optional): `boolean`
+  Whether users with admin role automatically pass the permissions check for this ACL rule
+
+- **condition** (optional): `string`
+  Filter query specifying fields and values that must be true for access
+
+- **decisionType** (optional): `'allow' | 'deny'`
+  Whether the ACL should allow or deny access
+
+- **description** (optional): `string`
+  Description of the object or permissions this ACL rule secures
+
+- **field** (optional): `SystemColumns | '*' | keyof FullSchema<T>`
+  Optional field within the table to secure, or '*' for all fields
+
+- **localOrExisting** (optional): `'Local' | 'Existing'`
+  Type of security attribute: 'Local' for condition-based or 'Existing' to reference an attribute
+
+- **name** (optional): `string`
+  Name of the resource being secured
+
+- **protectionPolicy** (optional): `'read' | 'protected'`
+  Controls edit/view access for other developers
+
+- **roles** (optional): `string | Role[]`
+  Array of roles that have access to the object
+
+- **script** (optional): `string | object`
+  Script that defines the permissions required to access the object
+
+- **securityAttribute** (optional): `Record<'sys_security_attribute'> | 'user_is_authenticated' | 'has_admin_role'`
+  Pre-defined conditions or security attributes to use for access control
+
+- **table** (optional): `T`
+  The table this ACL rule applies to
+
+
+## See
+
+- https://docs.servicenow.com/csh?topicname=acl-api-now-ts.html&version=latest
+
+
+## Examples
+
+### Advanced ACL with Script
+
+Create an ACL with a custom script for complex permission logic
+
+```typescript
+/**
+ * @title Advanced ACL with Script
+ * @description Create an ACL with a custom script for complex permission logic
+ */
+
+import { Acl, Role } from '@servicenow/sdk/core'
+
+export const managerRole = Role({
+    $id: Now.ID['manager_role'],
+    name: 'manager',
+})
+
+export const incidentWithScript = Acl({
+    $id: Now.ID['incident_with_script'],
+    type: 'record',
+    table: 'incident',
+    operation: 'write',
+    decisionType: 'allow',
+    roles: [managerRole],
+    script: script`
+        // Check if user is the assigned manager
+        return current.assigned_to == gs.getUserID();
+    `,
+    description: 'Allow managers to write incidents they are assigned to',
+    active: true,
+    adminOverrides: false,
+})
+
+```
+
+### Basic ACL Example
+
+Create access control rules for incident table with role-based permissions
+
+```typescript
+/**
+ * @title Basic ACL Example
+ * @description Create access control rules for incident table with role-based permissions
+ */
+
+import { Acl, Role } from '@servicenow/sdk/core'
+
+export const itilRole = Role({
+    $id: Now.ID['itil_role'],
+    name: 'itil',
+})
+
+export const adminRole = Role({
+    $id: Now.ID['admin_role'],
+    name: 'admin',
+})
+
+export const incidentDenyUnlessItil = Acl({
+    $id: Now.ID['incident_deny_unless_itil'],
+    type: 'record',
+    table: 'incident',
+    operation: 'read',
+    decisionType: 'deny',
+    roles: [itilRole],
+    description: 'Deny access to incidents unless user has itil role',
+    active: true,
+    adminOverrides: true,
+})
+
+export const incidentAllowRead = Acl({
+    $id: Now.ID['incident_allow_read'],
+    type: 'record',
+    table: 'incident',
+    operation: 'read',
+    decisionType: 'allow',
+    roles: [itilRole],
+    active: true,
+    adminOverrides: true,
+})
+
+```
+
+### REST Endpoint ACL
+
+Create an ACL for protecting a REST API endpoint with role-based access
+
+```typescript
+/**
+ * @title REST Endpoint ACL
+ * @description Create an ACL for protecting a REST API endpoint with role-based access
+ */
+import { Acl, Role } from '@servicenow/sdk/core'
+
+export const sampleAdmin = Role({
+    name: 'x_acl_sample.admin',
+})
+Acl({
+    $id: Now.ID['rest_acl'],
+    name: 'sample_api',
+    type: 'rest_endpoint',
+    operation: 'execute',
+    roles: [sampleAdmin],
+    securityAttribute: 'user_is_authenticated',
+})
+
+```
+
+---
+
+
+# Function: ApplicationMenu(config)
+
+Creates an Application Menu (`sys_app_application`).
+
+## Parameters
+
+### config
+
+`ApplicationMenu`
+
+an object containing the following properties:
+
+**Properties:**
+
+- **$id** (required): `string | number | ExplicitKey<string>`
+
+- **title** (required): `string`
+  The label for the menu in the application navigator.
+
+- **$meta** (optional): `object`
+  - **installMethod**: `'first install' | 'demo'`
+    Map a record to an output folder that loads only in specific circumstances.
+    'first install' - > 'unload',
+    'demo' -> 'unload.demo'
+
+
+- **active** (optional): `boolean`
+  Whether the menu is enabled.
+
+- **category** (optional): `string | Record<'sys_app_category'>`
+  The menu category that defines the navigation menu style.
+
+- **description** (optional): `string`
+  Additional information about what the application does.
+
+- **hint** (optional): `string`
+  The tooltip text that appears when a user hovers over the menu.
+
+- **name** (optional): `string`
+  An internal name to differentiate between applications with the same title.
+
+- **order** (optional): `number`
+  The relative position of the application menu in the application navigator.
+
+- **roles** (optional): `string | Role[]`
+  A list of `Role` objects or names of roles that can access the menu.
+
+
+## See
+
+-  - https://docs.servicenow.com/csh?topicname=app-menu-api-now-ts.html&version=latest
+ - 
+
+
+
+## Examples
+
+### Basic Application Menu
+
+Create an application menu with role-based access
+
+```typescript
+/**
+ * @title Basic Application Menu
+ * @description Create an application menu with role-based access
+ */
+import { ApplicationMenu, Role } from '@servicenow/sdk/core'
+
+export const activity_admin = Role({
+    name: 'x_appmenu.activity_admin',
+    description: 'Activity admin role',
+})
+
+export const menu = ApplicationMenu({
+    $id: Now.ID['My App Menu'],
+    title: 'My App Menu',
+    hint: 'This is a hint',
+    description: 'This is a description',
+    roles: [activity_admin],
+    active: true,
+})
+
+```
+
+### Multiple Application Menus
+
+Create multiple application menus under the same category
+
+```typescript
+/**
+ * @title Multiple Application Menus
+ * @description Create multiple application menus under the same category
+ */
+import { ApplicationMenu, Record } from '@servicenow/sdk/core'
+
+export const appCategory = Record({
+    $id: Now.ID['sys_app_category_my_app'],
+    table: 'sys_app_category',
+    data: {
+        name: 'My App Category',
+        style: 'border: 1px solid #96bcdc; background-color: #FBFBFB;',
+        default_order: 100,
+    },
+})
+
+export const menu = ApplicationMenu({
+    $id: Now.ID['My App Menu'],
+    title: 'My App Menu',
+    hint: 'This is a hint',
+    description: 'This is a description',
+    category: appCategory,
+    active: true,
+})
+
+export const menu2 = ApplicationMenu({
+    $id: Now.ID['Menu 2'],
+    title: 'Menu 2',
+    hint: 'hint 2',
+    description: 'This is a description',
+    category: appCategory,
+    active: true,
+})
+
+```
+
+### Application Menu with Category
+
+Create an application menu linked to a custom category
+
+```typescript
+/**
+ * @title Application Menu with Category
+ * @description Create an application menu linked to a custom category
+ */
+import { ApplicationMenu, Record, Role } from '@servicenow/sdk/core'
+
+export const appCategory = Record({
+    $id: Now.ID['sys_app_category_my_app'],
+    table: 'sys_app_category',
+    data: {
+        name: 'My App Category',
+        style: 'border: 1px solid #96bcdc; background-color: #FBFBFB;',
+        default_order: 100,
+    },
+})
+
+export const activity_admin = Role({
+    name: 'x_appmenu.activity_admin',
+    description: 'my role description',
+})
+
+export const menu = ApplicationMenu({
+    $id: Now.ID['My App Menu'],
+    title: 'My App Menu',
+    hint: 'This is a hint',
+    description: 'This is a description',
+    category: appCategory,
+    roles: [activity_admin],
+    active: true,
+})
+
+```
+
+---
+
+
+# Function: BusinessRule(config)
+
+Creates a Business Rule: logic that runs when database records are queried, updated,
+inserted, or deleted (`sys_script`).
+
+## Usage
+
+```ts
+BusinessRule({
+    $id: Now.ID['br0'],
+    action: ['update'],
+    table: 'incident',
+    name: 'LogStateChange',
+    order: 100,
+    when: 'after',
+    active: true
+})
+```
+## Parameters
+
+### config
+
+`BusinessRule<T>`
+
+Configuration for the business rule
+
+**Properties:**
+
+- **$id** (required): `string | number | ExplicitKey<string>`
+
+- **name** (required): `string`
+  The name of the business rule
+
+- **table** (required): `T`
+  The table on which the business rule runs
+
+- **$meta** (optional): `object`
+  - **installMethod**: `'first install' | 'demo'`
+    Map a record to an output folder that loads only in specific circumstances.
+    'first install' - > 'unload',
+    'demo' -> 'unload.demo'
+
+
+- **abortAction** (optional): `boolean`
+  Whether to abort the current database transaction
+
+- **access** (optional): `'public' | 'package_private'`
+  Is this rule accessible from all scopes or just this scope: Default: package_private
+
+- **action** (optional): `'update' | 'delete' | 'query' | 'insert'[]`
+  The database operations that trigger this business rule
+
+- **active** (optional): `boolean`
+  Whether the business rule is enabled
+
+- **addMessage** (optional): `boolean`
+  Whether to display a message when the business rule runs
+
+- **changeFields** (optional): `boolean`
+  Update reference fields. Default: false
+
+- **clientCallable** (optional): `boolean`
+  Is this rule callable by client scripts? Default: false
+
+- **condition** (optional): `string`
+  Script-based condition that must evaluate to true for the business rule to run
+
+- **description** (optional): `string`
+  Description of the business rule's purpose
+
+- **executeFunction** (optional): `boolean`
+  Automatically execute the function predefined for this type of business rule (onBefore, onAfter, etc). Default: false
+
+- **filterCondition** (optional): `string`
+  Condition-builder conditions that must be met for the business rule to run
+
+- **message** (optional): `string`
+  The message to display when add_message is true
+
+- **order** (optional): `number`
+  The execution order of the business rule (lower numbers execute first)
+
+- **priority** (optional): `number`
+  Sets priority value for async rules
+
+- **protectionPolicy** (optional): `'read' | 'protected'`
+  The policy determines whether someone can view or edit the business rule after the application is installed on their instance.
+    - **read**: Allow other application developers to see your script logic, but not to change it.
+    - **protected**: Prevent other application developers from changing this business rule.
+    - **undefined** Allow other application developers to customize your business rule.
+
+- **rest** (optional): `object`
+  REST properties for rule
+  - **method**: `string | Record<'sys_rest_message_fn'>`
+    Reference to a HTTP Method
+
+  - **methodText**: `string`
+
+  - **service**: `string | Record<'sys_rest_message'>`
+    Reference to a REST Message
+
+  - **serviceText**: `string`
+
+  - **variables**: `string`
+    Rest Variables
+
+  - **webService**: `boolean`
+    (is_rest) Whether this rule is associated with an outbound REST. Default: false
+
+
+- **roleConditions** (optional): `string | Role[]`
+  Roles that the user must have for the business rule to execute
+
+- **script** (optional): `string | object`
+  The script to execute, receives current and previous GlideRecords as arguments.
+
+- **setFieldValue** (optional): `string`
+  Field values to set in the current record
+
+- **when** (optional): `'before' | 'after' | 'async' | 'display' | 'async_deprecated'`
+  When the business rule should be executed relative to the database transaction
+
+
+## See
+
+- https://docs.servicenow.com/csh?topicname=business-rule-api-now-ts.html&version=latest
+
+
+## Examples
+
+### Basic Business Rule Example
+
+Create a business rule that runs after update on the incident table
+
+```typescript
+/**
+ * @title Basic Business Rule Example
+ * @description Create a business rule that runs after update on the incident table
+ */
+
+import { BusinessRule } from '@servicenow/sdk/core'
+
+export const LogStateChangeExample = BusinessRule({
+    $id: Now.ID['br0'],
+    action: ['update'],
+    table: 'incident',
+    name: 'LogStateChange',
+    order: 100,
+    when: 'after',
+    active: true,
+})
+
+```
+
+### Before Insert Business Rule
+
+Create a business rule that sets default values when a record is inserted
+
+```typescript
+/**
+ * @title Before Insert Business Rule
+ * @description Create a business rule that sets default values when a record is inserted
+ */
+import { BusinessRule } from '@servicenow/sdk/core'
+
+BusinessRule({
+    $id: Now.ID['br1'],
+    name: 'Sample Business Rule',
+    active: true,
+    table: 'sc_req_item',
+    when: 'before',
+    action: ['insert'],
+    script: script`;(function executeRule(current, previous) {
+        // Set default values on new records
+        current.setValue('state', 1);
+        current.setValue('priority', 4);
+    })`,
+})
+
+```
+
+### Business Rule with External Script
+
+Create a business rule that uses an external JavaScript file for the script logic
+
+```typescript
+/**
+ * @title Business Rule with External Script
+ * @description Create a business rule that uses an external JavaScript file for the script logic
+ */
+
+import { BusinessRule } from '@servicenow/sdk/core'
+import { logStateChange } from '../../server/BusinessRule/businessLogic'
+
+export const LogIncidentStateChange = BusinessRule({
+    $id: Now.ID['log_state_change'],
+    table: 'incident',
+    name: 'Log State Change',
+    when: 'after',
+    action: ['update'],
+    script: logStateChange,
+    active: true,
+})
+
+```
+
+**businessLogic.ts**
+
+```typescript
+import { gs } from '@servicenow/glide'
+
+export function logStateChange(current: any, previous: any) {
+    const title = current.getValue('title')
+    const currentState = current.getValue('state')
+    const previousState = previous.getValue('state')
+    gs.addInfoMessage(`"${title}" updated from "${previousState}" to "${currentState}"`)
+}
+```
+
+---
+
+
+# Function: ClientScript(properties)
+
+Creates a Client Script (`sys_script_client`).
+
+## Parameters
+
+### properties
+
+`ClientScriptProps<T, E, G>`
+
+**Properties:**
+
+- **$id** (required): `string | number | ExplicitKey<string>`
+
+- **name** (required): `string`
+  Name of the client script
+
+- **table** (required): `T`
+  Name of the table on which the client script runs
+
+- **$meta** (optional): `object`
+  - **installMethod**: `'first install' | 'demo'`
+    Map a record to an output folder that loads only in specific circumstances.
+    'first install' - > 'unload',
+    'demo' -> 'unload.demo'
+
+
+- **active** (optional): `boolean`
+  Whether the record is enabled
+
+- **appliesExtended** (optional): `boolean`
+  Indicates whether the client script applies to tables extended from the specified table
+
+- **description** (optional): `string`
+  Description of the functionality and purpose of the client script
+
+- **field** (optional): `field_type<T, E>`
+  Field on the table that the client script applies to.
+  This property applies only when the type property is set to `onChange` or `onCellEdit`.
+
+- **global** (optional): `G`
+  Indicates which views of the table the client script runs.
+  - `true`: the script runs on all views
+  - `false`: the script runs only on specified views
+
+- **isolateScript** (optional): `boolean`
+  Indicates whether scripts run in strict mode, with access to direct DOM, `jQuery`, `prototype`, and the `window` object turned off
+
+- **messages** (optional): `string`
+  Strings that are available to the client script as localized messages using `getmessage('[message]')`.
+
+- **script** (optional): `string`
+  Script to be executed when the client script runs
+
+- **type** (optional): `E`
+  Type of client script, which defines when it runs
+
+- **uiType** (optional): `'desktop' | 'all' | 'mobile_or_service_portal'`
+  User interface to which the client script applies
+
+- **view** (optional): `G extends false ? string : never`
+  Views of the table on which the client script runs.
+  This property applies only when the `global` property is set to `false`
+
+
+## See
+
+- https://docs.servicenow.com/csh?topicname=client-script-api-now-ts.html&version=latest
+
+
+## Examples
+
+### OnLoad Client Script with Inline Script
+
+Create an onLoad client script with inline JavaScript code
+
+```typescript
+/**
+ * @title OnLoad Client Script with Inline Script
+ * @description Create an onLoad client script with inline JavaScript code
+ */
+import { ClientScript } from '@servicenow/sdk/core'
+ClientScript({
+    $id: Now.ID['cs0'],
+    name: 'my_client_script',
+    table: 'incident',
+    active: true,
+    applies_extended: false,
+    global: true,
+    ui_type: 'all',
+    description: 'Custom client script generated by Now SDK',
+    messages: '',
+    isolate_script: false,
+    type: 'onLoad',
+    script: script`function onLoad() {
+        g_form.addInfoMessage("Table loaded successfully!!")
+    }`,
+})
+
+```
+
+### OnChange Client Script
+
+Create a client script that triggers when a field value changes
+
+```typescript
+/**
+ * @title OnChange Client Script
+ * @description Create a client script that triggers when a field value changes
+ */
+import { ClientScript } from '@servicenow/sdk/core'
+ClientScript({
+    $id: Now.ID['onchange_script'],
+    name: 'field_change_handler',
+    table: 'incident',
+    active: true,
+    type: 'onChange',
+    field: 'priority',
+    ui_type: 'desktop',
+    description: 'Handles priority field changes',
+    script: script`function onChange(control, oldValue, newValue, isLoading) {
+        if (isLoading) return;
+        if (newValue === '1') {
+            g_form.addWarningMessage('High priority incident - please add urgency details');
+        }
+    }`,
+})
+
+```
+
+### OnLoad Client Script with External File
+
+Create an onLoad client script that uses an external JavaScript file
+
+```typescript
+/**
+ * @title OnLoad Client Script with External File
+ * @description Create an onLoad client script that uses an external JavaScript file
+ */
+import { ClientScript } from '@servicenow/sdk/core'
+
+export default ClientScript({
+    $id: Now.ID['sample1'],
+    type: 'onLoad',
+    ui_type: 'all',
+    table: 'incident',
+    global: true,
+    name: 'sample_client_script',
+    active: true,
+    applies_extended: false,
+    description: 'sample client script',
+    isolate_script: false,
+    script: Now.include('../../server/ClientScript/clientscript-onload.client.js'),
+})
+
+```
+
+**clientscript-onload.client.js**
+
+```javascript
+function onLoad() {
+    g_form.addInfoMessage('Hello from Fluent Client Script')
+}
+```
+
+---
+
+
+# Function: CrossScopePrivilege(config)
+
+Creates a Cross Scope Privilege record (`sys_scope_privilege`).
+
+## Parameters
+
+### config
+
+`CrossScopePrivilege`
+
+an object containing the following properties:
+
+**Properties:**
+
+- **$id** (required): `string | number | ExplicitKey<string>`
+
+- **operation** (required): `'read' | 'delete' | 'create' | 'execute' | 'write'`
+  The operation being requested on the target.
+
+- **status** (required): `'requested' | 'allowed' | 'denied'`
+  The authorization status of the privilege request. Can be 'requested', 'allowed', or 'denied'.
+
+- **$meta** (optional): `object`
+  - **installMethod**: `'first install' | 'demo'`
+    Map a record to an output folder that loads only in specific circumstances.
+    'first install' - > 'unload',
+    'demo' -> 'unload.demo'
+
+
+- **targetName** (optional): `string`
+  The name of the table, script include, or script object being requested.
+
+- **targetScope** (optional): `string`
+  The application scope whose resources are being requested.
+
+- **targetType** (optional): `'sys_db_object' | 'sys_script_include' | 'scriptable'`
+  The type of target being requested
+
+
+## See
+
+- https://docs.servicenow.com/csh?topicname=c_CrossScopePrivilegeRecord.html&version=latest
+
+
+## Examples
+
+### Execute Script Include Privilege
+
+Allow executing a script include from another scope
+
+```typescript
+/**
+ * @title Execute Script Include Privilege
+ * @description Allow executing a script include from another scope
+ */
+import { CrossScopePrivilege } from '@servicenow/sdk/core'
+
+CrossScopePrivilege({
+    $id: Now.ID['6d109a82ff54b210fd87ffffffffff8e'],
+    operation: 'execute',
+    status: 'allowed',
+    targetName: 'GlideQuery',
+    targetScope: 'global',
+    targetType: 'sys_script_include',
+})
+
+```
+
+### Read Table Privilege
+
+Allow reading records from a table in another scope
+
+```typescript
+/**
+ * @title Read Table Privilege
+ * @description Allow reading records from a table in another scope
+ */
+import { CrossScopePrivilege } from '@servicenow/sdk/core'
+CrossScopePrivilege({
+    $id: Now.ID['read_privilege'],
+    operation: 'read',
+    status: 'allowed',
+    targetName: 'cmdb_ci_computer',
+    targetScope: 'global',
+    targetType: 'sys_db_object',
+})
+
+```
+
+### Write Table Privilege
+
+Allow writing records to a table in another scope
+
+```typescript
+/**
+ * @title Write Table Privilege
+ * @description Allow writing records to a table in another scope
+ */
+import { CrossScopePrivilege } from '@servicenow/sdk/core'
+CrossScopePrivilege({
+    $id: Now.ID['write_privilege'],
+    operation: 'write',
+    status: 'allowed',
+    targetName: 'incident',
+    targetScope: 'global',
+    targetType: 'sys_db_object',
+})
+
+```
+
+---
+
+
+# Function: ImportSet(config)
+
+Creates an Import Set: defines how rows in a staging/source table are transformed and loaded into a target table (`sys_transform_map`).
+
+## Parameters
+
+### config
+
+`ImportSet`
+
+an object containing the following properties:
+
+**Properties:**
+
+- **$id** (required): `string | number | ExplicitKey<string>`
+
+- **name** (required): `string`
+  Display name of the import set
+
+- **sourceTable** (required): `keyof Tables`
+  Source staging table name
+
+- **targetTable** (required): `keyof Tables`
+  Target table to insert/update records
+
+- **$meta** (optional): `object`
+  - **installMethod**: `'first install' | 'demo'`
+    Map a record to an output folder that loads only in specific circumstances.
+    'first install' - > 'unload',
+    'demo' -> 'unload.demo'
+
+
+- **active** (optional): `boolean`
+  Whether this import set is active
+
+- **copyEmptyFields** (optional): `boolean`
+  Copy empty fields from source to target
+
+- **createOnEmptyCoalesce** (optional): `boolean`
+  Create new record if coalesce finds no match
+
+- **enforceMandatoryFields** (optional): `'no' | 'onlyMappedFields' | 'allFields'`
+  Mandatory field enforcement level
+  - 'no': do not enforce target table mandatory fields during transform
+  - 'onlyMappedFields': enforce mandatory only for fields you map in `fields`
+  - 'allFields': enforce all target table mandatory fields; unmapped required fields must still be provided or the row will be rejected
+
+- **fields** (optional): `object`
+  Field mappings: targetField -> sourceField or configuration object.
+  - Simple string: direct field mapping
+  - Object: advanced mapping with transformations and options
+
+- **order** (optional): `number`
+  Execution order (lower numbers run first)
+
+- **runBusinessRules** (optional): `boolean`
+  Run business rules on target table
+
+- **runScript** (optional): `boolean`
+
+- **script** (optional): `string | ImportSetTransformMapFn`
+
+- **scripts** (optional): `ImportSetScript[]`
+  Transform scripts for various lifecycle hooks
+
+
+
+## Examples
+
+### Basic Import Set
+
+Create a simple transform map for importing user data
+
+```typescript
+/**
+ * @title Basic Import Set
+ * @description Create a simple transform map for importing user data
+ */
+import { ImportSet } from '@servicenow/sdk/core'
+
+ImportSet({
+    $id: Now.ID['1cd7e04a2a92440c977b31236326f151'],
+    name: 'Honda User Data Import Set',
+    targetTable: 'sys_user',
+    sourceTable: 'x_snc_employee_3am_honda_users_import',
+    active: true,
+    runScript: false,
+})
+
+```
+
+### Import Set with Field Mapping
+
+Create a transform map with custom field mappings and transformation scripts
+
+```typescript
+/**
+ * @title Import Set with Field Mapping
+ * @description Create a transform map with custom field mappings and transformation scripts
+ */
+import { ImportSet } from '@servicenow/sdk/core'
+
+ImportSet({
+    $id: Now.ID['1cd7e04a2a92440c977b31236326f151'],
+    name: 'Honda User Data Import Set',
+    targetTable: 'sys_user',
+    sourceTable: 'x_snc_employee_3am_honda_users_import',
+    active: true,
+    fields: {
+        first_name: {
+            sourceField: 'first_name',
+            sourceScript: `answer = (function transformEntry(source) {
+    // Add your code here
+    return source.first_name.toUpperCase();
+})(source);`,
+            useSourceScript: true,
+        },
+        last_name: {
+            sourceField: 'last_name',
+        },
+        mobile_phone: {
+            sourceField: 'mobile_number',
+        },
+    },
+    runScript: false,
+})
+
+```
+
+### Import Set with Transform Scripts
+
+Create a transform map with onBefore validation scripts
+
+```typescript
+/**
+ * @title Import Set with Transform Scripts
+ * @description Create a transform map with onBefore validation scripts
+ */
+import { ImportSet } from '@servicenow/sdk/core'
+
+ImportSet({
+    $id: Now.ID['1cd7e04a2a92440c977b31236326f151'],
+    name: 'Honda User Data Import Set',
+    targetTable: 'sys_user',
+    sourceTable: 'x_snc_employee_3am_honda_users_import',
+    active: true,
+    scripts: [
+        {
+            $id: Now.ID['5d5c371eb0624773893d0f128e80cff2'],
+            when: 'onBefore',
+            script: script`(function runTransformScript(source, map, log, target /*undefined until onAfter*/) {
+    // Validate source data before import
+    if (!source.first_name || !source.last_name) {
+        ignore = true;
+        log.error('Missing required name fields');
+    }
+})(source, map, log, target);`,
+        },
+    ],
+    runScript: false,
+})
+
+```
+
+---
+
+
+# Function: List(config)
+
+Creates a list view for tables (`sys_ui_list`)
+
+## Parameters
+
+### config
+
+`List<T>`
+
+an object containing the following properties:
+
+**Properties:**
+
+- **columns** (required): `string | ListElement<T> | TableSchemaDotWalk<T>[]`
+  An array of columns in the table to display in the list
+
+- **table** (required): `T`
+  Name of the table for the list
+
+- **view** (required): `string | Record<'sys_ui_view'>`
+  The UI view (sys_ui_view) to apply to the list (reference record or name of the UI View)
+
+- **$meta** (optional): `object`
+  - **installMethod**: `'first install' | 'demo'`
+    Map a record to an output folder that loads only in specific circumstances.
+    'first install' - > 'unload',
+    'demo' -> 'unload.demo'
+
+
+- **parent** (optional): `unknown`
+  The table on which the related list appears
+
+- **relationship** (optional): `string | Record<'sys_relationship'>`
+  The relationship to apply to the related list
+
+
+## See
+
+- https://docs.servicenow.com/csh?topicname=list-api-now-ts.html&version=latest
+
+
+## Examples
+
+### Basic List Configuration
+
+Create a list layout for CMDB server records with a custom view
+
+```typescript
+/**
+ * @title Basic List Configuration
+ * @description Create a list layout for CMDB server records with a custom view
+ */
+import { Record, List } from '@servicenow/sdk/core'
+
+const llama_task_view_1 = Record({
+    table: 'sys_ui_view',
+    $id: Now.ID['llama_task_view_1'],
+    data: {
+        name: 'llama_task_view_1',
+        title: 'llama_task_view_1',
+    },
+})
+
+List({
+    $id: Now.ID['1'],
+    table: 'cmdb_ci_server',
+    view: llama_task_view_1,
+    columns: [
+        { element: 'name', position: 0 },
+        { element: 'business_unit', position: 1 },
+        { element: 'vendor', position: 2 },
+        { element: 'cpu_type', position: 3 },
+    ],
+})
+
+```
+
+### Incident List Configuration
+
+Create a list layout for incident records with common columns
+
+```typescript
+/**
+ * @title Incident List Configuration
+ * @description Create a list layout for incident records with common columns
+ */
+import { Record, List } from '@servicenow/sdk/core'
+const incident_view = Record({
+    table: 'sys_ui_view',
+    $id: Now.ID['incident_view'],
+    data: {
+        name: 'incident_view',
+        title: 'Incident View',
+    },
+})
+
+// Create a list view for incidents
+List({
+    $id: Now.ID['incident_list'],
+    table: 'incident',
+    view: incident_view,
+    columns: [
+        { element: 'number', position: 0 },
+        { element: 'short_description', position: 1 },
+        { element: 'priority', position: 2 },
+        { element: 'state', position: 3 },
+        { element: 'assigned_to', position: 4 },
+    ],
+})
+
+```
+
+### Mobile List View
+
+Create a minimal list layout for mobile devices with essential columns
+
+```typescript
+/**
+ * @title Mobile List View
+ * @description Create a minimal list layout for mobile devices with essential columns
+ */
+import { Record, List } from '@servicenow/sdk/core'
+const mobile_view = Record({
+    table: 'sys_ui_view',
+    $id: Now.ID['mobile_incident_view'],
+    data: {
+        name: 'mobile_incident',
+        title: 'Mobile Incident View',
+    },
+})
+
+// Create a list for mobile view with minimal columns
+List({
+    $id: Now.ID['mobile_list'],
+    table: 'incident',
+    view: mobile_view,
+    columns: [
+        { element: 'number', position: 0 },
+        { element: 'short_description', position: 1 },
+        { element: 'state', position: 2 },
+    ],
+})
+
+```
+
+---
+
+
+# Function: Property(config)
+
+Creates a system property (`sys_properties`).
+
+## Parameters
+
+### config
+
+`Property<T>`
+
+an object containing the following properties:
+
+**Properties:**
+
+- **$id** (required): `string | number | ExplicitKey<string>`
+
+- **name** (required): `string`
+  Name of the property
+
+- **$meta** (optional): `object`
+  - **installMethod**: `'first install' | 'demo'`
+    Map a record to an output folder that loads only in specific circumstances.
+    'first install' - > 'unload',
+    'demo' -> 'unload.demo'
+
+
+- **choices** (optional): `string[]`
+  Comma-separated values for a choice list
+
+- **description** (optional): `string`
+  A brief, descriptive phrase describing the function of the property
+
+- **ignoreCache** (optional): `boolean`
+  Determines whether to flush this property's value from all other server-side caches
+
+- **isPrivate** (optional): `boolean`
+  If true, exclude this property from being imported via update sets
+
+- **roles** (optional): `object`
+  The roles that have access to this property
+  - **read**: `string | Role[]`
+
+  - **write**: `string | Role[]`
+
+
+- **type** (optional): `'' | T`
+  Data type for the property
+
+- **value** (optional): `string | number | boolean`
+  The desired value for the property
+
+
+## See
+
+- https://docs.servicenow.com/csh?topicname=property-api-now-ts.html&version=latest
+
+
+## Examples
+
+### Basic System Property
+
+Create a simple string property with minimal configuration
+
+```typescript
+/**
+ * @title Basic System Property
+ * @description Create a simple string property with minimal configuration
+ */
+import { Property } from '@servicenow/sdk/core'
+
+Property({
+    $id: Now.ID['test'],
+    name: 'x_test.my_property',
+    value: 'hello',
+})
+
+```
+
+### Private Boolean Property
+
+Create a private boolean property for feature flags
+
+```typescript
+/**
+ * @title Private Boolean Property
+ * @description Create a private boolean property for feature flags
+ */
+import { Property } from '@servicenow/sdk/core'
+Property({
+    $id: Now.ID['bool_prop'],
+    name: 'x_test.enable_feature',
+    type: 'boolean',
+    value: 'true',
+    description: 'Enable the new feature',
+    isPrivate: true,
+})
+
+```
+
+### Property with Role-Based Access
+
+Create a property with read/write role restrictions and value choices
+
+```typescript
+/**
+ * @title Property with Role-Based Access
+ * @description Create a property with read/write role restrictions and value choices
+ */
+import { Property } from '@servicenow/sdk/core'
+
+Property({
+    $id: Now.ID['test'],
+    name: 'x_test.my_property',
+    type: 'string',
+    value: 'hello',
+    description: 'My property',
+    choices: ['a', 'b', 'c'],
+    ignoreCache: true,
+    roles: {
+        read: ['admin'],
+        write: ['activity_admin'],
+    },
+})
+
+```
+
+---
+
+
+# Function: Record(record)
+
+Create a record in any table. This is a low-level function typically used as
+a fallback when the specific record type or metadata does not have its own
+dedicated API. When possible, prefer using other, dedicated APIs to generate
+metadata as those APIs will often have better type safety and will be easier
+to use.
+
+## Parameters
+
+### record
+
+`R & object & object & Meta`
+
+an object containing the following properties:
+
+**Properties:**
+
+- **$id** (required): `string | number | ExplicitKey<string>`
+
+- **data** (required): `Data<T>`
+  Fields and their values in the table.
+
+- **table** (required): `T`
+  The table to which the record belongs.
+
+
+## See
+
+- https://docs.servicenow.com/csh?topicname=record-api-now-ts.html&version=latest
+
+
+## Examples
+
+### CMDB Computer Record
+
+Create a CMDB configuration item for a computer
+
+```typescript
+/**
+ * @title CMDB Computer Record
+ * @description Create a CMDB configuration item for a computer
+ */
+import { Record } from '@servicenow/sdk/core'
+Record({
+    $id: Now.ID['cmdb-ci-computer-1'],
+    table: 'cmdb_ci_computer',
+    data: {
+        asset_tag: 'ASSET001',
+        assigned: '2024-04-21 07:00:00',
+        category: 'Hardware',
+        company: '31bea3d53790200044e0bfc8bcbe5dec',
+        cost_center: '7fb1cc99c0a80a6d30c04574d14c0acf',
+        cpu_manufacturer: '7aad6d00c611228400f00e0f80b67d2d',
+        cpu_speed: 798,
+        first_discovered: '2006-09-12 20:55:20',
+        install_date: '2023-10-29 08:00:00',
+        model_id: 'a9a2d0c3c6112276010db16c5ddd3461',
+        name: 'Computer 1',
+        os: 'Windows XP Professional',
+        os_service_pack: 'Service Pack 3',
+        os_version: '5.1',
+        po_number: 'PO27711',
+        ram: '1543',
+        serial_number: 'L3BB911',
+    },
+})
+
+```
+
+### Custom Table Record
+
+Create a record in a custom application table
+
+```typescript
+/**
+ * @title Custom Table Record
+ * @description Create a record in a custom application table
+ */
+import { Record } from '@servicenow/sdk/core'
+Record({
+    table: 'x_helloworld_tableone',
+    $id: Now.ID['x_helloworld_tableone_record1'],
+    data: {
+        string_field: 'Hello World 1',
+        datetime_field: '01-01-2024 12:00:00',
+        integer_field: 1,
+    },
+})
+
+```
+
+### Incident Record
+
+Create an incident record with detailed information
+
+```typescript
+/**
+ * @title Incident Record
+ * @description Create an incident record with detailed information
+ */
+import { Record } from '@servicenow/sdk/core'
+Record({
+    $id: Now.ID['incident-1'],
+    table: 'incident',
+    data: {
+        number: 'INC0010001',
+        active: true,
+        short_description: 'This is a sample incident',
+        description: 'This is a sample incident description',
+        comments: 'This is a sample comment',
+        cmdb_ci: '265e09dbeb584baf9c111a7148c99529',
+        urgency: 1,
+        activity_due: '2025-01-02 12:30:00',
+        approval: 'not requested',
+        caller_id: '77ad8176731313005754660c4cf6a7de',
+        notify: 1,
+        priority: 3,
+        opened_at: '2025-01-01 12:30:00',
+    },
+})
+
+```
+
+---
+
+
+# Function: RestApi(api)
+
+Creates endpoints, query parameters, and headers for a scripted REST service (`sys_ws_definition`).
+
+## Parameters
+
+### api
+
+`RestApi<I, V>`
+
+**Properties:**
+
+- **$id** (required): `string | number | ExplicitKey<string>`
+
+- **name** (required): `string`
+  The name of the API, which is used in the API documentation.
+
+- **$meta** (optional): `object`
+  - **installMethod**: `'first install' | 'demo'`
+    Map a record to an output folder that loads only in specific circumstances.
+    'first install' - > 'unload',
+    'demo' -> 'unload.demo'
+
+
+- **active** (optional): `boolean`
+  Indicates whether the API can serve requests
+
+- **consumes** (optional): `string`
+  A list of media types that resources of the API can consume
+
+- **docLink** (optional): `string`
+  A URL that links to static documentation about the API
+
+- **enforceAcl** (optional): `string | Acl<unknown>[]`
+  A list of ACLs to enforce when accessing resources (`sys_security_acl`)
+
+- **policy** (optional): `'' | 'read' | 'protected'`
+  The policy for how application files are protected when downloaded or installed
+
+- **produces** (optional): `string`
+  A list of media types that resources of the API can produce
+
+- **routes** (optional): `Routes & object[] | Routes[]`
+  The resources (`sys_ws_operation`) for the API
+
+- **serviceId** (optional): `string`
+  The API identifier used to distinguish this API in URI paths. It must be unique within the API namespace
+
+- **shortDescription** (optional): `string`
+  A brief description of the API, which is used in the API documentation
+
+- **versions** (optional): `Version<I>[]`
+  A list of versions (`sys_ws_version`) for the API
+
+
+## See
+
+- https://docs.servicenow.com/csh?topicname=scripted-rest-api-api-now-ts.html&version=latest
+
+
+## Examples
+
+### CRUD REST API
+
+Create a REST API with GET, PUT, and DELETE operations
+
+```typescript
+/**
+ * @title CRUD REST API
+ * @description Create a REST API with GET, PUT, and DELETE operations
+ */
+import { RestApi } from '@servicenow/sdk/core'
+RestApi({
+    $id: Now.ID['restapi-crud'],
+    name: 'CRUD REST API',
+    serviceId: 'restapi_crud',
+    consumes: 'application/json',
+    routes: [
+        {
+            $id: Now.ID['restapi-crud-get'],
+            name: 'get',
+            method: 'GET',
+            script: script`
+              (function process(request, response) {
+                response.setBody({ message: 'GET request' })
+              })(request, response)
+            `,
+        },
+        {
+            $id: Now.ID['restapi-crud-put'],
+            name: 'put',
+            method: 'PUT',
+            script: script`
+              (function process(request, response) {
+                var reqbody = request.body.dataString;
+                var parser = new global.JSON();
+                var parsedData = parser.decode(reqbody);
+                response.setBody({ put: parsedData })
+              })(request, response)
+            `,
+        },
+        {
+            $id: Now.ID['restapi-crud-delete'],
+            name: 'delete',
+            method: 'DELETE',
+            script: script`
+              (function process(request, response) {
+                response.setBody({ delete: { msg: "DELETED" } })
+              })(request, response)
+            `,
+        },
+    ],
+})
+
+```
+
+### Simple REST API
+
+Create a REST API with GET and POST routes using inline scripts
+
+```typescript
+/**
+ * @title Simple REST API
+ * @description Create a REST API with GET and POST routes using inline scripts
+ */
+import { RestApi } from '@servicenow/sdk/core'
+RestApi({
+    $id: Now.ID['restapi-hello'],
+    name: 'rest api fluent sample',
+    serviceId: 'restapi_hello',
+    consumes: 'application/json',
+    routes: [
+        {
+            $id: Now.ID['restapi-hello-get'],
+            name: 'get',
+            method: 'GET',
+            script: script`
+              (function process( /*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+                response.setBody({ message: 'Hello, World!' })
+              })(request, response)
+            `,
+        },
+        {
+            $id: Now.ID['restapi-hello-post'],
+            name: 'post',
+            method: 'POST',
+            script: script`
+              (function process( /*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+                var reqbody = request.body.dataString;
+                var parser = new global.JSON();
+                var parsedData = parser.decode(reqbody);
+                response.setBody({ post: parsedData })
+              })(request, response)
+            `,
+        },
+    ],
+})
+
+```
+
+### REST API with Module Handler
+
+Create a REST API that uses an imported TypeScript module for the route handler
+
+```typescript
+/**
+ * @title REST API with Module Handler
+ * @description Create a REST API that uses an imported TypeScript module for the route handler
+ */
+import { RestApi } from '@servicenow/sdk/core'
+import { process } from '../../server/RestApi/rest-api-handler'
+RestApi({
+    $id: Now.ID['restapi-modules'],
+    name: 'rest api fluent modules sample',
+    serviceId: 'restapi_modules',
+    consumes: 'application/json',
+    routes: [
+        {
+            $id: Now.ID['restapi-modules-get'],
+            name: 'get',
+            method: 'GET',
+            script: process,
+        },
+    ],
+})
+
+```
+
+**rest-api-handler.ts**
+
+```typescript
+import { gs } from '@servicenow/glide'
+
+export function process(request: any, response: any) {
+    gs.info('Processing REST API request')
+    response.setBody({ message: 'Hello from module!' })
+}
+```
+
+---
+
+
+# Function: Role(config)
+
+Creates a new Role (`sys_user_role`)
+
+## Parameters
+
+### config
+
+`Role & Meta`
+
+an object containing the following properties:
+
+**Properties:**
+
+- **name** (required): `string`
+  Name for the role beginning with the application scope in the format: `<scope>.<name>`.
+
+- **assignableBy** (optional): `string`
+  Other roles that can assign this role to users.
+
+- **canDelegate** (optional): `boolean`
+  Indicates if the role can be delegated to other users.
+
+- **containsRoles** (optional): `string | Role[]`
+  Other roles that this role contains.
+
+- **description** (optional): `string`
+  A description of what the role can access.
+
+- **elevatedPrivilege** (optional): `boolean`
+  Indicates whether manually accepting the responsibility of using the role before accessing its features is required.
+
+- **grantable** (optional): `boolean`
+  Indicates whether the role can be granted independently.
+
+- **scopedAdmin** (optional): `boolean`
+  Indicates whether the role is an Application Administrator role.
+
+
+## See
+
+- https://docs.servicenow.com/csh?topicname=role-api-now-ts.html&version=latest
+
+
+## Examples
+
+### Basic Role
+
+Create a simple application role with description
+
+```typescript
+/**
+ * @title Basic Role
+ * @description Create a simple application role with description
+ */
+import { Role } from '@servicenow/sdk/core'
+
+Role({
+    name: 'x_myapp.activity_admin',
+    description: 'Activity admin role for my application',
+})
+
+```
+
+### Multiple Access Levels
+
+Create viewer, editor, and admin roles for tiered permissions
+
+```typescript
+/**
+ * @title Multiple Access Levels
+ * @description Create viewer, editor, and admin roles for tiered permissions
+ */
+import { Role } from '@servicenow/sdk/core'
+export const viewer = Role({
+    name: 'x_myapp.viewer',
+    description: 'Read-only access to application data',
+})
+
+export const editor = Role({
+    name: 'x_myapp.editor',
+    description: 'Can edit records in the application',
+})
+
+export const admin = Role({
+    name: 'x_myapp.admin',
+    description: 'Full administrative access',
+})
+
+```
+
+### Role with ACL
+
+Create a role and use it in an access control rule
+
+```typescript
+/**
+ * @title Role with ACL
+ * @description Create a role and use it in an access control rule
+ */
+import { Acl, Role } from '@servicenow/sdk/core'
+
+export const sampleAdmin = Role({
+    name: 'x_acl_sample.admin',
+})
+
+Acl({
+    $id: Now.ID['create_acl'],
+    localOrExisting: 'Existing',
+    type: 'record',
+    operation: 'create',
+    roles: [sampleAdmin, 'x_other_scope.manager'],
+    table: 'x_acl_sample_table',
+})
+
+```
+
+---
+
+
+# Function: SPAngularProvider(config)
+
+API used to create a Service Portal Angular provider (`sp_angular_provider`). For
+more information, see the docs.
+
+## Parameters
+
+### config
+
+`SPAngularProvider`
+
+**Properties:**
+
+- **$id** (required): `string | number | ExplicitKey<string>`
+
+- **name** (required): `string`
+  The name of the Angular provider (required)
+
+- **$meta** (optional): `object`
+  - **installMethod**: `'first install' | 'demo'`
+    Map a record to an output folder that loads only in specific circumstances.
+    'first install' - > 'unload',
+    'demo' -> 'unload.demo'
+
+
+- **requires** (optional): `string | Record<'sp_angular_provider'> | SPAngularProvider[]`
+  An array of angular providers required by this provider
+
+- **script** (optional): `string`
+  The script for the Angular provider
+
+- **type** (optional): `AngularProviderType`
+  The type of the Angular provider (default is 'directive')
+
+
+
+## Examples
+
+### Basic Angular Provider
+
+Create a minimal Service Portal Angular provider
+
+```typescript
+/**
+ * @title Basic Angular Provider
+ * @description Create a minimal Service Portal Angular provider
+ */
+import { SPAngularProvider } from '@servicenow/sdk/core'
+
+SPAngularProvider({
+    $id: Now.ID['my_angular_provider'],
+    name: 'myAngularProvider',
+})
+
+```
+
+### Angular Provider Service
+
+Create an Angular provider of type service with custom script
+
+```typescript
+/**
+ * @title Angular Provider Service
+ * @description Create an Angular provider of type service with custom script
+ */
+import { SPAngularProvider } from '@servicenow/sdk/core'
+
+SPAngularProvider({
+    $id: Now.ID['my_angular_provider'],
+    name: 'myAngularProvider',
+    script: '// my provider service',
+    type: 'service',
+})
+
+```
+
+### Angular Provider with Dependencies
+
+Create an Angular provider that requires other providers
+
+```typescript
+/**
+ * @title Angular Provider with Dependencies
+ * @description Create an Angular provider that requires other providers
+ */
+import { SPAngularProvider } from '@servicenow/sdk/core'
+
+const childProvider = SPAngularProvider({
+    $id: Now.ID['3790304b16c4f94468b2932e79ca7364'],
+    name: 'childProvider',
+    script: '// child script',
+    type: 'directive',
+})
+
+SPAngularProvider({
+    $id: Now.ID['parent-provider-id'],
+    name: 'myAngularProvider',
+    requires: ['5f41b53498566648389c9b40286de458', childProvider],
+})
+
+```
+
+---
+
+
+# Function: SPWidgetDependency(config)
+
+API used to create a Service Portal widget dependency (`sp_widget_dependency`). For
+more information, see the docs.
+
+## Parameters
+
+### config
+
+`SPWidgetDependency`
+
+**Properties:**
+
+- **$id** (required): `string | number | ExplicitKey<string>`
+
+- **name** (required): `string`
+  The name of the widget dependency (required)
+
+- **$meta** (optional): `object`
+  - **installMethod**: `'first install' | 'demo'`
+    Map a record to an output folder that loads only in specific circumstances.
+    'first install' - > 'unload',
+    'demo' -> 'unload.demo'
+
+
+- **angularModuleName** (optional): `string`
+  The Angular module name for the widget dependency
+
+- **cssIncludes** (optional): `CssIncludeWithOrder[]`
+  An array of CSS includes for the widget dependency
+
+- **includeOnPageLoad** (optional): `boolean`
+  Whether the widget should be included on page load (default is false)
+
+- **jsIncludes** (optional): `JsIncludeWithOrder[]`
+  An array of JavaScript includes for the widget dependency
+
+- **portalsForPageLoad** (optional): `string | Record<'sp_portal'>[]`
+  An array of portals for the widget dependency
+
+
+
+## Examples
+
+### CSS Includes
+
+Create CSS includes from external URLs or sp_css records with RTL support
+
+```typescript
+/**
+ * @title CSS Includes
+ * @description Create CSS includes from external URLs or sp_css records with RTL support
+ */
+import { CssInclude } from '@servicenow/sdk/core'
+
+// CSS Include from URL
+CssInclude({
+    $id: Now.ID['bootstrap-css'],
+    name: 'Bootstrap CSS',
+    url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css',
+    rtlCssUrl: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css',
+})
+
+// CSS Include from sp_css with lazy loading
+CssInclude({
+    $id: Now.ID['custom-css'],
+    name: 'Custom Portal CSS',
+    spCss: 'ccfbb128f13494f68c570b646ba5d335',
+    lazyLoad: true,
+})
+
+```
+
+### JavaScript Includes
+
+Create JS includes from external URLs or sys_ui_script records
+
+```typescript
+/**
+ * @title JavaScript Includes
+ * @description Create JS includes from external URLs or sys_ui_script records
+ */
+import { JsInclude } from '@servicenow/sdk/core'
+
+// JS Include from URL
+JsInclude({
+    $id: Now.ID['chartjs-include'],
+    name: 'Chart.js',
+    url: 'https://cdn.jsdelivr.net/npm/chart.js',
+})
+
+// JS Include from sys_ui_script
+JsInclude({
+    $id: Now.ID['ui-script-include'],
+    name: 'Custom UI Script',
+    sysUiScript: '5f41b53498566648389c9b40286de458',
+})
+
+```
+
+### Widget Dependency with JS and CSS
+
+Create a widget dependency that bundles JavaScript and CSS includes
+
+```typescript
+/**
+ * @title Widget Dependency with JS and CSS
+ * @description Create a widget dependency that bundles JavaScript and CSS includes
+ */
+import { SPWidgetDependency, JsInclude, CssInclude } from '@servicenow/sdk/core'
+const myJsInclude = JsInclude({
+    $id: Now.ID['my-js-include'],
+    name: 'My JS Include',
+    url: 'https://cdn.example.com/script.js',
+})
+
+const myCssInclude = CssInclude({
+    $id: Now.ID['my-css-include'],
+    name: 'My CSS Include',
+    url: 'https://cdn.example.com/style.css',
+})
+
+SPWidgetDependency({
+    $id: Now.ID['my-dependency'],
+    name: 'My Widget Dependency',
+    angularModuleName: 'myModule',
+    jsIncludes: [{ order: 100, include: myJsInclude }],
+    cssIncludes: [{ order: 100, include: myCssInclude }],
+})
+
+```
+
+---
+
+
+# Function: SPWidget(config)
+
+API used to create a Service Portal widget (`sp_widget`). For
+more information, see the docs.
+
+## Parameters
+
+### config
+
+`SPWidget<T>`
+
+**Properties:**
+
+- **$id** (required): `string | number | ExplicitKey<string>`
+
+- **name** (required): `string`
+  The name of the widget (required)
+
+- **$meta** (optional): `object`
+  - **installMethod**: `'first install' | 'demo'`
+    Map a record to an output folder that loads only in specific circumstances.
+    'first install' - > 'unload',
+    'demo' -> 'unload.demo'
+
+
+- **angularProviders** (optional): `string | Record<'sp_angular_provider'> | SPAngularProvider[]`
+  Array of Angular providers for the widget
+
+- **category** (optional): `'standard' | 'custom' | 'sample' | 'otherApplications' | 'knowledgeBase' | 'servicePortal' | 'serviceCatalog'`
+  The category of the widget (default is 'custom')
+
+- **clientScript** (optional): `string`
+  The client script for the widget
+
+- **controllerAs** (optional): `string`
+  The controller for the widget (default is 'c')
+
+- **customCss** (optional): `string`
+  The custom CSS for the widget
+
+- **dataTable** (optional): `Table`
+  The data table for the widget (default is 'sp_instance')
+
+- **demoData** (optional): `JsonSerializable`
+  The demo data for the widget
+
+- **dependencies** (optional): `string | SPWidgetDependency | Record<'sp_dependency'>[]`
+  Array of widget dependencies
+
+- **description** (optional): `string`
+  The description of the widget
+
+- **docs** (optional): `string | Record<'sp_documentation'>`
+  The documentation for the widget
+
+- **fields** (optional): `string | SystemColumns | keyof FullSchema<Table>[]`
+  The fields for the widget
+
+- **hasPreview** (optional): `boolean`
+  Show the preview pane in the Service Portal editor
+
+- **htmlTemplate** (optional): `string`
+  The HTML template for the widget
+
+- **id** (optional): `string`
+  The unique id for the widget. Must contain alphanumeric, -, or _ characters
+
+- **internal** (optional): `boolean`
+  internal field used by ServiceNow developers
+
+- **linkScript** (optional): `string`
+  The link script for the widget (client-side)
+
+- **optionSchema** (optional): `WidgetOption[]`
+  The option schema for the widget
+
+- **public** (optional): `boolean`
+  Whether the widget is public
+
+- **roles** (optional): `string | Role | Record<'sys_user_role'>[]`
+  The roles that can access the widget
+
+- **serverScript** (optional): `string`
+  The server script for the widget
+
+- **servicenow** (optional): `boolean`
+  Built by ServiceNow. On build, can only be true if scope has sn_ or snc_ prefix
+
+- **templates** (optional): `SPTemplate[]`
+  Array of widget templates
+
+
+
+## Examples
+
+### Service Portal Widget with External Files
+
+Create a widget with external client script, server script, HTML template, and CSS
+
+```typescript
+/**
+ * @title Service Portal Widget with External Files
+ * @description Create a widget with external client script, server script, HTML template, and CSS
+ */
+import { SPWidget } from '@servicenow/sdk/core'
+
+// Chart.js dependency sys_id (ServiceNow-provided library)
+const CHARTJS = 'a7a8754347011200ba13a5554ee4905c'
+
+SPWidget({
+    $id: Now.ID['sample-widget'],
+    name: 'Sample Widget',
+    id: 'sample-widget',
+    clientScript: Now.include('../../server/SPWidget/sample-widget.client.js'),
+    serverScript: Now.include('../../server/SPWidget/sample-widget.server.js'),
+    htmlTemplate: Now.include('../../server/SPWidget/sample-widget.html'),
+    customCss: Now.include('../../server/SPWidget/sample-widget.scss'),
+    demoData: {
+        data: {
+            incidents: [99, 59, 80, 81, 56, 55, 40, 0, 5, 21, 11, 30],
+        },
+    },
+    hasPreview: true,
+    dependencies: [CHARTJS],
+})
+
+```
+
+**sample-widget.client.js**
+
+```javascript
+function controller() {
+    this.onClick = () => {
+        console.log('Widget clicked')
+    }
+}
+```
+
+**sample-widget.server.js**
+
+```javascript
+;(() => {
+    data.message = 'Hello from the widget server script'
+})()
+```
+
+**sample-widget.html**
+
+```javascript
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Sample Widget</h3>
+  </div>
+  <div class="panel-body">
+    <p>Hello from the widget</p>
+  </div>
+</div>
+```
+
+**sample-widget.scss**
+
+```javascript
+.panel {
+    margin: 10px;
+    border-radius: 4px;
+}
+
+.panel-heading {
+    background-color: #f5f5f5;
+}
+
+.panel-body {
+    padding: 15px;
+}
+```
+
+### Widget with Inline Content
+
+Create a Service Portal widget with inline HTML template and scripts
+
+```typescript
+/**
+ * @title Widget with Inline Content
+ * @description Create a Service Portal widget with inline HTML template and scripts
+ */
+import { SPWidget } from '@servicenow/sdk/core'
+
+SPWidget({
+    $id: Now.ID['inline-widget'],
+    name: 'Inline Widget',
+    id: 'inline-widget',
+    htmlTemplate: '<div class="panel">{{data.message}}</div>',
+    serverScript: script`(function() {
+        data.message = 'Hello from inline widget';
+    })();`,
+    clientScript: script`function() {
+        c.onClick = function() {
+            console.log('Widget clicked');
+        };
+    }`,
+    hasPreview: false,
+})
+
+```
+
+### Widget with Angular Providers
+
+Create a Service Portal widget that uses custom Angular directives
+
+```typescript
+/**
+ * @title Widget with Angular Providers
+ * @description Create a Service Portal widget that uses custom Angular directives
+ */
+import { SPWidget, SPAngularProvider } from '@servicenow/sdk/core'
+
+const myDirective = SPAngularProvider({
+    $id: Now.ID['my-directive'],
+    name: 'myDirective',
+    type: 'directive',
+    script: script`function myDirective() {
+        return {
+            restrict: 'E',
+            template: '<span>Custom Directive</span>'
+        };
+    }`,
+})
+
+SPWidget({
+    $id: Now.ID['widget-with-provider'],
+    name: 'Widget with Provider',
+    id: 'widget-with-provider',
+    htmlTemplate: '<div><my-directive></my-directive></div>',
+    serverScript: script`(function() {
+        data.title = 'Widget with Angular Provider';
+    })();`,
+    angularProviders: [myDirective],
+})
+
+```
+
+---
+
+
+# Function: ScriptAction(options)
+
+Script Actions are used to execute server-side scripts when specific events occur.
+Configure a Script Action record to run custom scripts when a particular event is triggered.
+Consider using a function exported from your `src/server` modules or using `Now.include()` to move the script to a separate js file
+
+## Parameters
+
+### options
+
+`ScriptAction`
+
+An Object containing the properties of the Script Action
+
+See https://www.servicenow.com/docs/csh?topicname=fluent-script-action-api.html&version=latest for more details
+
+**Properties:**
+
+- **$id** (required): `string | number | ExplicitKey<string>`
+
+- **eventName** (required): `string`
+  Event to use for this script action.
+  If you do not find an event for your script action that suits your purpose, you can create a new one
+
+- **name** (required): `string`
+  Unique name for your Script Action
+
+- **script** (required): `string | object`
+  Script that runs when the condition you define evaluates to true.
+  Two additional objects are available in this script:
+  - `event`: a GlideRecord - the sysevent that caused this to be invoked.
+  If you want this first parameter on the event, use `event.parm1` or `event.parm2` for the second parameter.
+  For the date/time of the event, use `event.sys_created_on`.
+  To get the user ID that created the event (if there was a user associated), use `event.user_id`.
+  - `current`: a GlideRecord - the event scheduled on behalf of (incident for example).
+  Consider using a function exported from your `src/server` modules or using `Now.include()` to move the script to a separate js file
+
+- **$meta** (optional): `object`
+  - **installMethod**: `'first install' | 'demo'`
+    Map a record to an output folder that loads only in specific circumstances.
+    'first install' - > 'unload',
+    'demo' -> 'unload.demo'
+
+
+- **active** (optional): `boolean`
+  Enable or disable the Script Action. Defaults to false.
+
+- **conditionScript** (optional): `string | object`
+  Statement for a condition under which this script should execute.
+  The system only parses the script field if the condition evaluates to true.
+  If you decide to include the condition statement in the script, leave this field blank
+
+- **description** (optional): `string`
+  Documentation explaining the purpose and function of the Script Action
+
+- **order** (optional): `number`
+  Order in which the script will be executed
+
+
+
+## Examples
+
+### Script Action with External File
+
+Create a script action that responds to events with an external script file
+
+```typescript
+/**
+ * @title Script Action with External File
+ * @description Create a script action that responds to events with an external script file
+ */
+import { ScriptAction } from '@servicenow/sdk/core'
+
+ScriptAction({
+    $id: Now.ID['sample-script-action'],
+    name: 'SampleScriptAction',
+    active: true,
+    description: 'Insert an incident',
+    script: Now.include('../../server/ScriptAction/action.server.js'),
+    eventName: 'sample.event',
+    order: 100,
+    conditionScript: "gs.hasRole('my_role')",
+})
+
+```
+
+**action.server.js**
+
+```javascript
+;(function executeScript() {
+    var gr = new GlideRecord('incident')
+    gr.initialize()
+    gr.short_description = 'Created by Script Action'
+    gr.insert()
+})()
+```
+
+### Conditional Script Action
+
+Create a script action with a condition script that only runs for high priority incidents
+
+```typescript
+/**
+ * @title Conditional Script Action
+ * @description Create a script action with a condition script that only runs for high priority incidents
+ */
+import { ScriptAction } from '@servicenow/sdk/core'
+
+ScriptAction({
+    $id: Now.ID['conditional-script-action'],
+    name: 'ConditionalScriptAction',
+    active: true,
+    description: 'Send notification only for high priority',
+    eventName: 'incident.priority.high',
+    order: 50,
+    conditionScript: "event.parm1 == '1'",
+    script: script`(function executeScript() {
+        var gr = new GlideRecord('sys_user');
+        gr.get(event.parm2);
+        gs.eventQueue('notify.user', gr, 'High priority incident assigned', '');
+    })();`,
+})
+
+```
+
+### Script Action with Inline Script
+
+Create a script action that logs event details with inline JavaScript
+
+```typescript
+/**
+ * @title Script Action with Inline Script
+ * @description Create a script action that logs event details with inline JavaScript
+ */
+import { ScriptAction } from '@servicenow/sdk/core'
+
+ScriptAction({
+    $id: Now.ID['inline-script-action'],
+    name: 'InlineScriptAction',
+    active: true,
+    description: 'Log event details',
+    eventName: 'custom.log.event',
+    order: 100,
+    script: script`(function executeScript() {
+        gs.info('Event triggered: ' + event.name);
+        gs.info('Event parm1: ' + event.parm1);
+        gs.info('Event parm2: ' + event.parm2);
+    })();`,
+})
+
+```
+
+---
+
+
+# Function: ScriptInclude(options)
+
+Script includes are used to store JavaScript that runs on the server.
+Create script includes to store JavaScript functions and classes for use by server scripts. Each script include defines either an object class or a function.
+
+## Parameters
+
+### options
+
+`ScriptIncludeOptions`
+
+An Object containing the properties of the Script Include
+
+**Properties:**
+
+- **$id** (required): `string | number | ExplicitKey<string>`
+
+- **name** (required): `string`
+  The name of the script include. If you are defining a class, this must match the name of the class, prototype, and type. If you are using a classless (on-demand) script include, the name must match the function name.
+
+- **script** (required): `string`
+  Defines the server side script to run when called from other scripts.
+  The script must define a single JavaScript class or a global function. The class or function name must match the Name field.
+  Consider using `Now.include()` to move the script to a separate js file
+
+- **$meta** (optional): `object`
+  - **installMethod**: `'first install' | 'demo'`
+    Map a record to an output folder that loads only in specific circumstances.
+    'first install' - > 'unload',
+    'demo' -> 'unload.demo'
+
+
+- **accessibleFrom** (optional): `'public' | 'package_private'`
+  Sets which applications can access this script include (access field)
+    - **public**: All application scopes
+
+- **active** (optional): `boolean`
+  Enable or disable the script include
+
+- **apiName** (optional): ``${string}.${string}``
+  The internal name of the Script Include. Used to call the Script Include from out-of-scope applications.  If not populated it will default to `{scope}.{name}`.
+
+- **clientCallable** (optional): `boolean`
+  The script include can be called from client-side scripts using GlideAjax.
+
+- **description** (optional): `string`
+  Documentation explaining the purpose and function of the Script Include
+
+- **mobileCallable** (optional): `boolean`
+  The script include is available to client scripts called from mobile devices.
+
+- **protectionPolicy** (optional): `'read' | 'protected'`
+  The policy determines whether someone can view or edit the script include after the application is installed on their instance.
+    - **read**: Allow other application developers to see your script logic, but not to change it.
+    - **protected**: Prevent other application developers from changing this script include.
+    - **undefined** Allow other application developers to customize your script include.
+
+- **sandboxCallable** (optional): `boolean`
+  The script include is available to scripts invoked from the script sandbox, such as a query condition.
+
+
+
+## Examples
+
+### Script Include with External File
+
+Create a script include with code in an external JavaScript file
+
+```typescript
+/**
+ * @title Script Include with External File
+ * @description Create a script include with code in an external JavaScript file
+ */
+import { ScriptInclude } from '@servicenow/sdk/core'
+
+ScriptInclude({
+    $id: Now.ID['my-script-include'],
+    name: 'MyScriptInclude',
+    active: true,
+    apiName: 'x_scriptincludes.MyScriptInclude',
+    script: Now.include('../../server/ScriptInclude/MyScriptInclude.server.js'),
+})
+
+```
+
+**MyScriptInclude.server.js**
+
+```javascript
+var MyScriptInclude = Class.create()
+MyScriptInclude.prototype = {
+    initialize: () => {},
+
+    example: () => {
+        //example of using another script include and getting type information
+        const processor = new global.AbstractAjaxProcessor()
+        gs.info('This is an example script include method')
+    },
+
+    type: 'MyScriptInclude',
+}
+```
+
+### Client-Callable Script Include
+
+Create an AJAX-enabled script include that can be called from client scripts
+
+```typescript
+/**
+ * @title Client-Callable Script Include
+ * @description Create an AJAX-enabled script include that can be called from client scripts
+ */
+import { ScriptInclude } from '@servicenow/sdk/core'
+
+ScriptInclude({
+    $id: Now.ID['ajax-script-include'],
+    name: 'AjaxHelper',
+    active: true,
+    apiName: 'x_myapp.AjaxHelper',
+    clientCallable: true,
+    script: script`var AjaxHelper = Class.create();
+AjaxHelper.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+    getUserDisplayName: function() {
+        var userId = this.getParameter('sysparm_user_id');
+        var gr = new GlideRecord('sys_user');
+        if (gr.get(userId)) {
+            return gr.getDisplayValue('name');
+        }
+        return '';
+    },
+
+    type: 'AjaxHelper'
+});`,
+})
+
+```
+
+### Script Include with Inline Code
+
+Create a utility script include with inline JavaScript methods
+
+```typescript
+/**
+ * @title Script Include with Inline Code
+ * @description Create a utility script include with inline JavaScript methods
+ */
+import { ScriptInclude } from '@servicenow/sdk/core'
+
+ScriptInclude({
+    $id: Now.ID['inline-script-include'],
+    name: 'UtilityHelper',
+    active: true,
+    apiName: 'x_myapp.UtilityHelper',
+    script: script`var UtilityHelper = Class.create();
+UtilityHelper.prototype = {
+    initialize: function() {},
+
+    formatDate: function(dateStr) {
+        var gdt = new GlideDateTime(dateStr);
+        return gdt.getDisplayValue();
+    },
+
+    isValidEmail: function(email) {
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    },
+
+    type: 'UtilityHelper'
+};`,
+})
+
+```
+
+---
+
+
+# Function: Table(table)
+
+Creates a table in a scoped application (`sys_db_object`).
+
+## Parameters
+
+### table
+
+`T & Table<S, E>`
+
+an object containing the following properties:
+
+**Properties:**
+
+- **name** (required): `string`
+  Name of the table. Must be lowercase and include the application scope
+
+- **schema** (required): `S`
+  Array of column references that define the table's schema
+
+- **accessibleFrom** (optional): `'public' | 'package_private'`
+  Application scopes that can access the table.
+
+- **actions** (optional): `'read' | 'update' | 'delete' | 'create'[]`
+  List of access options for the table.
+
+- **allowClientScripts** (optional): `boolean`
+  Indicates whether to allow design time configuration of client scripts on the table from other application scopes.
+
+- **allowNewFields** (optional): `boolean`
+  Indicates whether to allow design time configuration of new fields on the table from other application scope.
+
+- **allowUiActions** (optional): `boolean`
+  Indicates whether to allow design time configuration of UI Actions on the table from other application scopes.
+
+- **allowWebServiceAccess** (optional): `boolean`
+  Indicates whether web services can make calls to the table.
+
+- **attributes** (optional): `Record<string, string | number | boolean>`
+  Pairs of any supported dictionary attributes (sys_schema_attribute).
+
+- **audit** (optional): `boolean`
+  Indicates whether to track the creation, update, and deletion of all records in the table.
+
+- **autoNumber** (optional): `object`
+  Auto-numbering configuration for the table.
+  - **number**: `number`
+
+  - **numberOfDigits**: `number`
+
+  - **prefix**: `string`
+
+
+- **callerAccess** (optional): `'none' | 'tracking' | 'restricted'`
+  Access level for cross-scope requests.
+
+- **display** (optional): `string`
+  Default display column. Use a column name from the schema.
+
+- **extends** (optional): `E`
+  The name of any other table on which this table is based.
+
+- **extensible** (optional): `boolean`
+  Indicates whether other tables can extend this table.
+
+- **index** (optional): `object[]`
+  A list of column references to generate indexes in the metadata XML of the table.
+
+- **label** (optional): `string | Documentation[]`
+  A unique label for the table on list and form views.
+
+- **licensingConfig** (optional): `LicensingConfig`
+  Configuration for table licensing.
+
+- **liveFeed** (optional): `boolean`
+  Indicates if live feeds are available for records in the table.
+
+- **readOnly** (optional): `boolean`
+  Indicates whether users can edit fields in the table.
+
+- **scriptableTable** (optional): `boolean`
+  Indicates whether the table is a remote table that uses data retrieved from an external source.
+
+- **textIndex** (optional): `boolean`
+  Indicates whether search engines index the text in a table.
+
+
+## See
+
+- https://docs.servicenow.com/csh?topicname=table-api-now-ts.html&version=latest
+
+
+## Examples
+
+### Add Column to Existing Table
+
+Add a custom string column to the existing incident table
+
+```typescript
+/**
+ * @title Add Column to Existing Table
+ * @description Add a custom string column to the existing incident table
+ */
+import { StringColumn, Table } from '@servicenow/sdk/core'
+export const incident = Table({
+    name: 'incident' as any,
+    schema: {
+        x_tablesample_custom_column: StringColumn({
+            label: 'Custom Column',
+            maxLength: 40,
+        }),
+    },
+})
+
+```
+
+### Table Extending Task
+
+Create a table that extends task with auto-numbering and a reference column
+
+```typescript
+/**
+ * @title Table Extending Task
+ * @description Create a table that extends task with auto-numbering and a reference column
+ */
+import { ReferenceColumn, Table } from '@servicenow/sdk/core'
+export const x_tablesample_extends = Table({
+    name: 'x_tablesample_extends',
+    extends: 'task',
+    extensible: true,
+    display: 'Extension Example Table',
+    auto_number: {
+        prefix: 'sample',
+        number: 100,
+        number_of_digits: 9,
+    },
+    schema: {
+        user_reference_column: ReferenceColumn({
+            mandatory: true,
+            label: 'User Reference',
+            referenceTable: 'sys_user',
+        }),
+    },
+})
+
+```
+
+### Simple Table with Column Types
+
+Create a table with string, integer, boolean, and date columns
+
+```typescript
+/**
+ * @title Simple Table with Column Types
+ * @description Create a table with string, integer, boolean, and date columns
+ */
+import { Table, StringColumn, IntegerColumn, BooleanColumn, DateColumn } from '@servicenow/sdk/core'
+export const x_tablesample_name = Table({
+    name: 'x_tablesample_name',
+    schema: {
+        string_column: StringColumn({ mandatory: true, label: 'String Column' }),
+        integer_column: IntegerColumn({ mandatory: true, label: 'Integer Column' }),
+        boolean_column: BooleanColumn({ mandatory: true }),
+        date_column: DateColumn({ mandatory: true }),
+    },
+})
+
+```
+
+---
+
+
+# Function: UiAction(config)
+
+## Parameters
+
+### config
+
+`UiAction<T>`
+
+**Properties:**
+
+- **$id** (required): `string | number | ExplicitKey<string>`
+
+- **name** (required): `string`
+  name of the UI Action. It must be unique within the table
+
+- **table** (required): `T`
+  table on which UI Action appears
+
+- **$meta** (optional): `object`
+  - **installMethod**: `'first install' | 'demo'`
+    Map a record to an output folder that loads only in specific circumstances.
+    'first install' - > 'unload',
+    'demo' -> 'unload.demo'
+
+
+- **actionName** (optional): `string`
+  unique string that can be referenced in scripts
+
+- **active** (optional): `boolean`
+  If true, the UI Action is enabled
+
+- **client** (optional): `object`
+  If client side script and related properties
+  - **isClient**: `boolean`
+
+  - **isUi11Compatible**: `boolean`
+
+  - **isUi16Compatible**: `boolean`
+
+  - **onClick**: `string`
+
+
+- **comments** (optional): `string`
+  text field used by developers and admins to add internal notes
+
+- **condition** (optional): `string`
+  A script or condition that determines whether the UI Action is visible.
+
+- **excludeFromViews** (optional): `string[]`
+  Specifies views from which UI action to be excluded
+  TODO: Add support for sysid references
+
+- **form** (optional): `object`
+  UI action on form view and related properties
+  - **showButton**: `boolean`
+
+  - **showContextMenu**: `boolean`
+
+  - **showLink**: `boolean`
+
+  - **style**: `'primary' | 'destructive' | 'unstyled'`
+
+
+- **hint** (optional): `string`
+  a tooltip or hover text that appears when users hover their mouse pointer over
+
+- **includeInViews** (optional): `string[]`
+  Specifies views in which UI action to be included
+  TODO: Add support for sysid references
+
+- **isolateScript** (optional): `boolean`
+  Checked, script in a UI Action runs in an isolated script
+
+- **list** (optional): `object`
+  UI action on list view and related properties
+  - **showBannerButton**: `boolean`
+
+  - **showButton**: `boolean`
+
+  - **showContextMenu**: `boolean`
+
+  - **showLink**: `boolean`
+
+  - **showListChoice**: `boolean`
+
+  - **showSaveWithFormButton**: `boolean`
+
+  - **style**: `'primary' | 'destructive' | 'unstyled'`
+
+
+- **messages** (optional): `string[]`
+  messages field holds user facing messages or notification text that the UI Action may display when it executes
+
+- **order** (optional): `number`
+  Determines the order in which the UI Action appears. Lower values show first.
+
+- **overrides** (optional): `string | Record<'sys_ui_action'>`
+  Action being overridden by the current record
+
+- **roles** (optional): `string | Role[]`
+  stores roles associated with a UI Action, defining which users can see or execute that UI Action based on their roles
+  TODO: Add support for sysid references
+
+- **script** (optional): `string | object`
+  Script runs automatically as part of the UI Action when the client calls it. Note:
+  server module scripts (sys_module) can only be used on server-side UI Actions.
+
+- **showInsert** (optional): `boolean`
+  Checked, the UI Action appears in insert
+
+- **showMultipleUpdate** (optional): `boolean`
+  Checked, the UI Action appears in insert, update, query or update multiple(bulk edit) mode.
+
+- **showQuery** (optional): `boolean`
+  Checked, the UI Action appears in insert, update, query or update multiple(bulk edit) mode.
+
+- **showUpdate** (optional): `boolean`
+  Checked, the UI Action appears in update
+
+- **workspace** (optional): `object`
+  UI action on workspace configuration and related properties
+  - **clientScriptV2**: `string`
+
+  - **isConfigurableWorkspace**: `boolean`
+
+  - **showFormButtonV2**: `boolean`
+
+  - **showFormMenuButtonV2**: `boolean`
+
+
+
+
+## Examples
+
+### UI Action with Form and List Options
+
+Create a comprehensive UI action with form buttons, list buttons, conditions, and custom styling
+
+```typescript
+/**
+ * @title UI Action with Form and List Options
+ * @description Create a comprehensive UI action with form buttons, list buttons, conditions, and custom styling
+ */
+import { UiAction } from '@servicenow/sdk/core'
+
+UiAction({
+    $id: Now.ID['car_info'],
+    table: 'x_uiactionsample_ts_custom_cars',
+    actionName: 'Car Information',
+    name: 'View car info',
+    active: true,
+    showInsert: true,
+    showUpdate: true,
+    hint: 'View car info',
+    condition: "current.type == 'SUV'",
+    form: {
+        showButton: true,
+        showLink: true,
+        showContextMenu: false,
+        style: 'destructive',
+    },
+    list: {
+        showLink: true,
+        style: 'primary',
+        showButton: true,
+        showContextMenu: false,
+        showListChoice: false,
+        showBannerButton: true,
+        showSaveWithFormButton: true,
+    },
+    script: script`current.name = "updated by script";
+current.update();`,
+    roles: ['u_requestor'],
+    order: 100,
+})
+
+```
+
+### Client-Side UI Action
+
+Create a UI action that executes client-side JavaScript with workspace compatibility
+
+```typescript
+/**
+ * @title Client-Side UI Action
+ * @description Create a UI action that executes client-side JavaScript with workspace compatibility
+ */
+import { UiAction } from '@servicenow/sdk/core'
+
+UiAction({
+    $id: Now.ID['client_action'],
+    table: 'incident',
+    actionName: 'Confirm Action',
+    name: 'Confirm before save',
+    active: true,
+    showUpdate: true,
+    form: {
+        showButton: true,
+        style: 'primary',
+    },
+    client: {
+        isClient: true,
+        isUi11Compatible: true,
+        isUi16Compatible: true,
+    },
+    workspace: {
+        isConfigurableWorkspace: true,
+        showFormButtonV2: true,
+        clientScriptV2: `function onClick(g_form) {
+            if (confirm('Are you sure you want to proceed?')) {
+                g_form.submit();
+            }
+        }`,
+    },
+    order: 100,
+})
+
+```
+
+### Simple Server-Side UI Action
+
+Create a basic UI action with server-side script to update record state
+
+```typescript
+/**
+ * @title Simple Server-Side UI Action
+ * @description Create a basic UI action with server-side script to update record state
+ */
+import { UiAction } from '@servicenow/sdk/core'
+
+UiAction({
+    $id: Now.ID['simple_action'],
+    table: 'incident',
+    actionName: 'Mark Resolved',
+    name: 'Mark as Resolved',
+    active: true,
+    showUpdate: true,
+    form: {
+        showButton: true,
+        style: 'primary',
+    },
+    script: script`current.state = 6; // Resolved
+current.resolution_code = 'Solved (Permanently)';
+current.update();
+action.setRedirectURL(current);`,
+})
+
+```
+
+---
+
+
+# Function: UiPage(config)
+
+## Parameters
+
+### config
+
+`UiPage`
+
+**Properties:**
+
+- **$id** (required): `string | number | ExplicitKey<string>`
+
+- **endpoint** (required): ``${string}.do``
+  endpoint for the page, typically in the format `<scope_name>_<ui_page_name>.do`
+
+- **$meta** (optional): `object`
+  - **installMethod**: `'first install' | 'demo'`
+    Map a record to an output folder that loads only in specific circumstances.
+    'first install' - > 'unload',
+    'demo' -> 'unload.demo'
+
+
+- **category** (optional): `'catalog' | 'general' | 'homepages' | 'htmleditor' | 'kb' | 'cms'`
+  select a category from one of these values : general, homepages, htmleditor, kb, cms, catalog'
+
+- **clientScript** (optional): `string`
+  client-side JavaScript that runs in the browser, such as functions called by buttons. It’s intended to handle any client-side processing needed, like setting focus to a field or other interactive DHTML features after a page is loaded.
+
+- **description** (optional): `string`
+  description about ui page
+
+- **direct** (optional): `boolean`
+  Select this check box for a direct UI page
+
+- **html** (optional): `string`
+  define what is rendered when the page is shown. It can contain either static XHTML, dynamically generated content defined as Jelly, or call script includes and UI Macros.
+
+- **processingScript** (optional): `string | object`
+  Script that runs on the server when the page is submitted
+
+
+
+## Examples
+
+### UI Page with External Files
+
+Create a UI page that uses external HTML, client script, and processing script files
+
+```typescript
+/**
+ * @title UI Page with External Files
+ * @description Create a UI page that uses external HTML, client script, and processing script files
+ */
+import { UiPage } from '@servicenow/sdk/core'
+
+UiPage({
+    $id: Now.ID['ui-page-sample'],
+    category: 'general',
+    endpoint: 'x_uipagesample_mypage.do',
+    description: 'This is a sample UI Page created with the SDK',
+    html: Now.include('../../server/UiPage/ui-page.html'),
+    clientScript: Now.include('../../server/UiPage/ui-page.client-script.client.js'),
+    processingScript: Now.include('../../server/UiPage/ui-page.processing-script.server.js'),
+})
+
+```
+
+**ui-page.html**
+
+```javascript
+<g:ui_form>
+  <p>Click OK to run the processing script.</p>
+  <g:dialog_buttons_ok_cancel ok="return onSubmit()" />
+  <input type="hidden" name="application_sys_id" value="499836460a0a0b1700003e7ad950b5da" />
+</g:ui_form>
+```
+
+**ui-page.client-script.client.js**
+
+```javascript
+function onSubmit() {
+    return true
+}
+```
+
+**ui-page.processing-script.server.js**
+
+```javascript
+var application = new GlideRecord('hr_application')
+application.get(application_sys_id)
+application.status = 'Rejected'
+application.update()
+var urlOnStack = GlideSession.get().getStack().bottom()
+response.sendRedirect(urlOnStack)
+```
+
+### UI Page with Inline Content
+
+Create a UI page with inline HTML template and embedded client/processing scripts
+
+```typescript
+/**
+ * @title UI Page with Inline Content
+ * @description Create a UI page with inline HTML template and embedded client/processing scripts
+ */
+import { UiPage } from '@servicenow/sdk/core'
+
+UiPage({
+    $id: Now.ID['inline-page'],
+    category: 'general',
+    endpoint: 'x_myapp_inline_page.do',
+    description: 'UI Page with inline HTML and scripts',
+    html: `<g:ui_form>
+  <h1>Welcome to My Page</h1>
+  <p>This is a simple UI page.</p>
+  <g:dialog_buttons_ok_cancel ok="return onSubmit()" />
+</g:ui_form>`,
+    clientScript: script`function onSubmit() {
+    return true;
+}`,
+    processingScript: script`gs.info('Processing script executed');
+response.sendRedirect('incident_list.do');`,
+})
+
+```
+
+### UI Page with React
+
+Create a UI page that renders a custom client-side application built with React. The HTML import points to a client directory and is aliased to the build output in dist/static/ via the staticContentPaths config in now.config.json. The SDK bundles the client build output as source artifacts alongside the UI page record. See https://www.servicenow.com/docs/r/application-development/ui-development-react.html
+
+```typescript
+/**
+ * @title UI Page with React
+ * @description Create a UI page that renders a custom client-side application built with React. The HTML import points to a client directory and is aliased to the build output in dist/static/ via the staticContentPaths config in now.config.json. The SDK bundles the client build output as source artifacts alongside the UI page record. See https://www.servicenow.com/docs/r/application-development/ui-development-react.html
+ */
+import { UiPage } from '@servicenow/sdk/core'
+import html from './client/index.html'
+
+UiPage({
+    $id: Now.ID['react-app'],
+    endpoint: 'x_myapp_react.do',
+    description: 'UI Page rendering a custom React application',
+    html: html,
+})
+
+```
+
+**index.html**
+
+```typescript
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React App</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="module" src="./app.tsx"></script>
+</body>
+</html>
+```
+
+### Simple UI Page
+
+Create a minimal UI page with just HTML content
+
+```typescript
+/**
+ * @title Simple UI Page
+ * @description Create a minimal UI page with just HTML content
+ */
+import { UiPage } from '@servicenow/sdk/core'
+
+UiPage({
+    $id: Now.ID['simple-page'],
+    category: 'general',
+    endpoint: 'x_myapp_simple.do',
+    description: 'A simple UI page',
+    html: `<h1>Hello World</h1>
+<p>This is a simple page.</p>`,
+})
+
+```
+
+---
+
+
+# Function: UiPolicy(config)
+
+Creates a UI Policy that defines dynamic form behaviors to change field properties based on conditions.
+UI  Policies can make fields mandatory, read-only, visible, hidden, or cleared when certain conditions are met.
+
+## Parameters
+
+### config
+
+`UiPolicy<T>`
+
+an object containing api properties:
+
+**Properties:**
+
+- **$id** (required): `string | number | ExplicitKey<string>`
+
+- **shortDescription** (required): `string`
+  A brief description of what the UI Policy does (required and must not be empty)
+
+- **actions** (optional): `UiPolicyAction<T>[]`
+  List of actions to perform when the UI Policy condition is met
+
+- **active** (optional): `boolean`
+  Whether the UI Policy is active
+
+- **conditions** (optional): `string`
+  A condition script or query that determines when the UI Policy applies
+
+- **description** (optional): `string`
+  Detailed description of the UI Policy
+
+- **global** (optional): `boolean`
+  Whether the UI Policy applies globally across all applications
+
+- **inherit** (optional): `boolean`
+  Whether the UI Policy is inherited by tables that extend this table
+
+- **isolateScript** (optional): `boolean`
+  Whether to run the script in an isolated scope
+
+- **modelId** (optional): `string`
+  Model ID for the UI Policy
+
+- **modelTable** (optional): `T`
+  Model table for the UI Policy
+
+- **onLoad** (optional): `boolean`
+  Whether the UI Policy runs when the form loads
+
+- **order** (optional): `number`
+  Order/priority of the UI Policy execution
+
+- **relatedListActions** (optional): `UiPolicyRelatedListAction[]`
+  List of related list visibility controls
+
+- **reverseIfFalse** (optional): `boolean`
+  Whether to reverse the actions when the condition is false (renamed from 'reverse' for clarity)
+
+- **runScripts** (optional): `boolean`
+  Whether to run the scripts defined in scriptTrue/scriptFalse
+
+- **scriptFalse** (optional): `string`
+  JavaScript code that runs when the condition evaluates to false
+
+- **scriptTrue** (optional): `string`
+  JavaScript code that runs when the condition evaluates to true
+
+- **setValues** (optional): `string`
+  Values to set when the UI Policy is applied
+
+- **table** (optional): `T`
+  The table to which the UI Policy applies (optional)
+
+- **uiType** (optional): `uiType`
+  User interface to which the UI Policy applies
+
+- **view** (optional): `string | Record<'sys_ui_view'>`
+  View context where the UI Policy applies (sys_ui_view reference or name).
+  If global is true, the UI Policy applies to all form views.
+  If global is false/undefined, specify a view to make the policy view-specific.
+
+
+## See
+
+- https://docs.servicenow.com/csh?topicname=ui-policy-api-now-ts.html&version=latest
+
+
+## Examples
+
+### Basic UI Policy
+
+Create a minimal UI policy for a table
+
+```typescript
+/**
+ * @title Basic UI Policy
+ * @description Create a minimal UI policy for a table
+ */
+import { UiPolicy } from '@servicenow/sdk/core'
+
+UiPolicy({
+    $id: Now.ID['basic_policy'],
+    table: 'incident',
+    shortDescription: 'Basic UI Policy Test',
+})
+
+```
+
+### UI Policy with Field Actions
+
+Create a UI policy that controls field visibility, mandatory state, and read-only behavior
+
+```typescript
+/**
+ * @title UI Policy with Field Actions
+ * @description Create a UI policy that controls field visibility, mandatory state, and read-only behavior
+ */
+import { UiPolicy } from '@servicenow/sdk/core'
+
+UiPolicy({
+    $id: Now.ID['policy_with_actions'],
+    table: 'incident',
+    shortDescription: 'Policy with Actions',
+    actions: [
+        {
+            field: 'priority',
+            visible: false,
+            mandatory: 'ignore',
+            readOnly: 'ignore',
+        },
+        {
+            field: 'urgency',
+            visible: 'ignore',
+            mandatory: true,
+            readOnly: false,
+        },
+    ],
+})
+
+```
+
+### UI Policy with Scripts
+
+Create a UI policy with condition-based scripts and advanced options
+
+```typescript
+/**
+ * @title UI Policy with Scripts
+ * @description Create a UI policy with condition-based scripts and advanced options
+ */
+import { UiPolicy } from '@servicenow/sdk/core'
+
+UiPolicy({
+    $id: Now.ID['policy_with_scripts'],
+    table: 'incident',
+    shortDescription: 'Policy with Scripts',
+    runScripts: true,
+    uiType: 'desktop',
+    scriptTrue: 'function onCondition() { g_form.addErrorMessage("Error"); }',
+    scriptFalse: 'function onCondition() { g_form.clearMessages(); }',
+    conditions: 'state=1',
+    global: true,
+    reverseIfFalse: true,
+    isolateScript: true,
+})
+
+```
+
+---
+
+
+# Function: UserPreference(config)
+
+Creates a User Preference (sys_user_preference).
+
+## Parameters
+
+### config
+
+`UserPreference`
+
+an object containing the following properties:
+
+**Properties:**
+
+- **$id** (required): `string | number | ExplicitKey<string>`
+
+- **name** (required): `string`
+  Name of the feature or functionality
+
+- **type** (required): `'string' | 'boolean' | 'image' | 'password2' | 'date_format' | 'integer' | 'choicelist' | 'time_format' | 'color' | 'uploaded_image' | 'password' | 'timezone' | 'short_string'`
+  The data type of entry accepted for the `value`
+
+- **value** (required): `string | number | boolean`
+  Current setting for this record
+
+- **$meta** (optional): `object`
+  - **installMethod**: `'first install' | 'demo'`
+    Map a record to an output folder that loads only in specific circumstances.
+    'first install' - > 'unload',
+    'demo' -> 'unload.demo'
+
+
+- **description** (optional): `string`
+  Short description of the feature or functionality
+
+- **system** (optional): `boolean`
+  Whether this record indicates the system-wide default
+
+
+## See
+
+- https://docs.servicenow.com/csh?topicname=c_UserPreferences.html&version=latest
+
+
+## Examples
+
+### Basic String Preference
+
+Create a string user preference with a default value
+
+```typescript
+/**
+ * @title Basic String Preference
+ * @description Create a string user preference with a default value
+ */
+import { UserPreference } from '@servicenow/sdk/core'
+
+UserPreference({
+    $id: Now.ID['pref-id'],
+    name: 'my-pref',
+    type: 'string',
+    value: 'hello world',
+    description: 'this is the description',
+    system: false,
+})
+
+```
+
+### Boolean Preference
+
+Create a boolean user preference for feature toggles
+
+```typescript
+/**
+ * @title Boolean Preference
+ * @description Create a boolean user preference for feature toggles
+ */
+import { UserPreference } from '@servicenow/sdk/core'
+
+UserPreference({
+    $id: Now.ID['bool-pref'],
+    name: 'enable_notifications',
+    type: 'boolean',
+    value: 'true',
+    description: 'Enable email notifications',
+    system: false,
+})
+
+```
+
+### System Preference
+
+Create a system-level integer preference with default value
+
+```typescript
+/**
+ * @title System Preference
+ * @description Create a system-level integer preference with default value
+ */
+import { UserPreference } from '@servicenow/sdk/core'
+
+UserPreference({
+    $id: Now.ID['sys-pref'],
+    name: 'default_page_size',
+    type: 'integer',
+    value: '20',
+    description: 'Default number of records per page',
+    system: true,
+})
+
+```
+

@@ -1,0 +1,44 @@
+/**
+ * ServiceNow brand colors for Docusaurus theme.
+ * --ifm-color-primary is the main accent color for links, buttons, etc.
+ */
+:root {
+  --ifm-color-primary: #03344c;
+  --ifm-color-primary-dark: #032f44;
+  --ifm-color-primary-darker: #032c41;
+  --ifm-color-primary-darkest: #022435;
+  --ifm-color-primary-light: #033954;
+  --ifm-color-primary-lighter: #033c57;
+  --ifm-color-primary-lightest: #044463;
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #63df4e;
+  --ifm-color-primary-dark: #4dda35;
+  --ifm-color-primary-darker: #41d828;
+  --ifm-color-primary-darkest: #35b220;
+  --ifm-color-primary-light: #79e467;
+  --ifm-color-primary-lighter: #85e674;
+  --ifm-color-primary-lightest: #a6ed9a;
+}
+
+/* ── Embed mode (?embed=true) ────────────────────────────────────────────────
+   Hides the navbar, sidebar, and footer so API pages can be linked to or
+   embedded directly without navigation chrome.
+   Example: /sdk/api/acl?embed=true
+*/
+[data-embed='true'] .navbar,
+[data-embed='true'] .theme-doc-sidebar-container,
+[data-embed='true'] footer.footer {
+  display: none !important;
+}
+
+[data-embed='true'] .main-wrapper {
+  padding-top: 0 !important;
+}
+
+[data-embed='true'] .docMainContainer_gTbr,
+[data-embed='true'] article {
+  max-width: 100% !important;
+  padding: 1.5rem 2rem !important;
+}

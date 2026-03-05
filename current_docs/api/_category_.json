@@ -1,0 +1,9 @@
+{
+  "label": "API Reference",
+  "position": 2,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "description": "Complete API reference for the ServiceNow SDK Fluent functions."
+  }
+}
