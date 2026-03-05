@@ -1,0 +1,34 @@
+# ServiceNow SDK
+
+> TypeScript SDK for developing ServiceNow applications in source code using ServiceNow Fluent — a domain-specific language for creating application metadata as code. Import functions from `@servicenow/sdk/core` to define platform records (ACLs, Business Rules, etc.) that are deployed to ServiceNow instances.
+
+## API Reference
+
+- [acl](https://servicenow.github.io/sdk/api/acl?embed=true): Creates an Access Control List (ACL) record that secure parts of an application (`sys_security_acl`).
+- [application-menu](https://servicenow.github.io/sdk/api/application-menu?embed=true): Creates an Application Menu (`sys_app_application`).
+- [business-rule](https://servicenow.github.io/sdk/api/business-rule?embed=true): Creates a Business Rule: logic that runs when database records are queried, updated,
+- [client-script](https://servicenow.github.io/sdk/api/client-script?embed=true): Creates a Client Script (`sys_script_client`).
+- [cross-scope-privilege](https://servicenow.github.io/sdk/api/cross-scope-privilege?embed=true): Creates a Cross Scope Privilege record (`sys_scope_privilege`).
+- [import-set](https://servicenow.github.io/sdk/api/import-set?embed=true): Creates an Import Set: defines how rows in a staging/source table are transformed and loaded into a target table (`sys_transform_map`).
+- [list](https://servicenow.github.io/sdk/api/list?embed=true): Creates a list view for tables (`sys_ui_list`)
+- [property](https://servicenow.github.io/sdk/api/property?embed=true): Creates a system property (`sys_properties`).
+- [record](https://servicenow.github.io/sdk/api/record?embed=true): Create a record in any table. This is a low-level function typically used as
+- [rest-api](https://servicenow.github.io/sdk/api/rest-api?embed=true): Creates endpoints, query parameters, and headers for a scripted REST service (`sys_ws_definition`).
+- [role](https://servicenow.github.io/sdk/api/role?embed=true): Creates a new Role (`sys_user_role`)
+- [sp-angular-provider](https://servicenow.github.io/sdk/api/sp-angular-provider?embed=true): API used to create a Service Portal Angular provider (`sp_angular_provider`). For
+- [sp-widget-dependency](https://servicenow.github.io/sdk/api/sp-widget-dependency?embed=true): API used to create a Service Portal widget dependency (`sp_widget_dependency`). For
+- [sp-widget](https://servicenow.github.io/sdk/api/sp-widget?embed=true): API used to create a Service Portal widget (`sp_widget`). For
+- [script-action](https://servicenow.github.io/sdk/api/script-action?embed=true): Script Actions are used to execute server-side scripts when specific events occur.
+- [script-include](https://servicenow.github.io/sdk/api/script-include?embed=true): Script includes are used to store JavaScript that runs on the server.
+- [table](https://servicenow.github.io/sdk/api/table?embed=true): Creates a table in a scoped application (`sys_db_object`).
+- [ui-action](https://servicenow.github.io/sdk/api/ui-action?embed=true): ## Parameters
+- [ui-page](https://servicenow.github.io/sdk/api/ui-page?embed=true): ## Parameters
+- [ui-policy](https://servicenow.github.io/sdk/api/ui-policy?embed=true): Creates a UI Policy that defines dynamic form behaviors to change field properties based on conditions.
+- [user-preference](https://servicenow.github.io/sdk/api/user-preference?embed=true): Creates a User Preference (sys_user_preference).
+
+## Resources
+
+- [Full content](https://servicenow.github.io/sdk/llms-full.txt): Complete API reference in a single file
+- [NPM Package](https://www.npmjs.com/package/@servicenow/sdk): @servicenow/sdk
+- [Release Notes](https://github.com/servicenow/sdk/releases)
+- [SDK Examples](https://github.com/servicenow/sdk-examples)
