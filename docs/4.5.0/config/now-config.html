@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-4.5.0 docs-doc-page docs-doc-id-config/now-config" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.9.2">
+<title data-rh="true">now.config.json | ServiceNow SDK</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://servicenow.github.io/sdk/4.5.0/config/now-config"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="keywords" content="fluent, servicenow, sdk, api, reference, documentation"><meta data-rh="true" name="docusaurus_version" content="4.5.0"><meta data-rh="true" name="docusaurus_tag" content="docs-default-4.5.0"><meta data-rh="true" name="docsearch:version" content="4.5.0"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-4.5.0"><meta data-rh="true" property="og:title" content="now.config.json | ServiceNow SDK"><meta data-rh="true" name="description" content="ServiceNow SDK configuration schema."><meta data-rh="true" property="og:description" content="ServiceNow SDK configuration schema."><link data-rh="true" rel="icon" href="/sdk/img/logo.png"><link data-rh="true" rel="canonical" href="https://servicenow.github.io/sdk/4.5.0/config/now-config"><link data-rh="true" rel="alternate" href="https://servicenow.github.io/sdk/4.5.0/config/now-config" hreflang="en"><link data-rh="true" rel="alternate" href="https://servicenow.github.io/sdk/4.5.0/config/now-config" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Configuration","item":"https://servicenow.github.io/sdk/4.5.0/category/configuration"},{"@type":"ListItem","position":2,"name":"now.config.json","item":"https://servicenow.github.io/sdk/4.5.0/config/now-config"}]}</script><link rel="stylesheet" href="/sdk/assets/css/styles.c3a810d4.css">
+<script src="/sdk/assets/js/runtime~main.f9b0f0c0.js" defer="defer"></script>
+<script src="/sdk/assets/js/main.8cd02b33.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||"dark"),document.documentElement.setAttribute("data-theme-choice",t||"dark")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_kMH0" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/sdk/"><div class="navbar__logo"><img src="/sdk/img/logo.png" alt="ServiceNow SDK Logo" class="themedComponent_MLPj themedComponent--light_i1cx"><img src="/sdk/img/logo.png" alt="ServiceNow SDK Logo" class="themedComponent_MLPj themedComponent--dark_aJ6v"></div><b class="navbar__title text--truncate">ServiceNow SDK</b></a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><div class="navbar__item dropdown dropdown--hoverable dropdown--right"><a aria-current="page" class="navbar__link active" aria-haspopup="true" aria-expanded="false" role="button" href="/sdk/4.5.0/config/now-config">4.5.0</a><ul class="dropdown__menu"><li><a class="dropdown__link" href="/sdk/config/now-config">Latest (4.5.0)</a></li><li><a aria-current="page" class="dropdown__link dropdown__link--active" href="/sdk/4.5.0/config/now-config">4.5.0</a></li></ul></div><a href="https://github.com/ServiceNow/sdk" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_cHRo"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_ShCj colorModeToggle_LDxI"><button class="clean-btn toggleButton_OTnK toggleButtonDisabled_ntyj" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_Y5m7 lightToggleIcon_yEjM"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_Y5m7 darkToggleIcon_HeV7"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_Y5m7 systemToggleIcon_ZBs5"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_Yqy7"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_7az8"><div class="docsWrapper_RH9T"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_rzEd" type="button"></button><div class="docRoot_tbyW"><aside class="theme-doc-sidebar-container docSidebarContainer_QVaV"><div class="sidebarViewport_nPYj"><div class="sidebar_ts_A"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_DRhj"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/sdk/4.5.0"><span title="ServiceNow SDK API Reference" class="linkLabel_xNzX">ServiceNow SDK API Reference</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_Xhuj menu__link menu__link--sublist menu__link--active" href="/sdk/4.5.0/category/configuration"><span title="Configuration" class="categoryLinkLabel_yxVI">Configuration</span></a><button aria-label="Collapse sidebar category &#x27;Configuration&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/sdk/4.5.0/config/now-config"><span title="now.config.json" class="linkLabel_xNzX">now.config.json</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_Xhuj menu__link menu__link--sublist" href="/sdk/4.5.0/category/guides"><span title="Guides" class="categoryLinkLabel_yxVI">Guides</span></a><button aria-label="Collapse sidebar category &#x27;Guides&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.5.0/guides/data-helpers"><span title="Data Helpers" class="linkLabel_xNzX">Data Helpers</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.5.0/guides/now-include"><span title="Now.include" class="linkLabel_xNzX">Now.include</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.5.0/guides/now-attach"><span title="Now.attach" class="linkLabel_xNzX">Now.attach</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.5.0/guides/now-ref"><span title="Now.ref" class="linkLabel_xNzX">Now.ref</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.5.0/guides/keys-file"><span title="Keys File" class="linkLabel_xNzX">Keys File</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_Xhuj menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/sdk/4.5.0/api/acl"><span title="api" class="categoryLinkLabel_yxVI">api</span></a></div></li></ul></nav></div></div></aside><main class="docMainContainer_ewJd"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_wOuX"><div class="docItemContainer_emeC"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_nCEY" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/sdk/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_h8Qu"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/sdk/4.5.0/category/configuration"><span>Configuration</span></a></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">now.config.json</span></li></ul></nav><span class="theme-doc-version-badge badge badge--secondary">Version: 4.5.0</span><div class="tocCollapsible_WKXj theme-doc-toc-mobile tocMobile_x5G0"><button type="button" class="clean-btn tocCollapsibleButton_Gmjs">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>now.config.json</h1></header>
+<p>ServiceNow SDK configuration schema.</p>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="required-properties">Required Properties<a href="#required-properties" class="hash-link" aria-label="Direct link to Required Properties" title="Direct link to Required Properties" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="scope"><code>scope</code><a href="#scope" class="hash-link" aria-label="Direct link to scope" title="Direct link to scope" translate="no">​</a></h3>
+<p>Scope of the application (example: &#x27;x_myapp&#x27; or &#x27;sn_myapp&#x27;)</p>
+<ul>
+<li class=""><strong>Type:</strong> <code>string</code></li>
+<li class=""><strong>Pattern:</strong> <code>^((x|sn)_[a-z0-9_]+|global)$</code></li>
+<li class=""><strong>Min length:</strong> 4</li>
+<li class=""><strong>Max length:</strong> 18</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="scopeid"><code>scopeId</code><a href="#scopeid" class="hash-link" aria-label="Direct link to scopeid" title="Direct link to scopeid" translate="no">​</a></h3>
+<p>Scope ID of the application (example: &#x27;fc1b5713c3db3110d6489a038a40dd85&#x27;)</p>
+<ul>
+<li class=""><strong>Type:</strong> <code>string</code></li>
+<li class=""><strong>Pattern:</strong> <code>^([0-9a-f]{32}|global$)</code></li>
+<li class=""><strong>Max length:</strong> 32</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="properties">Properties<a href="#properties" class="hash-link" aria-label="Direct link to Properties" title="Direct link to Properties" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="active"><code>active</code><a href="#active" class="hash-link" aria-label="Direct link to active" title="Direct link to active" translate="no">​</a></h3>
+<p>Is the application active</p>
+<ul>
+<li class=""><strong>Type:</strong> <code>boolean</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="appoutputdir"><code>appOutputDir</code><a href="#appoutputdir" class="hash-link" aria-label="Direct link to appoutputdir" title="Direct link to appoutputdir" translate="no">​</a></h3>
+<p>Location to output built application for packaging during fluent build command</p>
+<ul>
+<li class=""><strong>Type:</strong> <code>string</code></li>
+<li class=""><strong>Default:</strong> <code>&quot;dist/app&quot;</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="applicationruntimepolicy"><code>applicationRuntimePolicy</code><a href="#applicationruntimepolicy" class="hash-link" aria-label="Direct link to applicationruntimepolicy" title="Direct link to applicationruntimepolicy" translate="no">​</a></h3>
+<p>Application Runtime Policy mode. Set to &#x27;tracking&#x27; or &#x27;enforcing&#x27; to enable policy records. Defaults to &#x27;none&#x27; if not specified.</p>
+<ul>
+<li class=""><strong>Type:</strong> <code>&quot;none&quot;</code> | <code>&quot;tracking&quot;</code> | <code>&quot;enforcing&quot;</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="clientdir"><code>clientDir</code><a href="#clientdir" class="hash-link" aria-label="Direct link to clientdir" title="Direct link to clientdir" translate="no">​</a></h3>
+<p>Directory containing client files of the application, such as HTML and TypeScript files. Set to empty to disable the client build.</p>
+<ul>
+<li class=""><strong>Type:</strong> <code>string</code></li>
+<li class=""><strong>Default:</strong> <code>&quot;src/client&quot;</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="description"><code>description</code><a href="#description" class="hash-link" aria-label="Direct link to description" title="Direct link to description" translate="no">​</a></h3>
+<p>Description of the application</p>
+<ul>
+<li class=""><strong>Type:</strong> <code>string</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="fluentdir"><code>fluentDir</code><a href="#fluentdir" class="hash-link" aria-label="Direct link to fluentdir" title="Direct link to fluentdir" translate="no">​</a></h3>
+<p>Directory containing .now.ts fluent files of the application</p>
+<ul>
+<li class=""><strong>Type:</strong> <code>string</code></li>
+<li class=""><strong>Default:</strong> <code>&quot;src/fluent&quot;</code></li>
+<li class=""><strong>Min length:</strong> 1</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="generateddir"><code>generatedDir</code><a href="#generateddir" class="hash-link" aria-label="Direct link to generateddir" title="Direct link to generateddir" translate="no">​</a></h3>
+<p>Directory relative to &#x27;fluentDir&#x27; where Fluent will generate files, such as keys.ts</p>
+<ul>
+<li class=""><strong>Type:</strong> <code>string</code></li>
+<li class=""><strong>Default:</strong> <code>&quot;generated&quot;</code></li>
+<li class=""><strong>Min length:</strong> 1</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="guidedsetupguid"><code>guidedSetupGuid</code><a href="#guidedsetupguid" class="hash-link" aria-label="Direct link to guidedsetupguid" title="Direct link to guidedsetupguid" translate="no">​</a></h3>
+<p>SysID of the Guided Setup to start when the application is upgraded</p>
+<ul>
+<li class=""><strong>Type:</strong> <code>string</code></li>
+<li class=""><strong>Pattern:</strong> <code>^[0-9a-f]{32}$</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="ignoretransformtablelist"><code>ignoreTransformTableList</code><a href="#ignoretransformtablelist" class="hash-link" aria-label="Direct link to ignoretransformtablelist" title="Direct link to ignoretransformtablelist" translate="no">​</a></h3>
+<p>List of tables to ignore when transforming entities to ServiceNow tables</p>
+<ul>
+<li class=""><strong>Type:</strong> <code>string</code>[]</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="installedasdependency"><code>installedAsDependency</code><a href="#installedasdependency" class="hash-link" aria-label="Direct link to installedasdependency" title="Direct link to installedasdependency" translate="no">​</a></h3>
+<p>App was installed as a dependency</p>
+<ul>
+<li class=""><strong>Type:</strong> <code>boolean</code></li>
+<li class=""><strong>Default:</strong> <code>false</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="jslevel"><code>jsLevel</code><a href="#jslevel" class="hash-link" aria-label="Direct link to jslevel" title="Direct link to jslevel" translate="no">​</a></h3>
+<p>JavaScript level for the application</p>
+<ul>
+<li class=""><strong>Type:</strong> <code>&quot;es_latest&quot;</code> | <code>&quot;helsinki_es5&quot;</code> | <code>&quot;traditional&quot;</code></li>
+<li class=""><strong>Default:</strong> <code>&quot;es_latest&quot;</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="logo"><code>logo</code><a href="#logo" class="hash-link" aria-label="Direct link to logo" title="Direct link to logo" translate="no">​</a></h3>
+<p>SysID of the app logo</p>
+<ul>
+<li class=""><strong>Type:</strong> <code>string</code></li>
+<li class=""><strong>Pattern:</strong> <code>^[0-9a-f]{32}$</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="menu"><code>menu</code><a href="#menu" class="hash-link" aria-label="Direct link to menu" title="Direct link to menu" translate="no">​</a></h3>
+<p>SysID of the application&#x27;s primary menu for default table modules</p>
+<ul>
+<li class=""><strong>Type:</strong> <code>string</code></li>
+<li class=""><strong>Pattern:</strong> <code>^[0-9a-f]{32}$</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="metadatadir"><code>metadataDir</code><a href="#metadatadir" class="hash-link" aria-label="Direct link to metadatadir" title="Direct link to metadatadir" translate="no">​</a></h3>
+<p>Directory containing metadata xml for the app</p>
+<ul>
+<li class=""><strong>Type:</strong> <code>string</code></li>
+<li class=""><strong>Default:</strong> <code>&quot;metadata&quot;</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="name"><code>name</code><a href="#name" class="hash-link" aria-label="Direct link to name" title="Direct link to name" translate="no">​</a></h3>
+<p>Name of the application (example: &#x27;MyApp&#x27;)</p>
+<ul>
+<li class=""><strong>Type:</strong> <code>string</code></li>
+<li class=""><strong>Min length:</strong> 3</li>
+<li class=""><strong>Max length:</strong> 100</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="networkpolicies"><code>networkPolicies</code><a href="#networkpolicies" class="hash-link" aria-label="Direct link to networkpolicies" title="Direct link to networkpolicies" translate="no">​</a></h3>
+<p>Network access policies for the application (sys_arp_network_policy)</p>
+<ul>
+<li class=""><strong>Type:</strong> <code>object</code>[]</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="npmupdatecheck"><code>npmUpdateCheck</code><a href="#npmupdatecheck" class="hash-link" aria-label="Direct link to npmupdatecheck" title="Direct link to npmupdatecheck" translate="no">​</a></h3>
+<ul>
+<li class=""><strong>Type:</strong> <code>number</code> | <code>boolean</code></li>
+<li class=""><strong>Default:</strong> <code>10</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="packoutputdir"><code>packOutputDir</code><a href="#packoutputdir" class="hash-link" aria-label="Direct link to packoutputdir" title="Direct link to packoutputdir" translate="no">​</a></h3>
+<p>Location to output the zip file during build process, to be later installed on the instance during install command</p>
+<ul>
+<li class=""><strong>Type:</strong> <code>string</code></li>
+<li class=""><strong>Default:</strong> <code>&quot;target&quot;</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="packageresolverversion"><code>packageResolverVersion</code><a href="#packageresolverversion" class="hash-link" aria-label="Direct link to packageresolverversion" title="Direct link to packageresolverversion" translate="no">​</a></h3>
+<p>Rhino module resolver version. Must be 2.0.0+ for Global apps</p>
+<ul>
+<li class=""><strong>Type:</strong> <code>&quot;1.0.0&quot;</code> | <code>&quot;2.0.0&quot;</code></li>
+<li class=""><strong>Default:</strong> <code>&quot;1.0.0&quot;</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="servermodulesdir"><code>serverModulesDir</code><a href="#servermodulesdir" class="hash-link" aria-label="Direct link to servermodulesdir" title="Direct link to servermodulesdir" translate="no">​</a></h3>
+<p>Directory containing modular files to be built into sys_modules</p>
+<ul>
+<li class=""><strong>Type:</strong> <code>string</code></li>
+<li class=""><strong>Default:</strong> <code>&quot;src/server&quot;</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="servermodulesexcludepatterns"><code>serverModulesExcludePatterns</code><a href="#servermodulesexcludepatterns" class="hash-link" aria-label="Direct link to servermodulesexcludepatterns" title="Direct link to servermodulesexcludepatterns" translate="no">​</a></h3>
+<p>Patterns to exclude when building server modules</p>
+<ul>
+<li class=""><strong>Type:</strong> <code>string</code>[]</li>
+<li class=""><strong>Default:</strong> <code>[&quot;**/*.test.ts&quot;,&quot;**/*.test.js&quot;,&quot;**/*.d.ts&quot;]</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="servermodulesincludepatterns"><code>serverModulesIncludePatterns</code><a href="#servermodulesincludepatterns" class="hash-link" aria-label="Direct link to servermodulesincludepatterns" title="Direct link to servermodulesincludepatterns" translate="no">​</a></h3>
+<p>Patterns to include when building server modules</p>
+<ul>
+<li class=""><strong>Type:</strong> <code>string</code>[]</li>
+<li class=""><strong>Default:</strong> <code>[&quot;**/*.ts&quot;,&quot;**/*.tsx&quot;,&quot;**/*.js&quot;,&quot;**/*.jsx&quot;,&quot;**/*.cts&quot;,&quot;**/*.cjs&quot;,&quot;**/*.mts&quot;,&quot;**/*.mjs&quot;,&quot;**/*.json&quot;]</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="staticcontentdir"><code>staticContentDir</code><a href="#staticcontentdir" class="hash-link" aria-label="Direct link to staticcontentdir" title="Direct link to staticcontentdir" translate="no">​</a></h3>
+<p>Directory containing static asset files of the application</p>
+<ul>
+<li class=""><strong>Type:</strong> <code>string</code></li>
+<li class=""><strong>Default:</strong> <code>&quot;dist/static&quot;</code></li>
+<li class=""><strong>Min length:</strong> 1</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="tabledefaultlanguage"><code>tableDefaultLanguage</code><a href="#tabledefaultlanguage" class="hash-link" aria-label="Direct link to tabledefaultlanguage" title="Direct link to tabledefaultlanguage" translate="no">​</a></h3>
+<p>BCP 47 language tag for table/column documentation defaults. Used to resolve labels from multi-language documentation arrays (e.g., &#x27;en&#x27;, &#x27;es&#x27;, &#x27;fr&#x27;, &#x27;en-US&#x27;, &#x27;zh-Hans&#x27;).</p>
+<ul>
+<li class=""><strong>Type:</strong> <code>string</code></li>
+<li class=""><strong>Default:</strong> <code>&quot;en&quot;</code></li>
+<li class=""><strong>Pattern:</strong> <code>^[a-z]{2,3}(-[a-zA-Z0-9]{2,8})*$</code></li>
+<li class=""><strong>Min length:</strong> 2</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="tableoutputformat"><code>tableOutputFormat</code><a href="#tableoutputformat" class="hash-link" aria-label="Direct link to tableoutputformat" title="Direct link to tableoutputformat" translate="no">​</a></h3>
+<p>Artifact type built for table definitions. Traditional bootstrap or separate component records.</p>
+<ul>
+<li class=""><strong>Type:</strong> <code>&quot;bootstrap&quot;</code> | <code>&quot;component&quot;</code></li>
+<li class=""><strong>Default:</strong> <code>&quot;bootstrap&quot;</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="trustedmodules"><code>trustedModules</code><a href="#trustedmodules" class="hash-link" aria-label="Direct link to trustedmodules" title="Direct link to trustedmodules" translate="no">​</a></h3>
+<p>List of npm module patterns to mark as trusted. Trusted modules will have external_source set to false. Valid patterns: fully qualified package names (e.g., &#x27;lodash&#x27;, &#x27;@servicenow/sdk&#x27;) or organization prefixes with wildcard (e.g., &#x27;@servicenow/<em>&#x27;). Blanket wildcards like &#x27;</em>&#x27; are not allowed.</p>
+<ul>
+<li class=""><strong>Type:</strong> <code>string</code>[]</li>
+<li class=""><strong>Default:</strong> <code>[]</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="tsconfigpath"><code>tsconfigPath</code><a href="#tsconfigpath" class="hash-link" aria-label="Direct link to tsconfigpath" title="Direct link to tsconfigpath" translate="no">​</a></h3>
+<p>Path to tsconfig file to be used for transpilation of server module typescript. ServiceNow SDK will emit build errors following the referenced tsconfig. (example: &#x27;./src/server/tsconfig.json&#x27;)</p>
+<ul>
+<li class=""><strong>Type:</strong> <code>string</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="type"><code>type</code><a href="#type" class="hash-link" aria-label="Direct link to type" title="Direct link to type" translate="no">​</a></h3>
+<p>Whether this project represents a scoped/global app package or a set of a record changes</p>
+<ul>
+<li class=""><strong>Type:</strong> <code>&quot;package&quot;</code> | <code>&quot;configuration&quot;</code></li>
+<li class=""><strong>Default:</strong> <code>&quot;package&quot;</code></li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="accesscontrols"><code>accessControls</code><a href="#accesscontrols" class="hash-link" aria-label="Direct link to accesscontrols" title="Direct link to accesscontrols" translate="no">​</a></h2>
+<p>Manage scoping restrictions and access to the application</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Property</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>canEditInStudio</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Can the application be opened in developer studio</td></tr><tr><td><code>hideOnUI</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Application hidden in UI</td></tr><tr><td><code>private</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Mark the application as private</td></tr><tr><td><code>restrictTableAccess</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Restrict design time access to tables from outside the application</td></tr><tr><td><code>runtimeAccessTracking</code></td><td><code>&quot;none&quot;</code> | <code>&quot;permissive&quot;</code> | <code>&quot;enforcing&quot;</code></td><td><code>&quot;permissive&quot;</code></td><td>Runtime access tracking for the application</td></tr><tr><td><code>scopedAdministration</code></td><td><code>boolean</code></td><td><code>false</code></td><td>If true, System Admins will be prevented from accessing the application</td></tr><tr><td><code>trackable</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Mark the application as trackable</td></tr><tr><td><code>uninstallBlocked</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Uninstall blocked for the application</td></tr><tr><td><code>userRole</code></td><td><code>string</code></td><td></td><td>Role required for end users to access the application and its tables</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="dependencies"><code>dependencies</code><a href="#dependencies" class="hash-link" aria-label="Direct link to dependencies" title="Direct link to dependencies" translate="no">​</a></h2>
+<p>Reference dependencies on other ServiceNow application tables and entities, organized by scope</p>
+<p>Keys match the pattern <code>^((x|sn)_[a-z0-9_]+|global)$</code>. Each entry can include:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Property</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>roles</code></td><td><code>&quot;*&quot;</code> | <code>string</code>[]</td><td></td><td>Role definitions from sys_user_role (list of role names or &#x27;*&#x27; for all)</td></tr><tr><td><code>tables</code></td><td><code>&quot;*&quot;</code> | <code>string</code>[]</td><td></td><td>Table definitions from sys_db_object (list of table names or &#x27;*&#x27; for all)</td></tr></tbody></table>
+<p>Additional keys are also accepted.</p>
+<blockquote>
+<p><strong>Deprecated sub-property:</strong> <code>dependencies.applications</code> — DEPRECATED: Use flat scope structure instead. Move scopes directly under &#x27;dependencies&#x27;.</p>
+</blockquote>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="licensing"><code>licensing</code><a href="#licensing" class="hash-link" aria-label="Direct link to licensing" title="Direct link to licensing" translate="no">​</a></h2>
+<p>If this application is licensable, set the subscription requirement and model.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Property</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>enforceLicense</code></td><td><code>&quot;none&quot;</code> | <code>&quot;log&quot;</code> | <code>&quot;enforce&quot;</code></td><td><code>&quot;log&quot;</code></td><td>Subscription requirement for the application</td></tr><tr><td><code>licensable</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Mark package as licensable</td></tr><tr><td><code>licenseCategory</code></td><td><code>&quot;none&quot;</code> | <code>&quot;general&quot;</code> | <code>&quot;beta&quot;</code></td><td><code>&quot;none&quot;</code></td><td>License category for the application</td></tr><tr><td><code>licenseModel</code></td><td><code>&quot;none&quot;</code> | <code>&quot;fulfiller&quot;</code> | <code>&quot;producer&quot;</code> | <code>&quot;capacity&quot;</code> | <code>&quot;mixed&quot;</code> | <code>&quot;app_use&quot;</code></td><td><code>&quot;none&quot;</code></td><td>License model for the application</td></tr><tr><td><code>subscriptionEntitlement</code></td><td><code>string</code></td><td></td><td>SysID of the subscription entitlement for the application</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="modulepaths"><code>modulePaths</code><a href="#modulepaths" class="hash-link" aria-label="Direct link to modulepaths" title="Direct link to modulepaths" translate="no">​</a></h2>
+<p>Mapping between file glob patterns to resolve imported file paths to valid runtime paths. This is needed if your Fluent files are importing modules from a different location than the runtime modules. For example, if you have a custom TypeScript setup that transpiles modules from a &#x27;src&#x27; directory to a &#x27;dist&#x27; directory, you would need to specify that mapping here.</p>
+<p>Keys match the pattern <code>.*</code>. Values are <code>string</code>.</p>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="performancepolicy"><code>performancePolicy</code><a href="#performancepolicy" class="hash-link" aria-label="Direct link to performancepolicy" title="Direct link to performancepolicy" translate="no">​</a></h2>
+<p>Performance (resource limit) configuration (sys_app_resource_limit_template). Only one per scope.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Property</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>$id</code></td><td><code>string</code></td><td></td><td>Unique sys_id for the record</td></tr><tr><td><code>apiTransactionLimit</code></td><td><code>integer</code></td><td><code>30</code></td><td>API Transaction Quota percentage (1-100)</td></tr><tr><td><code>eventHandlerLimit</code></td><td><code>integer</code></td><td><code>20</code></td><td>Event Handler Quota percentage (1-100)</td></tr><tr><td><code>interactiveTransactionLimit</code></td><td><code>integer</code></td><td><code>30</code></td><td>Interactive Transaction Quota percentage (1-100)</td></tr><tr><td><code>mode</code></td><td><code>&quot;disabled&quot;</code> | <code>&quot;logOnly&quot;</code> | <code>&quot;enforced&quot;</code></td><td></td><td>Enforcement mode for quota thresholds. Auto-derived from applicationRuntimePolicy if not explicitly set: &#x27;none&#x27;→disabled, &#x27;tracking&#x27;→logOnly, &#x27;enforcing&#x27;→enforced</td></tr><tr><td><code>name</code></td><td><code>string</code></td><td></td><td>Configuration name</td></tr><tr><td><code>scheduledJobLimit</code></td><td><code>integer</code></td><td><code>20</code></td><td>Scheduled Job Quota percentage (1-100)</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="scripts"><code>scripts</code><a href="#scripts" class="hash-link" aria-label="Direct link to scripts" title="Direct link to scripts" translate="no">​</a></h2>
+<p>Define scripts that are executed with the SDK task runner. The task functions are async and are passed APIs for cross-environment compatibility. Use prebuild to run a script before the build process for custom build tasks.</p>
+<p>Keys match the pattern <code>.*</code>. Values are <code>string</code>.</p>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="staticcontentpaths"><code>staticContentPaths</code><a href="#staticcontentpaths" class="hash-link" aria-label="Direct link to staticcontentpaths" title="Direct link to staticcontentpaths" translate="no">​</a></h2>
+<p>Mapping of source files to static output paths.</p>
+<p>Keys match the pattern <code>.*</code>. Values are <code>string</code>.</p>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="taxonomy"><code>taxonomy</code><a href="#taxonomy" class="hash-link" aria-label="Direct link to taxonomy" title="Direct link to taxonomy" translate="no">​</a></h2>
+<p>Configuration for taxonomy-based file organization</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Property</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>fallbackFolderName</code></td><td><code>string</code></td><td></td><td>Folder name to use when a table doesn&#x27;t have a mapping (lowercase, no spaces or special chars)</td></tr><tr><td><code>mapping</code></td><td><code>object</code></td><td></td><td>Maps table names to their folder path for organization. Resulting files will be placed in &#x27;{generatedDir}/{path}&#x27;</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="wildcardpolicy"><code>wildcardPolicy</code><a href="#wildcardpolicy" class="hash-link" aria-label="Direct link to wildcardpolicy" title="Direct link to wildcardpolicy" translate="no">​</a></h2>
+<p>Wildcard/exemption policy for the application (sys_arp_segment_policy). Only one per scope.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Property</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>$id</code></td><td><code>string</code></td><td></td><td>Unique sys_id for the record</td></tr><tr><td><code>active</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Whether the policy is active</td></tr><tr><td><code>arl</code></td><td><code>object</code></td><td></td><td>ARL (Application Resource Limit) pillar configuration</td></tr><tr><td><code>network</code></td><td><code>object</code></td><td></td><td>Network pillar configuration</td></tr><tr><td><code>record</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Enable Record pillar access</td></tr><tr><td><code>scripting</code></td><td><code>object</code></td><td></td><td>Scripting pillar configuration</td></tr><tr><td><code>shortDescription</code></td><td><code>string</code></td><td></td><td>Human-readable description of the policy</td></tr></tbody></table></div></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/sdk/4.5.0/category/configuration"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Configuration</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/sdk/4.5.0/category/guides"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Guides</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_vU8W thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#required-properties" class="table-of-contents__link toc-highlight">Required Properties</a><ul><li><a href="#scope" class="table-of-contents__link toc-highlight"><code>scope</code></a></li><li><a href="#scopeid" class="table-of-contents__link toc-highlight"><code>scopeId</code></a></li></ul></li><li><a href="#properties" class="table-of-contents__link toc-highlight">Properties</a><ul><li><a href="#active" class="table-of-contents__link toc-highlight"><code>active</code></a></li><li><a href="#appoutputdir" class="table-of-contents__link toc-highlight"><code>appOutputDir</code></a></li><li><a href="#applicationruntimepolicy" class="table-of-contents__link toc-highlight"><code>applicationRuntimePolicy</code></a></li><li><a href="#clientdir" class="table-of-contents__link toc-highlight"><code>clientDir</code></a></li><li><a href="#description" class="table-of-contents__link toc-highlight"><code>description</code></a></li><li><a href="#fluentdir" class="table-of-contents__link toc-highlight"><code>fluentDir</code></a></li><li><a href="#generateddir" class="table-of-contents__link toc-highlight"><code>generatedDir</code></a></li><li><a href="#guidedsetupguid" class="table-of-contents__link toc-highlight"><code>guidedSetupGuid</code></a></li><li><a href="#ignoretransformtablelist" class="table-of-contents__link toc-highlight"><code>ignoreTransformTableList</code></a></li><li><a href="#installedasdependency" class="table-of-contents__link toc-highlight"><code>installedAsDependency</code></a></li><li><a href="#jslevel" class="table-of-contents__link toc-highlight"><code>jsLevel</code></a></li><li><a href="#logo" class="table-of-contents__link toc-highlight"><code>logo</code></a></li><li><a href="#menu" class="table-of-contents__link toc-highlight"><code>menu</code></a></li><li><a href="#metadatadir" class="table-of-contents__link toc-highlight"><code>metadataDir</code></a></li><li><a href="#name" class="table-of-contents__link toc-highlight"><code>name</code></a></li><li><a href="#networkpolicies" class="table-of-contents__link toc-highlight"><code>networkPolicies</code></a></li><li><a href="#npmupdatecheck" class="table-of-contents__link toc-highlight"><code>npmUpdateCheck</code></a></li><li><a href="#packoutputdir" class="table-of-contents__link toc-highlight"><code>packOutputDir</code></a></li><li><a href="#packageresolverversion" class="table-of-contents__link toc-highlight"><code>packageResolverVersion</code></a></li><li><a href="#servermodulesdir" class="table-of-contents__link toc-highlight"><code>serverModulesDir</code></a></li><li><a href="#servermodulesexcludepatterns" class="table-of-contents__link toc-highlight"><code>serverModulesExcludePatterns</code></a></li><li><a href="#servermodulesincludepatterns" class="table-of-contents__link toc-highlight"><code>serverModulesIncludePatterns</code></a></li><li><a href="#staticcontentdir" class="table-of-contents__link toc-highlight"><code>staticContentDir</code></a></li><li><a href="#tabledefaultlanguage" class="table-of-contents__link toc-highlight"><code>tableDefaultLanguage</code></a></li><li><a href="#tableoutputformat" class="table-of-contents__link toc-highlight"><code>tableOutputFormat</code></a></li><li><a href="#trustedmodules" class="table-of-contents__link toc-highlight"><code>trustedModules</code></a></li><li><a href="#tsconfigpath" class="table-of-contents__link toc-highlight"><code>tsconfigPath</code></a></li><li><a href="#type" class="table-of-contents__link toc-highlight"><code>type</code></a></li></ul></li><li><a href="#accesscontrols" class="table-of-contents__link toc-highlight"><code>accessControls</code></a></li><li><a href="#dependencies" class="table-of-contents__link toc-highlight"><code>dependencies</code></a></li><li><a href="#licensing" class="table-of-contents__link toc-highlight"><code>licensing</code></a></li><li><a href="#modulepaths" class="table-of-contents__link toc-highlight"><code>modulePaths</code></a></li><li><a href="#performancepolicy" class="table-of-contents__link toc-highlight"><code>performancePolicy</code></a></li><li><a href="#scripts" class="table-of-contents__link toc-highlight"><code>scripts</code></a></li><li><a href="#staticcontentpaths" class="table-of-contents__link toc-highlight"><code>staticContentPaths</code></a></li><li><a href="#taxonomy" class="table-of-contents__link toc-highlight"><code>taxonomy</code></a></li><li><a href="#wildcardpolicy" class="table-of-contents__link toc-highlight"><code>wildcardPolicy</code></a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Resources</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://www.npmjs.com/package/@servicenow/sdk" target="_blank" rel="noopener noreferrer" class="footer__link-item">NPM Package<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_cHRo"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://github.com/servicenow/sdk-examples" target="_blank" rel="noopener noreferrer" class="footer__link-item">SDK Examples<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_cHRo"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://github.com/servicenow/sdk/releases" target="_blank" rel="noopener noreferrer" class="footer__link-item">Release Notes<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_cHRo"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Help &amp; Community</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/ServiceNow/sdk/discussions" target="_blank" rel="noopener noreferrer" class="footer__link-item">Discussions<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_cHRo"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2026 ServiceNow.</div></div></div></footer></div>
+</body>
+</html>

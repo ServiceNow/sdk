@@ -1,0 +1,11 @@
+{
+  "latest": "4.5.0",
+  "versions": [
+    {
+      "version": "4.5.0",
+      "url": "https://code.devsnc.com/pages/dev/fluent/4.5.0/",
+      "llms": "https://code.devsnc.com/pages/dev/fluent/4.5.0/llms.txt",
+      "llmsFull": "https://code.devsnc.com/pages/dev/fluent/4.5.0/llms-full.txt"
+    }
+  ]
+}
