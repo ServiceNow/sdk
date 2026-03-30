@@ -7,6 +7,8 @@ This respository currently does not contain the source code for the SDK
 ### Support, Questions, and Announcements
 Visit the [discussions](https://github.com/ServiceNow/sdk/discussions) section!
 
+Fluent API Documentation: https://servicenow.github.io/sdk/
+
 ### Links
 
 [NPM Package](https://www.npmjs.com/package/@servicenow/sdk)
