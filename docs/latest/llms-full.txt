@@ -5088,7 +5088,7 @@ to use.
 
 ### record
 
-`R & object & object & Meta`
+`object`
 
 an object containing the following properties:
 
@@ -5117,72 +5117,41 @@ an object containing the following properties:
 
 ## Examples
 
-### CMDB Computer Record
+### Custom Table Record that extends sys_metadata
 
-Create a CMDB configuration item for a computer
+Create a record in a custom application table that extends sys_metadata.
 
 ```typescript
 /**
- * @title CMDB Computer Record
- * @description Create a CMDB configuration item for a computer
+ * @title Custom Table Record that extends sys_metadata
+ * @description Create a record in a custom application table that extends sys_metadata.
+ * This table has 3 fields (string_field: string, datetime_field: datetime, integer_field: integer) in addition to the fields inherited from sys_metadata.
  */
-import { Record } from '@servicenow/sdk/core'
+import { Record } from "@servicenow/sdk/core";
+
 Record({
-    $id: Now.ID['cmdb-ci-computer-1'],
-    table: 'cmdb_ci_computer',
-    data: {
-        asset_tag: 'ASSET001',
-        assigned: '2024-04-21 07:00:00',
-        category: 'Hardware',
-        company: '31bea3d53790200044e0bfc8bcbe5dec',
-        cost_center: '7fb1cc99c0a80a6d30c04574d14c0acf',
-        cpu_manufacturer: '7aad6d00c611228400f00e0f80b67d2d',
-        cpu_speed: 798,
-        first_discovered: '2006-09-12 20:55:20',
-        install_date: '2023-10-29 08:00:00',
-        model_id: 'a9a2d0c3c6112276010db16c5ddd3461',
-        name: 'Computer 1',
-        os: 'Windows XP Professional',
-        os_service_pack: 'Service Pack 3',
-        os_version: '5.1',
-        po_number: 'PO27711',
-        ram: '1543',
-        serial_number: 'L3BB911',
-    },
-})
+  table: "x_helloworld_tableone",
+  $id: Now.ID["x_helloworld_tableone_record1"],
+  data: {
+    string_field: "Hello World 1",
+    datetime_field: "01-01-2024 12:00:00",
+    integer_field: 1,
+  },
+});
 
 ```
 
-### Custom Table Record
+### Record example for populating demo data
 
-Create a record in a custom application table
-
-```typescript
-/**
- * @title Custom Table Record
- * @description Create a record in a custom application table
- */
-import { Record } from '@servicenow/sdk/core'
-Record({
-    table: 'x_helloworld_tableone',
-    $id: Now.ID['x_helloworld_tableone_record1'],
-    data: {
-        string_field: 'Hello World 1',
-        datetime_field: '01-01-2024 12:00:00',
-        integer_field: 1,
-    },
-})
-
-```
-
-### Incident Record
-
-Create an incident record with detailed information
+For defining demo data in your application, some APIs expose the `$meta: { installMethod }` property 
 
 ```typescript
 /**
- * @title Incident Record
- * @description Create an incident record with detailed information
+ * @title Record example for populating demo data
+ * @description For defining demo data in your application, some APIs expose the `$meta: { installMethod }` property 
+ * which allows you to specify a record that should be created during installation of your application. 
+ * This example shows how to use the `Record` function to create a record in the `incident` table, and
+ * install the record when the "Load demo data" option is selected during installation
  */
 import { Record } from '@servicenow/sdk/core'
 Record({
@@ -5194,16 +5163,44 @@ Record({
         short_description: 'This is a sample incident',
         description: 'This is a sample incident description',
         comments: 'This is a sample comment',
-        cmdb_ci: '265e09dbeb584baf9c111a7148c99529',
         urgency: 1,
-        activity_due: '2025-01-02 12:30:00',
         approval: 'not requested',
-        caller_id: '77ad8176731313005754660c4cf6a7de',
         notify: 1,
         priority: 3,
-        opened_at: '2025-01-01 12:30:00',
+        $meta: {
+            installMethod: 'demo'
+        }
     },
 })
+
+```
+
+### Adds a Record to an Out-of-Box Table (`user_criteria`)
+
+Create a record in the `user_criteria` table, which is an out-of-box table in ServiceNow.
+
+```typescript
+/**
+ * @title Adds a Record to an Out-of-Box Table (`user_criteria`)
+ * @description Create a record in the `user_criteria` table, which is an out-of-box table in ServiceNow.
+ */
+import { Record } from "@servicenow/sdk/core";
+
+Record({
+  table: "user_criteria",
+  $id: Now.ID["user_criteria_example_1"],
+  data: {
+    name: "All ACME Corporation employees",
+    short_description: "Criteria for all ACME Corporation employees",
+    active: true,
+    advanced: false,
+    match_all: false,
+    company: [
+      "e7c1f3d53790200044e0bfc8bcbe5deb",
+      "227cdfb03710200044e0bfc8bcbe5d6b",
+    ],
+  },
+});
 
 ```
 
@@ -5252,7 +5249,7 @@ Creates endpoints, query parameters, and headers for a scripted REST service (`s
 - **produces** (optional): `string`
   A list of media types that resources of the API can produce
 
-- **routes** (optional): `(Route & object)[] | Route[]`
+- **routes** (optional): `(object)[] | Route[]`
   The resources (`sys_ws_operation`) for the API
   - **$id**: `string | number | ExplicitKey<string>`
 
@@ -6446,7 +6443,7 @@ specified table when submitted. Extends CatalogItem with record creation and scr
 
 ### config
 
-`CatalogItemRecordProducer<V> & object`
+`object`
 
 Record Producer configuration — target table, variables, fulfillment scripts, and catalog settings.
 
@@ -6850,7 +6847,7 @@ Creates a Service Catalog Item (`sc_cat_item`) — a requestable item in the Ser
 
 ### config
 
-`CatalogItem<V> & object`
+`object`
 
 Catalog item configuration — name, description, variables, fulfillment process, and visibility settings.
 
@@ -7453,7 +7450,7 @@ be attached to one or more catalog items.
 
 ### config
 
-`object & object & object`
+`object`
 
 Variable Set configuration — title, layout, variables, and role-based access.
 
@@ -15019,7 +15016,7 @@ const temperature = FloatColumn({
 
 ### config
 
-`C & Column<Type, Default> & object`
+`object`
 
 **Properties:**
 
@@ -15619,7 +15616,7 @@ A Column for a list type field.
 
 ### config
 
-`C & Column<Type, Default> & object`
+`object`
 
 **Properties:**
 
@@ -16035,7 +16032,7 @@ A Column for a radio type field.
 
 ### config
 
-`C & Column<Type, Default> & object`
+`object`
 
 **Properties:**
 
@@ -16057,7 +16054,7 @@ A Column for a list type field.
 
 ### config
 
-`C & Column<Type, Default> & object`
+`object`
 
 **Properties:**
 
@@ -16280,7 +16277,7 @@ A Column for a script type field.
 
 ### config
 
-`C & Column<Type, Default> & object`
+`object`
 
 **Properties:**
 
@@ -16318,7 +16315,7 @@ const assignedRoles = SlushBucketColumn({
 
 ### config
 
-`C & Column<Type, Default> & object`
+`object`
 
 an object that can include all base `Column` properties
 
@@ -16646,7 +16643,7 @@ const fields = TemplateValueColumn({
 
 ### config
 
-`C & Column<Type, Default> & object`
+`object`
 
 **Properties:**
 
