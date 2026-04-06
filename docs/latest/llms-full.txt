@@ -4,6 +4,717 @@
 
 ---
 
+# ServiceNow SDK API Reference
+
+The ServiceNow SDK lets you develop applications in source code using **ServiceNow Fluent** — a domain-specific language for creating application metadata as code.
+
+## What is ServiceNow Fluent?
+
+ServiceNow Fluent provides a set of typed API functions that map directly to platform records. Instead of configuring records through the UI, you define them in TypeScript and deploy them with the SDK.
+
+## Getting Started
+
+Install the SDK:
+
+```bash
+npm install @servicenow/sdk -d
+```
+
+Import APIs from `@servicenow/sdk/core`:
+
+```typescript
+import { Acl, BusinessRule, Role } from "@servicenow/sdk/core";
+```
+
+## Available APIs
+
+Browse the [**API Reference**](./category/api-reference) section in the sidebar for complete documentation on each available function.
+
+## AI Agent Configuration
+
+If you are using an AI coding agent (such as Claude, Cursor, GitHub Copilot, or similar), you can configure it with the Fluent API documentation to improve code generation accuracy.
+
+### API Documentation for Agents
+
+Two documentation formats are available for agent context:
+
+| File | URL | Best for |
+|---|---|---|
+| `llms.txt` | `{siteBaseUrl}llms.txt` | Lightweight index; use when fitting within tight context budgets |
+| `llms-full.txt` | `{siteBaseUrl}llms-full.txt` | Complete API reference inlined; use for highest code generation accuracy |
+
+For most agent workflows, prefer `llms-full.txt` — it includes full type signatures, property descriptions, and usage examples that reduce hallucinations when generating Fluent API code.
+
+### Available Versions
+
+A machine-readable index of all published versions (including per-version `llms.txt` and `llms-full.txt` URLs) is available at:
+
+```
+{siteBaseUrl}versions.json
+```
+
+This is useful for agents or tooling that need to target a specific SDK version. Each entry in the `versions` array includes:
+- `version` — the SDK version string
+- `url` — the docs base URL for that version
+- `llms` — the condensed API reference for that version
+- `llmsFull` — the complete API reference for that version
+
+### Example Agent System Prompt
+
+```
+Before generating any ServiceNow Fluent SDK code:
+1. Read the local project's package.json and find the version of @servicenow/sdk in dependencies.
+2. Fetch {siteBaseUrl}versions.json and find the closest semver
+   match to the installed version.
+3. Load the llmsFull URL from that version entry as your API reference.
+
+Example: if package.json has "@servicenow/sdk": "4.5.0", fetch versions.json,
+match "4.5.0", and load its llmsFull value as the API reference before coding.
+```
+
+## External Links
+
+- [NPM Package](https://www.npmjs.com/package/@servicenow/sdk)
+- [Official Documentation](https://www.servicenow.com/docs/r/application-development/servicenow-sdk/servicenow-sdk-landing.html)
+- [SDK Examples](https://github.com/servicenow/sdk-examples)
+- [Release Notes](https://github.com/servicenow/sdk/releases)
+
+
+---
+
+# Data Helpers
+
+Fluent provides global helper functions for creating typed values in `Record()` data fields. These functions are available globally — no import needed.
+
+## Duration()
+
+Creates a duration value in ServiceNow format. Used with `DurationColumn` fields.
+
+```typescript
+Duration({ days: 1, hours: 6, minutes: 30, seconds: 15 })
+// Serialized to: '1970-01-02 06:30:15'
+```
+
+### Parameters
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `days` | `number` | Optional. Number of days |
+| `hours` | `number` | Optional. Number of hours |
+| `minutes` | `number` | Optional. Number of minutes |
+| `seconds` | `number` | Optional. Number of seconds |
+
+### Example
+
+```typescript
+import { Record } from '@servicenow/sdk/core'
+
+Record({
+    $id: Now.ID['my-sla-record'],
+    table: 'contract_sla',
+    data: {
+        name: 'Priority 1 SLA',
+        duration: Duration({ days: 0, hours: 4 }),
+    },
+})
+```
+
+## Time()
+
+Creates a time-of-day value in ServiceNow format (UTC). Used with `TimeColumn` fields.
+
+The time is converted from the specified timezone to UTC. If no timezone is provided, the system timezone is used.
+
+```typescript
+// System timezone (default)
+Time({ hours: 14, minutes: 30, seconds: 0 })
+
+// Explicit timezone — 14:30 EST converts to 19:30 UTC
+Time({ hours: 14, minutes: 30, seconds: 0 }, 'America/New_York')
+
+// UTC (no conversion)
+Time({ hours: 9, minutes: 0, seconds: 0 }, 'UTC')
+```
+
+### Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `value.hours` | `number` | Optional. Hour (0-23) |
+| `value.minutes` | `number` | Optional. Minutes (0-59) |
+| `value.seconds` | `number` | Optional. Seconds (0-59) |
+| `timeZone` | `string` | Optional. IANA timezone (e.g., `'America/New_York'`, `'UTC'`). Defaults to system timezone |
+
+### Example
+
+```typescript
+import { Record } from '@servicenow/sdk/core'
+
+Record({
+    $id: Now.ID['daily-job'],
+    table: 'sysauto_script',
+    data: {
+        name: 'Daily Data Processing',
+        run_time: Time({ hours: 9, minutes: 0, seconds: 0 }, 'UTC'),
+    },
+})
+```
+
+## TemplateValue()
+
+Creates a template value serialized as a ServiceNow encoded query string. Used with `TemplateValueColumn` fields.
+
+Supports a generic table parameter for type-safe field IntelliSense.
+
+```typescript
+// Generic — accepts any key/value pairs
+TemplateValue({ cost: 100, description: 'Item', active: true })
+// Serialized to: 'cost=100^description=Item^active=true^EQ'
+
+// Table-specific — provides IntelliSense for sc_cat_item fields
+TemplateValue<'sc_cat_item'>({ cost: 100, description: 'Item', category: 'Hardware' })
+```
+
+### Example
+
+```typescript
+import { Record } from '@servicenow/sdk/core'
+
+Record({
+    $id: Now.ID['onboarding-task'],
+    table: 'sc_cat_item',
+    data: {
+        name: 'New Laptop Request',
+        template: TemplateValue<'sc_req_item'>({
+            short_description: 'Laptop setup',
+            priority: 2,
+            assignment_group: 'IT Hardware',
+        }),
+    },
+})
+```
+
+## FieldList()
+
+Creates a comma-separated list of field names. Used with `FieldListColumn` and `SlushBucketColumn` fields.
+
+Supports a generic table parameter for type-safe field IntelliSense, including dot-walk paths.
+
+```typescript
+// Generic — accepts any strings
+FieldList(['name', 'description', 'cost'])
+// Serialized to: 'name,description,cost'
+
+// Table-specific — provides IntelliSense and dot-walk support
+FieldList<'sc_cat_item'>(['name', 'description', 'cost', 'category', 'assigned_to.name'])
+```
+
+### Example
+
+```typescript
+import { Table, FieldListColumn, TableNameColumn } from '@servicenow/sdk/core'
+
+Table({
+    name: 'x_myapp_config',
+    label: 'Config',
+    schema: {
+        target_table: TableNameColumn({ label: 'Target Table' }),
+        display_fields: FieldListColumn({ label: 'Display Fields', dependent: 'target_table' }),
+    },
+})
+
+Record({
+    $id: Now.ID['config-record'],
+    table: 'x_myapp_config',
+    data: {
+        target_table: 'sc_cat_item',
+        display_fields: FieldList<'sc_cat_item'>(['name', 'description', 'cost', 'availability']),
+    },
+})
+```
+
+
+---
+
+# The keys.ts File
+
+Every Fluent project has an auto-generated `keys.ts` file that maps human-readable identifiers to ServiceNow sys_ids. It's the registry that makes `Now.ID['my-record']` work.
+
+## Location
+
+```
+src/fluent/generated/keys.ts
+```
+
+This file is **auto-generated by the build system** — you should not normally need to edit it by hand.
+
+## Purpose
+
+ServiceNow identifies every record by a 32-character sys_id (e.g., `4103297d12554b488d489c0bf1ceff19`). Working with raw sys_ids in source code is error-prone and unreadable. The keys file solves this by mapping meaningful names to sys_ids:
+
+```typescript
+$id: Now.ID['validate-on-insert']  // readable
+// resolves to sys_id: '4103297d12554b488d489c0bf1ceff19'
+```
+
+## Structure
+
+```typescript
+import '@servicenow/sdk/global'
+
+declare global {
+    namespace Now {
+        namespace Internal {
+            interface Keys extends KeysRegistry {
+                explicit: {
+                    'validate-on-insert': {
+                        table: 'sys_script'
+                        id: '4103297d12554b488d489c0bf1ceff19'
+                    }
+                    'my-acl': {
+                        table: 'sys_security_acl'
+                        id: 'a3a4966e8c38446d8e1c25620e4e73f4'
+                    }
+                }
+                composite: [
+                    {
+                        table: 'sys_documentation'
+                        id: '00e80b3ed0124620a32c6f9ac0472cf4'
+                        key: {
+                            name: 'x_myapp_table'
+                            element: 'name'
+                            language: 'en'
+                        }
+                    }
+                ]
+                deleted: {}
+            }
+        }
+    }
+}
+```
+
+## Key types
+
+### Explicit keys
+
+Direct mappings from a developer-chosen name to a table and sys_id. These are created when you use `$id: Now.ID['some-name']` in your Fluent code.
+
+```typescript
+explicit: {
+    'my-business-rule': {
+        table: 'sys_script'
+        id: '4103297d12554b488d489c0bf1ceff19'
+    }
+}
+```
+
+- **You choose the key name** — it can be any string (`'my-rule'`, `'validate-on-insert'`, `'1'`)
+- **The sys_id is auto-generated** on first build and stable thereafter
+- IDE autocomplete suggests existing keys when you type `Now.ID['`
+
+### Composite keys
+
+For records identified by a combination of field values (coalesce keys) rather than a single developer-chosen name. These are auto-generated for child and descendant records like table columns, documentation entries, and choice values.
+
+```typescript
+composite: [
+    {
+        table: 'sys_choice'
+        id: 'ae25f03b01c14366942460e8cfeec032'
+        key: {
+            name: 'x_myapp_task'
+            element: 'state'
+            value: 'todo'
+        }
+    }
+]
+```
+
+You don't interact with composite keys directly — they're managed by the build system.
+
+### Deleted keys
+
+Tracks records that have been removed from the project. This prevents sys_id reuse and enables clean uninstall.
+
+## How Now.ID works
+
+### First build — key is new
+
+```typescript
+// In your .now.ts file:
+BusinessRule({
+    $id: Now.ID['my-new-rule'],  // Key doesn't exist yet
+    ...
+})
+```
+
+The build system:
+1. Sees `'my-new-rule'` is not in keys.ts
+2. Generates a new sys_id
+3. Adds the entry to keys.ts
+4. Uses that sys_id in the XML output
+
+### Subsequent builds — key exists
+
+```typescript
+// In your .now.ts file:
+BusinessRule({
+    $id: Now.ID['my-new-rule'],  // Key exists in keys.ts
+    ...
+})
+```
+
+The build system:
+1. Looks up `'my-new-rule'` in keys.ts
+2. Finds the existing sys_id
+3. Uses the **same** sys_id — ensuring the record is updated, not duplicated
+
+
+## Best practices
+
+- **Don't edit keys.ts manually** unless you need to fix a specific mapping
+- **Do commit keys.ts to version control** — it's the source of truth for record identity
+- **Use meaningful key names** — `'validate-priority-on-insert'` is better than `'1'`
+- **Don't worry about composite keys** — they're fully automatic
+
+
+---
+
+# Now.attach
+
+`Now.attach()` attaches an image file to a record at build time. It reads the file, compresses it, and creates the corresponding `sys_attachment` and `sys_attachment_doc` records in the XML output.
+
+## Syntax
+
+```typescript
+Now.attach(path: ImagePath): Image
+```
+
+The file path is **relative to the `.now.ts` file** that contains the call.
+
+## Supported image formats
+
+| Extension | Format |
+|-----------|--------|
+| `.jpg`, `.jpeg` | JPEG |
+| `.png` | PNG |
+| `.gif` | GIF |
+| `.bmp` | Bitmap |
+| `.ico` | Icon |
+| `.svg` | SVG |
+
+Both lowercase and uppercase extensions are accepted (e.g., `.PNG`, `.JPG`).
+
+## How it works
+
+1. The SDK reads the image file from disk
+2. Compresses the file data using gzip
+3. Splits the compressed data into base64-encoded chunks
+4. Generates a SHA-256 hash for deduplication
+5. Creates `sys_attachment` and `sys_attachment_doc` records linked to the parent record
+
+During transform (XML → Fluent), the SDK extracts the attachment data back into an image file and generates a `Now.attach()` call.
+
+## Examples
+
+### Portal with a logo
+
+```typescript
+import { Record } from '@servicenow/sdk/core'
+
+Record({
+    $id: Now.ID['my-portal'],
+    table: 'sp_portal',
+    data: {
+        title: 'My Portal',
+        icon: Now.attach('../../assets/portal-icon.png'),
+    },
+})
+```
+
+### Reusing the same image across multiple fields
+
+Store the attachment in a variable to avoid reading and compressing the file multiple times:
+
+```typescript
+import { Record } from '@servicenow/sdk/core'
+
+const logo = Now.attach('../../assets/company-logo.jpg')
+
+Record({
+    $id: Now.ID['portal-a'],
+    table: 'sp_portal',
+    data: {
+        title: 'Portal A',
+        icon: logo,
+        logo: logo,
+    },
+})
+```
+
+### Sharing an image across multiple records
+
+```typescript
+import { Record } from '@servicenow/sdk/core'
+
+const icon = Now.attach('../../assets/app-icon.png')
+
+Record({
+    $id: Now.ID['portal-one'],
+    table: 'sp_portal',
+    data: {
+        title: 'Portal One',
+        icon: icon,
+    },
+})
+
+Record({
+    $id: Now.ID['portal-two'],
+    table: 'sp_portal',
+    data: {
+        title: 'Portal Two',
+        icon: icon,
+    },
+})
+```
+
+## File organization
+
+A common pattern is to keep image assets in an `assets/` directory at the project root:
+
+```
+src/
+├── fluent/
+│   ├── portal.now.ts        ← Now.attach('../../assets/logo.png')
+│   └── generated/
+│       └── keys.ts
+├── assets/
+│   ├── logo.png
+│   ├── favicon.ico
+│   └── banner.jpg
+└── now.config.json
+```
+
+
+---
+
+# Now.include
+
+`Now.include()` populates a record field with the contents of a file at build time. It's the recommended way to manage scripts, HTML, and CSS in Fluent projects — keeping them as separate files with full IDE support (syntax highlighting, IntelliSense, linting) rather than embedding them as inline strings in `.now.ts` files.
+
+## Syntax
+
+```typescript
+Now.include(filePath: string): string
+```
+
+The file path is **relative to the `.now.ts` file** that contains the call.
+
+## How it works
+
+1. **At build time**: The SDK reads the file and inlines its contents into the XML output field
+2. **At transform time** (XML → Fluent): The SDK extracts field content into separate files and generates `Now.include()` calls in the `.now.ts` output
+
+This enables a round-trip workflow where scripts are always maintained as standalone files.
+
+## Supported file types
+
+| Type | Common extensions | Use case |
+|------|------------------|----------|
+| JavaScript | `.js`, `.client.js`, `.server.js` | Server scripts, client scripts, business rule scripts |
+| HTML | `.html` | UI Page HTML, widget templates |
+| CSS/SCSS | `.css`, `.scss` | Widget styles, UI Page styles |
+
+## Examples
+
+### Business Rule with external script
+
+```typescript
+import { BusinessRule } from '@servicenow/sdk/core'
+
+BusinessRule({
+    $id: Now.ID['validate-on-insert'],
+    name: 'Validate on Insert',
+    table: 'incident',
+    when: 'before',
+    insert: true,
+    script: Now.include('../server/validate-on-insert.js'),
+})
+```
+
+The script lives in a separate file with full JavaScript IDE support:
+
+```javascript
+// server/validate-on-insert.js
+(function executeRule(current, previous) {
+    if (!current.short_description) {
+        current.setAbortAction(true);
+        gs.addErrorMessage('Short description is required');
+    }
+})(current, previous);
+```
+
+### UI Page with HTML, client script, and server script
+
+```typescript
+import { UiPage } from '@servicenow/sdk/core'
+
+UiPage({
+    $id: Now.ID['my-ui-page'],
+    name: 'my_custom_page',
+    html: Now.include('../../server/UiPage/my-page.html'),
+    clientScript: Now.include('../../server/UiPage/my-page.client-script.client.js'),
+    processingScript: Now.include('../../server/UiPage/my-page.processing-script.server.js'),
+})
+```
+
+### Service Portal Widget
+
+```typescript
+import { SPWidget } from '@servicenow/sdk/core'
+
+SPWidget({
+    $id: Now.ID['my-widget'],
+    name: 'My Custom Widget',
+    clientScript: Now.include('../../server/SPWidget/my-widget.client.js'),
+    serverScript: Now.include('../../server/SPWidget/my-widget.server.js'),
+    htmlTemplate: Now.include('../../server/SPWidget/my-widget.html'),
+    customCss: Now.include('../../server/SPWidget/my-widget.scss'),
+})
+```
+
+### Record with HTML content
+
+```typescript
+import { Record } from '@servicenow/sdk/core'
+
+Record({
+    $id: Now.ID['my-record'],
+    table: 'x_my_table',
+    data: {
+        name: 'My Record',
+        description_html: Now.include('./html/description.html'),
+        script: Now.include('../scripts/myScript.js'),
+    },
+})
+```
+
+## Inline scripts (alternative)
+
+For very short scripts, you can use inline strings instead of `Now.include()`:
+
+```typescript
+BusinessRule({
+    $id: Now.ID['simple-rule'],
+    name: 'Set Priority',
+    table: 'incident',
+    when: 'before',
+    insert: true,
+    script: `(function executeRule(current, previous) {
+        current.priority = 1;
+    })(current, previous);`,
+})
+```
+
+Use `Now.include()` when:
+- The script is more than a few lines
+- You want syntax highlighting and linting
+- Multiple records share the same script
+- The content is HTML or CSS
+
+
+---
+
+# Now.ref
+
+`Now.ref()` creates a reference to a record in another table. Use it when a field needs to point to a record that isn't defined in the current file — for example, referencing a role, a flow, or any record identified by its sys_id or coalesce keys.
+
+## Syntax
+
+```typescript
+// By coalesce keys — identifies the record by unique field values
+Now.ref(table: string, keys: { [key: string]: string }): any
+
+// By sys_id or Now.ID key — identifies the record by GUID
+Now.ref(table: string, guid: string, keys?: { [key: string]: string }): any
+```
+
+## Examples
+
+### Reference by coalesce keys
+
+When you know the unique field values that identify a record:
+
+```typescript
+import { Acl } from '@servicenow/sdk/core'
+
+Acl({
+    $id: Now.ID['incident-read-acl'],
+    type: 'record',
+    operation: 'read',
+    table: 'incident',
+    roles: [
+        Now.ref('sys_user_role', { name: 'admin' }),
+        Now.ref('sys_user_role', { name: 'itil' }),
+    ],
+})
+```
+
+### Reference by sys_id
+
+When you have the record's sys_id:
+
+```typescript
+import { Record } from '@servicenow/sdk/core'
+
+Record({
+    $id: Now.ID['my-catalog-item'],
+    table: 'sc_cat_item',
+    data: {
+        name: 'Request Laptop',
+        flow: Now.ref('sys_hub_flow', 'a1b2c3d4e5f67890abcdef1234567890'),
+    },
+})
+```
+
+### Reference by Now.ID key
+
+If the target record is also defined in your Fluent project, you can use its `Now.ID` key as the guid:
+
+```typescript
+import { Record } from '@servicenow/sdk/core'
+
+Record({
+    $id: Now.ID['my-catalog-item'],
+    table: 'sc_cat_item',
+    data: {
+        name: 'Request Laptop',
+        flow: Now.ref('sys_hub_flow', 'test_flow_for_service_catalog'),
+    },
+})
+```
+
+### Reference with fallback coalesce keys
+
+Provide both a GUID and coalesce keys — the keys act as a fallback identifier:
+
+```typescript
+Now.ref('sys_hub_flow', 'a1b2c3d4...', { name: 'My Flow' })
+```
+
+## When to use Now.ref vs direct references
+
+| Scenario | Use |
+|----------|-----|
+| Record defined in same project | Return value of the API function (e.g., `const role = Role({...})`) |
+| Record on the instance, known sys_id | `Now.ref('table', 'sys_id')` |
+| Record on the instance, known unique fields | `Now.ref('table', { field: 'value' })` |
+| Record in same project, different file | `Now.ID['key-name']` or `Now.ref('table', 'key-name')` |
+
+
+---
+
 # Function: Acl(config)
 
 Creates an Access Control List (ACL) record that secure parts of an application (`sys_security_acl`).
@@ -5127,29 +5838,29 @@ Create a record in a custom application table that extends sys_metadata.
  * @description Create a record in a custom application table that extends sys_metadata.
  * This table has 3 fields (string_field: string, datetime_field: datetime, integer_field: integer) in addition to the fields inherited from sys_metadata.
  */
-import { Record } from "@servicenow/sdk/core";
+import { Record } from '@servicenow/sdk/core'
 
 Record({
-  table: "x_helloworld_tableone",
-  $id: Now.ID["x_helloworld_tableone_record1"],
-  data: {
-    string_field: "Hello World 1",
-    datetime_field: "01-01-2024 12:00:00",
-    integer_field: 1,
-  },
-});
+    table: 'x_helloworld_tableone',
+    $id: Now.ID['x_helloworld_tableone_record1'],
+    data: {
+        string_field: 'Hello World 1',
+        datetime_field: '01-01-2024 12:00:00',
+        integer_field: 1,
+    },
+})
 
 ```
 
 ### Record example for populating demo data
 
-For defining demo data in your application, some APIs expose the `$meta: { installMethod }` property 
+For defining demo data in your application, some APIs expose the `$meta: { installMethod }` property
 
 ```typescript
 /**
  * @title Record example for populating demo data
- * @description For defining demo data in your application, some APIs expose the `$meta: { installMethod }` property 
- * which allows you to specify a record that should be created during installation of your application. 
+ * @description For defining demo data in your application, some APIs expose the `$meta: { installMethod }` property
+ * which allows you to specify a record that should be created during installation of your application.
  * This example shows how to use the `Record` function to create a record in the `incident` table, and
  * install the record when the "Load demo data" option is selected during installation
  */
@@ -5168,8 +5879,8 @@ Record({
         notify: 1,
         priority: 3,
         $meta: {
-            installMethod: 'demo'
-        }
+            installMethod: 'demo',
+        },
     },
 })
 
@@ -5177,30 +5888,27 @@ Record({
 
 ### Adds a Record to an Out-of-Box Table (`user_criteria`)
 
-Create a record in the `user_criteria` table, which is an out-of-box table in ServiceNow.
+Create a record in the `user_criteria` table, which is an out-of-box table in ServiceNow that extends `sys_metadata`.
 
 ```typescript
 /**
  * @title Adds a Record to an Out-of-Box Table (`user_criteria`)
- * @description Create a record in the `user_criteria` table, which is an out-of-box table in ServiceNow.
+ * @description Create a record in the `user_criteria` table, which is an out-of-box table in ServiceNow that extends `sys_metadata`.
  */
-import { Record } from "@servicenow/sdk/core";
+import { Record } from '@servicenow/sdk/core'
 
 Record({
-  table: "user_criteria",
-  $id: Now.ID["user_criteria_example_1"],
-  data: {
-    name: "All ACME Corporation employees",
-    short_description: "Criteria for all ACME Corporation employees",
-    active: true,
-    advanced: false,
-    match_all: false,
-    company: [
-      "e7c1f3d53790200044e0bfc8bcbe5deb",
-      "227cdfb03710200044e0bfc8bcbe5d6b",
-    ],
-  },
-});
+    table: 'user_criteria',
+    $id: Now.ID['user_criteria_example_1'],
+    data: {
+        name: 'All ACME Corporation employees',
+        short_description: 'Criteria for all ACME Corporation employees',
+        active: true,
+        advanced: false,
+        match_all: false,
+        company: ['e7c1f3d53790200044e0bfc8bcbe5deb', '227cdfb03710200044e0bfc8bcbe5d6b'],
+    },
+})
 
 ```
 
@@ -18990,4 +19698,324 @@ export const WorkspaceWithListConfigExample = Workspace({
 })
 
 ```
+
+
+---
+
+# now.config.json
+
+ServiceNow SDK configuration schema.
+
+## Required Properties
+
+### `scope`
+
+Scope of the application (example: 'x_myapp' or 'sn_myapp')
+
+- **Type:** `string`
+- **Pattern:** `^((x|sn)_[a-z0-9_]+|global)$`
+- **Min length:** 4
+- **Max length:** 18
+
+### `scopeId`
+
+Scope ID of the application (example: 'fc1b5713c3db3110d6489a038a40dd85')
+
+- **Type:** `string`
+- **Pattern:** `^([0-9a-f]{32}|global$)`
+- **Max length:** 32
+
+## Properties
+
+### `active`
+
+Is the application active
+
+- **Type:** `boolean`
+
+### `appOutputDir`
+
+Location to output built application for packaging during fluent build command
+
+- **Type:** `string`
+- **Default:** `"dist/app"`
+
+### `applicationRuntimePolicy`
+
+Application Runtime Policy mode. Set to 'tracking' or 'enforcing' to enable policy records. Defaults to 'none' if not specified.
+
+- **Type:** `"none"` | `"tracking"` | `"enforcing"`
+
+### `clientDir`
+
+Directory containing client files of the application, such as HTML and TypeScript files. Set to empty to disable the client build.
+
+- **Type:** `string`
+- **Default:** `"src/client"`
+
+### `description`
+
+Description of the application
+
+- **Type:** `string`
+
+### `fluentDir`
+
+Directory containing .now.ts fluent files of the application
+
+- **Type:** `string`
+- **Default:** `"src/fluent"`
+- **Min length:** 1
+
+### `generatedDir`
+
+Directory relative to 'fluentDir' where Fluent will generate files, such as keys.ts
+
+- **Type:** `string`
+- **Default:** `"generated"`
+- **Min length:** 1
+
+### `guidedSetupGuid`
+
+SysID of the Guided Setup to start when the application is upgraded
+
+- **Type:** `string`
+- **Pattern:** `^[0-9a-f]{32}$`
+
+### `ignoreTransformTableList`
+
+List of tables to ignore when transforming entities to ServiceNow tables
+
+- **Type:** `string`[]
+
+### `installedAsDependency`
+
+App was installed as a dependency
+
+- **Type:** `boolean`
+- **Default:** `false`
+
+### `jsLevel`
+
+JavaScript level for the application
+
+- **Type:** `"es_latest"` | `"helsinki_es5"` | `"traditional"`
+- **Default:** `"es_latest"`
+
+### `logo`
+
+SysID of the app logo
+
+- **Type:** `string`
+- **Pattern:** `^[0-9a-f]{32}$`
+
+### `menu`
+
+SysID of the application's primary menu for default table modules
+
+- **Type:** `string`
+- **Pattern:** `^[0-9a-f]{32}$`
+
+### `metadataDir`
+
+Directory containing metadata xml for the app
+
+- **Type:** `string`
+- **Default:** `"metadata"`
+
+### `name`
+
+Name of the application (example: 'MyApp')
+
+- **Type:** `string`
+- **Min length:** 3
+- **Max length:** 100
+
+### `networkPolicies`
+
+Network access policies for the application (sys_arp_network_policy)
+
+- **Type:** `object`[]
+
+### `npmUpdateCheck`
+
+- **Type:** `number` | `boolean`
+- **Default:** `10`
+
+### `packOutputDir`
+
+Location to output the zip file during build process, to be later installed on the instance during install command
+
+- **Type:** `string`
+- **Default:** `"target"`
+
+### `packageResolverVersion`
+
+Rhino module resolver version. Must be 2.0.0+ for Global apps
+
+- **Type:** `"1.0.0"` | `"2.0.0"`
+- **Default:** `"1.0.0"`
+
+### `serverModulesDir`
+
+Directory containing modular files to be built into sys_modules
+
+- **Type:** `string`
+- **Default:** `"src/server"`
+
+### `serverModulesExcludePatterns`
+
+Patterns to exclude when building server modules
+
+- **Type:** `string`[]
+- **Default:** `["**/*.test.ts","**/*.test.js","**/*.d.ts"]`
+
+### `serverModulesIncludePatterns`
+
+Patterns to include when building server modules
+
+- **Type:** `string`[]
+- **Default:** `["**/*.ts","**/*.tsx","**/*.js","**/*.jsx","**/*.cts","**/*.cjs","**/*.mts","**/*.mjs","**/*.json"]`
+
+### `staticContentDir`
+
+Directory containing static asset files of the application
+
+- **Type:** `string`
+- **Default:** `"dist/static"`
+- **Min length:** 1
+
+### `tableDefaultLanguage`
+
+BCP 47 language tag for table/column documentation defaults. Used to resolve labels from multi-language documentation arrays (e.g., 'en', 'es', 'fr', 'en-US', 'zh-Hans').
+
+- **Type:** `string`
+- **Default:** `"en"`
+- **Pattern:** `^[a-z]{2,3}(-[a-zA-Z0-9]{2,8})*$`
+- **Min length:** 2
+
+### `tableOutputFormat`
+
+Artifact type built for table definitions. Traditional bootstrap or separate component records.
+
+- **Type:** `"bootstrap"` | `"component"`
+- **Default:** `"bootstrap"`
+
+### `trustedModules`
+
+List of npm module patterns to mark as trusted. Trusted modules will have external_source set to false. Valid patterns: fully qualified package names (e.g., 'lodash', '@servicenow/sdk') or organization prefixes with wildcard (e.g., '@servicenow/*'). Blanket wildcards like '*' are not allowed.
+
+- **Type:** `string`[]
+- **Default:** `[]`
+
+### `tsconfigPath`
+
+Path to tsconfig file to be used for transpilation of server module typescript. ServiceNow SDK will emit build errors following the referenced tsconfig. (example: './src/server/tsconfig.json')
+
+- **Type:** `string`
+
+### `type`
+
+Whether this project represents a scoped/global app package or a set of a record changes
+
+- **Type:** `"package"` | `"configuration"`
+- **Default:** `"package"`
+
+## `accessControls`
+
+Manage scoping restrictions and access to the application
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `canEditInStudio` | `boolean` | `true` | Can the application be opened in developer studio |
+| `hideOnUI` | `boolean` | `false` | Application hidden in UI |
+| `private` | `boolean` | `false` | Mark the application as private |
+| `restrictTableAccess` | `boolean` | `false` | Restrict design time access to tables from outside the application |
+| `runtimeAccessTracking` | `"none"` \| `"permissive"` \| `"enforcing"` | `"permissive"` | Runtime access tracking for the application |
+| `scopedAdministration` | `boolean` | `false` | If true, System Admins will be prevented from accessing the application |
+| `trackable` | `boolean` | `true` | Mark the application as trackable |
+| `uninstallBlocked` | `boolean` | `false` | Uninstall blocked for the application |
+| `userRole` | `string` |  | Role required for end users to access the application and its tables |
+
+## `dependencies`
+
+Reference dependencies on other ServiceNow application tables and entities, organized by scope
+
+Keys match the pattern `^((x|sn)_[a-z0-9_]+|global)$`. Each entry can include:
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `roles` | `"*"` \| `string`[] |  | Role definitions from sys_user_role (list of role names or '*' for all) |
+| `tables` | `"*"` \| `string`[] |  | Table definitions from sys_db_object (list of table names or '*' for all) |
+
+Additional keys are also accepted.
+
+> **Deprecated sub-property:** `dependencies.applications` — DEPRECATED: Use flat scope structure instead. Move scopes directly under 'dependencies'.
+
+## `licensing`
+
+ If this application is licensable, set the subscription requirement and model.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `enforceLicense` | `"none"` \| `"log"` \| `"enforce"` | `"log"` | Subscription requirement for the application |
+| `licensable` | `boolean` | `true` | Mark package as licensable |
+| `licenseCategory` | `"none"` \| `"general"` \| `"beta"` | `"none"` | License category for the application |
+| `licenseModel` | `"none"` \| `"fulfiller"` \| `"producer"` \| `"capacity"` \| `"mixed"` \| `"app_use"` | `"none"` | License model for the application |
+| `subscriptionEntitlement` | `string` |  | SysID of the subscription entitlement for the application |
+
+## `modulePaths`
+
+Mapping between file glob patterns to resolve imported file paths to valid runtime paths. This is needed if your Fluent files are importing modules from a different location than the runtime modules. For example, if you have a custom TypeScript setup that transpiles modules from a 'src' directory to a 'dist' directory, you would need to specify that mapping here.
+
+Keys match the pattern `.*`. Values are `string`.
+
+## `performancePolicy`
+
+Performance (resource limit) configuration (sys_app_resource_limit_template). Only one per scope.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `$id` | `string` |  | Unique sys_id for the record |
+| `apiTransactionLimit` | `integer` | `30` | API Transaction Quota percentage (1-100) |
+| `eventHandlerLimit` | `integer` | `20` | Event Handler Quota percentage (1-100) |
+| `interactiveTransactionLimit` | `integer` | `30` | Interactive Transaction Quota percentage (1-100) |
+| `mode` | `"disabled"` \| `"logOnly"` \| `"enforced"` |  | Enforcement mode for quota thresholds. Auto-derived from applicationRuntimePolicy if not explicitly set: 'none'→disabled, 'tracking'→logOnly, 'enforcing'→enforced |
+| `name` | `string` |  | Configuration name |
+| `scheduledJobLimit` | `integer` | `20` | Scheduled Job Quota percentage (1-100) |
+
+## `scripts`
+
+Define scripts that are executed with the SDK task runner. The task functions are async and are passed APIs for cross-environment compatibility. Use prebuild to run a script before the build process for custom build tasks.
+
+Keys match the pattern `.*`. Values are `string`.
+
+## `staticContentPaths`
+
+Mapping of source files to static output paths.
+
+Keys match the pattern `.*`. Values are `string`.
+
+## `taxonomy`
+
+Configuration for taxonomy-based file organization
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `fallbackFolderName` | `string` |  | Folder name to use when a table doesn't have a mapping (lowercase, no spaces or special chars) |
+| `mapping` | `object` |  | Maps table names to their folder path for organization. Resulting files will be placed in '{generatedDir}/{path}' |
+
+## `wildcardPolicy`
+
+Wildcard/exemption policy for the application (sys_arp_segment_policy). Only one per scope.
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `$id` | `string` |  | Unique sys_id for the record |
+| `active` | `boolean` | `false` | Whether the policy is active |
+| `arl` | `object` |  | ARL (Application Resource Limit) pillar configuration |
+| `network` | `object` |  | Network pillar configuration |
+| `record` | `boolean` | `false` | Enable Record pillar access |
+| `scripting` | `object` |  | Scripting pillar configuration |
+| `shortDescription` | `string` |  | Human-readable description of the policy |
 

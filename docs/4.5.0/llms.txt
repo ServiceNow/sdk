@@ -2,6 +2,18 @@
 
 > TypeScript SDK for developing ServiceNow applications in source code using ServiceNow Fluent — a domain-specific language for creating application metadata as code. Import functions from `@servicenow/sdk/core` to define platform records (ACLs, Business Rules, etc.) that are deployed to ServiceNow instances.
 
+## Overview
+
+- [intro](https://code.devsnc.com/pages/dev/fluent/4.5.0/intro?embed=true): The ServiceNow SDK lets you develop applications in source code using **ServiceNow Fluent** — a domain-specific language for creating application metadata as code.
+
+## Guides
+
+- [data-helpers](https://code.devsnc.com/pages/dev/fluent/4.5.0/guides/data-helpers?embed=true): Fluent provides global helper functions for creating typed values in `Record()` data fields. These functions are available globally — no import needed.
+- [keys-file](https://code.devsnc.com/pages/dev/fluent/4.5.0/guides/keys-file?embed=true): Every Fluent project has an auto-generated `keys.ts` file that maps human-readable identifiers to ServiceNow sys_ids. It's the registry that makes `Now.ID['my-record']` work.
+- [now-attach](https://code.devsnc.com/pages/dev/fluent/4.5.0/guides/now-attach?embed=true): `Now.attach()` attaches an image file to a record at build time. It reads the file, compresses it, and creates the corresponding `sys_attachment` and `sys_attachment_doc` records in the XML output.
+- [now-include](https://code.devsnc.com/pages/dev/fluent/4.5.0/guides/now-include?embed=true): `Now.include()` populates a record field with the contents of a file at build time. It's the recommended way to manage scripts, HTML, and CSS in Fluent projects — keeping them as separate files with full IDE support (syntax highlighting, IntelliSense, linting) rather than embedding them as inline strings in `.now.ts` files.
+- [now-ref](https://code.devsnc.com/pages/dev/fluent/4.5.0/guides/now-ref?embed=true): `Now.ref()` creates a reference to a record in another table. Use it when a field needs to point to a record that isn't defined in the current file — for example, referencing a role, a flow, or any record identified by its sys_id or coalesce keys.
+
 ## API Reference
 
 - [acl](https://code.devsnc.com/pages/dev/fluent/4.5.0/api/acl?embed=true): Creates an Access Control List (ACL) record that secure parts of an application (`sys_security_acl`).
@@ -134,9 +146,7 @@
 - [ux-list-menu-config](https://code.devsnc.com/pages/dev/fluent/4.5.0/api/workspace/ux-list-menu-config?embed=true): ## Parameters
 - [workspace](https://code.devsnc.com/pages/dev/fluent/4.5.0/api/workspace/workspace?embed=true): Creates a workspace configuration
 
-## Resources
+## Configuration
 
-- [Full content](https://code.devsnc.com/pages/dev/fluent/4.5.0/llms-full.txt): Complete API reference in a single file
-- [NPM Package](https://www.npmjs.com/package/@servicenow/sdk): @servicenow/sdk
-- [Release Notes](https://github.com/servicenow/sdk/releases)
-- [SDK Examples](https://github.com/servicenow/sdk-examples)
+- [now-config](https://code.devsnc.com/pages/dev/fluent/4.5.0/config/now-config?embed=true): ServiceNow SDK configuration schema.
+
