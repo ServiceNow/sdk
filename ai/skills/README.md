@@ -2,7 +2,8 @@
 
 Skills for AI-powered Fluent (ServiceNow SDK) development.
 
-> **IMPORTANT:** These skills rely on features available only in version `4.6.0` or newer of the SDK.
+> [!IMPORTANT]
+> These skills rely on features available only in version `4.6.0` or newer of the SDK.
 
 ### Skills
 
