@@ -1,6 +1,6 @@
 ## fluent-skills
 
-Claude Code skills for AI-powered fluent (ServiceNow) development.
+Skills for AI-powered fluent (ServiceNow) development.
 
 ### Skills
 
@@ -13,31 +13,25 @@ Claude Code skills for AI-powered fluent (ServiceNow) development.
 
 1. Clone this repo:
    ```bash
-   git clone <repo-url>
+   git clone https://github.com/ServiceNow/sdk
    ```
 
-2. Open Claude Code and ask it to install the skills to your user-level `.claude` folder:
-   ```
-   Please install the skills from /path/to/fluent-skills into my user-level .claude folder
-   ```
-
-3. The skills will be available as slash commands (`/now-sdk-explain`, `/now-sdk-setup`) across all your projects.
+2. Install the contents of `sdk/ai/skills` into your AI tool of choice:
+    - **Claude Code**: [https://code.claude.com/docs/en/skills#where-skills-live](https://code.claude.com/docs/en/skills#where-skills-live)
+    - **OpenAI Codex**: [https://developers.openai.com/codex/skills#where-to-save-skills](https://developers.openai.com/codex/skills#where-to-save-skills)
 
 ### Usage
 
-Just ask Claude to make fluent changes directly — it will automatically use `now-sdk explain` to build context about fluent conventions, metadata types, and project structure before making edits. For example:
+Just ask your agent to perform ServiceNow SDK (Fluent) tasks changes directly — it will automatically use `now-sdk explain` to build context about fluent conventions, metadata types, and project structure before making edits.
 
+For example:
 ```
-Create a new fluent project for managing change requests
+Create a new Fluent project for managing change requests
 Add a Business Rule that prevents deletion of active incidents
 Add an ACL for the custom_table table
 ```
 
-You can also invoke the skills directly as slash commands if needed:
+Some AI tools like **Claude Code** allow invoking the skills directly as slash commands, if needed:
 
 - `/now-sdk-setup` — run this first if `now-sdk` commands fail (installs Node.js 20+, `@servicenow/sdk` v4.6.0+)
 - `/now-sdk-explain [topic]` — browse or search SDK documentation topics
-
-### Owners
-
-> ronald.chan
