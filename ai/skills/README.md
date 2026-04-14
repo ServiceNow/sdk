@@ -1,6 +1,8 @@
 ## fluent-skills
 
-Skills for AI-powered fluent (ServiceNow) development.
+Skills for AI-powered Fluent (ServiceNow SDK) development.
+
+> **IMPORTANT:** These skills rely on features available only in version `4.6.0` or newer of the SDK.
 
 ### Skills
 
@@ -22,7 +24,7 @@ Skills for AI-powered fluent (ServiceNow) development.
 
 ### Usage
 
-Just ask your agent to perform ServiceNow SDK (Fluent) tasks changes directly — it will automatically use `now-sdk explain` to build context about fluent conventions, metadata types, and project structure before making edits.
+Just ask your agent to perform Fluent tasks directly — it will automatically use `now-sdk explain` to build context about Fluent conventions, metadata types, and project structure before making edits.
 
 For example:
 ```
