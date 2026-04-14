@@ -30,5 +30,5 @@ The `kiro/` directory contains a Power with steering files for each skill.
 
 1. Open Kiro and navigate to the `Power` tab.
 2. Select `Add power from GitHub`.
-3. Enter this URL: `https://github.com/ServiceNow/sdk/ai/kiro`.
+3. Enter this URL: `https://github.com/ServiceNow/sdk/tree/master/ai/kiro`.
 4. Select the power from the list.
