@@ -1,0 +1,19 @@
+{
+  "name": "servicenow",
+  "owner": {
+    "name": "ronald.chan"
+  },
+  "metadata": {
+    "description": "Claude Code plugins for AI-powered ServiceNow development.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "fluent",
+      "description": "Create, edit, and deploy ServiceNow applications with the Fluent SDK effortlessly through Claude AI",
+      "version": "1.0.0",
+      "source": "./ai/skills"
+    }
+  ]
+}
+
