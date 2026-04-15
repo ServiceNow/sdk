@@ -1,0 +1,12 @@
+{
+  "name": "fluent",
+  "description": "Create, edit, and deploy ServiceNow applications with the Fluent SDK effortlessly through Cursor",
+  "version": "1.0.1",
+  "author": {
+    "name": "ServiceNow",
+    "url": "https://www.servicenow.com"
+  },
+  "homepage": "https://servicenow.github.io/sdk/",
+  "repository": "https://github.com/ServiceNow/sdk",
+  "keywords": ["servicenow", "fluent", "now-sdk", "platform"]
+}

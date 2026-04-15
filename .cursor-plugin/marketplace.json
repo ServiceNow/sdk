@@ -6,7 +6,7 @@
   "plugins": [
     {
       "name": "fluent",
-      "source": "./providers/claude/plugin/",
+      "source": "./providers/cursor/plugin/",
       "description": "ServiceNow Fluent SDK",
       "version": "1.0.1",
       "author": {

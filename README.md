@@ -2,21 +2,58 @@
 
 The ServiceNow IDE and ServiceNow SDK support developing applications in source code with ServiceNow Fluent, creating JavaScript modules, and using third-party libraries. ServiceNow Fluent is a domain-specific programming language for creating application metadata in code.
 
-This respository currently does not contain the source code for the SDK
+This repository currently does not contain the source code for the SDK.
 
-### Support, Questions, and Announcements
-Visit the [discussions](https://github.com/ServiceNow/sdk/discussions) section!
+## AI Skills
 
-Fluent API Documentation: https://servicenow.github.io/sdk/
+This repository contains agent skills for creating, editing, and deploying ServiceNow Fluent applications. These skills teach AI coding assistants how to use the `@servicenow/sdk` CLI to look up platform conventions, metadata types, and project structure before making changes.
 
-### Links
+> [!IMPORTANT]
+> These skills rely on features available only in version `4.6.0` or newer of the SDK.
 
-[NPM Package](https://www.npmjs.com/package/@servicenow/sdk)
+### Skills
 
-[Documentation](https://www.servicenow.com/docs/r/application-development/servicenow-sdk/servicenow-sdk-landing.html)
+| Skill | Description |
+|---|---|
+| **now-sdk-explain** | Fetches SDK documentation via `npx @servicenow/sdk explain`. Covers API types, metadata conventions, skills, and project structure. Automatically triggered when working in a Fluent app or when ServiceNow/Fluent topics are mentioned. |
+| **now-sdk-setup** | Configures the environment (Node.js 20+, `@servicenow/sdk` v4.6.0+) so that `now-sdk explain` works. Run this if `now-sdk-explain` fails with environment errors. |
 
-[Release Notes](https://github.com/servicenow/sdk/releases)
+## Setup by Tool
 
-[Community Forum](https://www.servicenow.com/community/servicenow-ide-sdk-and-fluent/bd-p/ide-sdk-fluent-forum)
+### Claude Code
 
-[SDK Examples](https://github.com/servicenow/sdk-examples)
+1. Start a Claude Code session.
+2. Add the marketplace and install the plugin:
+   ```
+   /plugin marketplace add servicenow/sdk
+   /plugin install fluent
+   /reload-plugins
+   ```
+
+### Cursor
+
+1. Open Cursor Settings (Cmd+Shift+J).
+2. Navigate to **Rules** > **Plugin Marketplaces**.
+3. Add the marketplace: `servicenow/sdk`
+4. Install the **fluent** plugin.
+
+Alternatively, loading the skills into Claude Code will also allow Cursor to use them.
+
+### Kiro
+
+The [`providers/kiro/`](providers/kiro/) directory contains a Power with steering files for each skill.
+
+1. Open Kiro and navigate to the `Power` tab.
+2. Select `Add power from GitHub`.
+3. Enter this URL: `https://github.com/ServiceNow/sdk/tree/master/providers/kiro`.
+4. Select the power from the list.
+
+## Links
+
+- [NPM Package](https://www.npmjs.com/package/@servicenow/sdk)
+- [Fluent API Documentation](https://servicenow.github.io/sdk/)
+- [Documentation](https://www.servicenow.com/docs/r/application-development/servicenow-sdk/servicenow-sdk-landing.html)
+- [Release Notes](https://github.com/servicenow/sdk/releases)
+- [Community Forum](https://www.servicenow.com/community/servicenow-ide-sdk-and-fluent/bd-p/ide-sdk-fluent-forum)
+- [SDK Examples](https://github.com/servicenow/sdk-examples)
+- [Discussions](https://github.com/ServiceNow/sdk/discussions)
