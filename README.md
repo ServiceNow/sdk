@@ -2,14 +2,14 @@
 
 The ServiceNow IDE and ServiceNow SDK support developing applications in source code with ServiceNow Fluent, creating JavaScript modules, and using third-party libraries. ServiceNow Fluent is a TypeScript-based domain-specific programming language for creating application metadata in code.
 
-## AI Skills
+# AI Skills
 
-This repository contains agent skills for creating, editing, and deploying ServiceNow Fluent applications. These skills teach AI coding assistants how to use the `@servicenow/sdk` CLI to look up platform conventions, metadata types, and project structure before making changes.
+This repository contains agent skills for creating, editing, and deploying ServiceNow Fluent applications. These skills teach AI coding assistants how to use the [`@servicenow/sdk`](https://www.npmjs.com/package/@servicenow/sdk) CLI to look up platform conventions, metadata types, and project structure before making changes.
 
 > [!IMPORTANT]
 > These skills rely on features available only in version `4.6.0` or newer of the SDK.
 
-### Skills
+## Skills
 
 | Skill | Description |
 |---|---|
