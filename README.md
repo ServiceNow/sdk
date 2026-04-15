@@ -1,8 +1,6 @@
 # ServiceNow SDK
 
-The ServiceNow IDE and ServiceNow SDK support developing applications in source code with ServiceNow Fluent, creating JavaScript modules, and using third-party libraries. ServiceNow Fluent is a domain-specific programming language for creating application metadata in code.
-
-This repository currently does not contain the source code for the SDK.
+The ServiceNow IDE and ServiceNow SDK support developing applications in source code with ServiceNow Fluent, creating JavaScript modules, and using third-party libraries. ServiceNow Fluent is a TypeScript-based domain-specific programming language for creating application metadata in code.
 
 ## AI Skills
 
