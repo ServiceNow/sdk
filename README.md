@@ -33,9 +33,9 @@ This repository contains agent skills for creating, editing, and deploying Servi
 ### Cursor
 
 1. Open Cursor Settings (Cmd+Shift+J).
-2. Navigate to **Rules** > **Plugin Marketplaces**.
-3. Add the marketplace: `servicenow/sdk`
-4. Install the **fluent** plugin.
+2. Navigate to **Plugins**.
+3. Paste in the link to the repo: `https://github.com/ServiceNow/sdk.git`
+4. Select `Add to Cursor` for the `fluent` plugin.
 
 Alternatively, loading the skills into Claude Code will also allow Cursor to use them.
 
