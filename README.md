@@ -28,6 +28,16 @@ This repository contains agent skills for creating, editing, and deploying Servi
    /reload-plugins
    ```
 
+### Codex
+
+1. Start a Codex session.
+2. Run the following two commands to directly install the skills:
+   ```
+   $skill-installer https://github.com/ServiceNow/sdk/tree/master/skills/now-sdk-setup
+   $skill-installer https://github.com/ServiceNow/sdk/tree/master/skills/now-sdk-explain
+   ```
+3. Restart Codex to load the skills.
+
 ### Cursor
 
 1. Open Cursor Settings (Cmd+Shift+J).
