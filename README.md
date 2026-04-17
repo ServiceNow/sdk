@@ -56,6 +56,17 @@ The [`providers/kiro/`](providers/kiro/) directory contains a Power with steerin
 3. Enter this URL: `https://github.com/ServiceNow/sdk/tree/master/providers/kiro`.
 4. Select the power from the list.
 
+### Windsurf and Other Agents
+Some agents may not have built in support to install skills from Github. However, you can manually install the skills by following these steps:
+
+1. Start a new session with your favorite AI coding tool.
+2. Prompt it to install the skills directly from GitHub:
+   ```
+   Please install these skills in my user level configuration from github: https://github.com/ServiceNow/sdk/tree/master/skills
+   ```
+3. The agent should be able to pull and load the skills from the configuration.
+4. You may need to restart the agent to load the skills.
+
 ## Links
 
 - [NPM Package](https://www.npmjs.com/package/@servicenow/sdk)
