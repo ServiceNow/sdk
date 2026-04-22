@@ -1,0 +1,1039 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-4.6.0 docs-doc-page docs-doc-id-guides/building-ai-agents-guide" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.9.2">
+<title data-rh="true">Building AI Agents Guide | ServiceNow SDK</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://servicenow.github.io/sdk/4.6.0/guides/building-ai-agents-guide"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="keywords" content="fluent, servicenow, sdk, api, reference, documentation"><meta data-rh="true" name="docusaurus_version" content="4.6.0"><meta data-rh="true" name="docusaurus_tag" content="docs-default-4.6.0"><meta data-rh="true" name="docsearch:version" content="4.6.0"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-4.6.0"><meta data-rh="true" property="og:title" content="Building AI Agents Guide | ServiceNow SDK"><meta data-rh="true" name="description" content="Build and configure ServiceNow AI Agents and AI Agentic Workflows using the Fluent SDK. AI Agents perform tasks with tools (CRUD, script, OOB, reference-based), while AI Agentic Workflows orchestrate multiple agents as a team. This guide covers end-to-end creation: authentication, tool configuration, instructions authoring, triggers, ACL deployment, and editing existing agents. Requires SDK 4.4.0 or higher."><meta data-rh="true" property="og:description" content="Build and configure ServiceNow AI Agents and AI Agentic Workflows using the Fluent SDK. AI Agents perform tasks with tools (CRUD, script, OOB, reference-based), while AI Agentic Workflows orchestrate multiple agents as a team. This guide covers end-to-end creation: authentication, tool configuration, instructions authoring, triggers, ACL deployment, and editing existing agents. Requires SDK 4.4.0 or higher."><link data-rh="true" rel="icon" href="/sdk/img/logo.png"><link data-rh="true" rel="canonical" href="https://servicenow.github.io/sdk/4.6.0/guides/building-ai-agents-guide"><link data-rh="true" rel="alternate" href="https://servicenow.github.io/sdk/4.6.0/guides/building-ai-agents-guide" hreflang="en"><link data-rh="true" rel="alternate" href="https://servicenow.github.io/sdk/4.6.0/guides/building-ai-agents-guide" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Guides","item":"https://servicenow.github.io/sdk/4.6.0/category/guides"},{"@type":"ListItem","position":2,"name":"Building AI Agents Guide","item":"https://servicenow.github.io/sdk/4.6.0/guides/building-ai-agents-guide"}]}</script><link rel="stylesheet" href="/sdk/assets/css/styles.2cb8ee13.css">
+<script src="/sdk/assets/js/runtime~main.88d7d254.js" defer="defer"></script>
+<script src="/sdk/assets/js/main.439ea9a2.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||"dark"),document.documentElement.setAttribute("data-theme-choice",t||"dark")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_kMH0" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/sdk/"><div class="navbar__logo"><img src="/sdk/img/logo.png" alt="ServiceNow SDK Logo" class="themedComponent_MLPj themedComponent--light_i1cx"><img src="/sdk/img/logo.png" alt="ServiceNow SDK Logo" class="themedComponent_MLPj themedComponent--dark_aJ6v"></div><b class="navbar__title text--truncate">ServiceNow SDK</b></a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><div class="navbar__item dropdown dropdown--hoverable dropdown--right"><a aria-current="page" class="navbar__link active" aria-haspopup="true" aria-expanded="false" role="button" href="/sdk/4.6.0/guides/building-ai-agents-guide">4.6.0</a><ul class="dropdown__menu"><li><a class="dropdown__link" href="/sdk/guides/building-ai-agents-guide">Latest (4.6.0)</a></li><li><a aria-current="page" class="dropdown__link dropdown__link--active" href="/sdk/4.6.0/guides/building-ai-agents-guide">4.6.0</a></li><li><a class="dropdown__link" href="/sdk/4.5.0">4.5.0</a></li></ul></div><a href="https://github.com/ServiceNow/sdk" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_cHRo"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_ShCj colorModeToggle_LDxI"><button class="clean-btn toggleButton_OTnK toggleButtonDisabled_ntyj" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_Y5m7 lightToggleIcon_yEjM"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_Y5m7 darkToggleIcon_HeV7"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_Y5m7 systemToggleIcon_ZBs5"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_Yqy7"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_7az8"><div class="docsWrapper_RH9T"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_rzEd" type="button"></button><div class="docRoot_tbyW"><aside class="theme-doc-sidebar-container docSidebarContainer_QVaV"><div class="sidebarViewport_nPYj"><div class="sidebar_ts_A"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_DRhj"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/sdk/4.6.0"><span title="ServiceNow SDK API Reference" class="linkLabel_xNzX">ServiceNow SDK API Reference</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_Xhuj menu__link menu__link--sublist" href="/sdk/4.6.0/category/configuration"><span title="Configuration" class="categoryLinkLabel_yxVI">Configuration</span></a><button aria-label="Collapse sidebar category &#x27;Configuration&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/config/now-config-reference"><span title="now.config.json" class="linkLabel_xNzX">now.config.json</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_Xhuj menu__link menu__link--sublist" href="/sdk/4.6.0/category/api-reference"><span title="API Reference" class="categoryLinkLabel_yxVI">API Reference</span></a><button aria-label="Collapse sidebar category &#x27;API Reference&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/acl-api"><span title="Acl" class="linkLabel_xNzX">Acl</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/aiagent-api"><span title="AiAgent" class="linkLabel_xNzX">AiAgent</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/aiagenticworkflow-api"><span title="AiAgenticWorkflow" class="linkLabel_xNzX">AiAgenticWorkflow</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/applicationmenu-api"><span title="ApplicationMenu" class="linkLabel_xNzX">ApplicationMenu</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/businessrule-api"><span title="BusinessRule" class="linkLabel_xNzX">BusinessRule</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/clientscript-api"><span title="ClientScript" class="linkLabel_xNzX">ClientScript</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/crossscopeprivilege-api"><span title="CrossScopePrivilege" class="linkLabel_xNzX">CrossScopePrivilege</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/emailnotification-api"><span title="EmailNotification" class="linkLabel_xNzX">EmailNotification</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_Xhuj menu__link menu__link--sublist" tabindex="0" href="/sdk/4.6.0/category/flow"><span title="Flow" class="categoryLinkLabel_yxVI">Flow</span></a><button aria-label="Expand sidebar category &#x27;Flow&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/form-api"><span title="Form" class="linkLabel_xNzX">Form</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/importset-api"><span title="ImportSet" class="linkLabel_xNzX">ImportSet</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/inboundemailaction-api"><span title="InboundEmailAction" class="linkLabel_xNzX">InboundEmailAction</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_Xhuj menu__link menu__link--sublist" tabindex="0" href="/sdk/4.6.0/category/instance-scan"><span title="Instance Scan" class="categoryLinkLabel_yxVI">Instance Scan</span></a><button aria-label="Expand sidebar category &#x27;Instance Scan&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/list-api"><span title="List" class="linkLabel_xNzX">List</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/nowassistskillconfig-api"><span title="NowAssistSkillConfig" class="linkLabel_xNzX">NowAssistSkillConfig</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/property-api"><span title="Property" class="linkLabel_xNzX">Property</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/record-api"><span title="Record" class="linkLabel_xNzX">Record</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/restapi-api"><span title="RestApi" class="linkLabel_xNzX">RestApi</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/role-api"><span title="Role" class="linkLabel_xNzX">Role</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/scheduledscript-api"><span title="ScheduledScript" class="linkLabel_xNzX">ScheduledScript</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/scriptaction-api"><span title="ScriptAction" class="linkLabel_xNzX">ScriptAction</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/scriptinclude-api"><span title="ScriptInclude" class="linkLabel_xNzX">ScriptInclude</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_Xhuj menu__link menu__link--sublist" tabindex="0" href="/sdk/4.6.0/category/service-catalog"><span title="Service Catalog" class="categoryLinkLabel_yxVI">Service Catalog</span></a><button aria-label="Expand sidebar category &#x27;Service Catalog&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_Xhuj menu__link menu__link--sublist" tabindex="0" href="/sdk/4.6.0/category/service-portal"><span title="Service Portal" class="categoryLinkLabel_yxVI">Service Portal</span></a><button aria-label="Expand sidebar category &#x27;Service Portal&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/sla-api"><span title="Sla" class="linkLabel_xNzX">Sla</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_Xhuj menu__link menu__link--sublist" tabindex="0" href="/sdk/4.6.0/category/table"><span title="Table" class="categoryLinkLabel_yxVI">Table</span></a><button aria-label="Expand sidebar category &#x27;Table&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/test-api"><span title="Test" class="linkLabel_xNzX">Test</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/uiaction-api"><span title="UiAction" class="linkLabel_xNzX">UiAction</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/uipage-api"><span title="UiPage" class="linkLabel_xNzX">UiPage</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/uipolicy-api"><span title="UiPolicy" class="linkLabel_xNzX">UiPolicy</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/userpreference-api"><span title="UserPreference" class="linkLabel_xNzX">UserPreference</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_Xhuj menu__link menu__link--sublist" tabindex="0" href="/sdk/4.6.0/category/workspace"><span title="Workspace" class="categoryLinkLabel_yxVI">Workspace</span></a><button aria-label="Expand sidebar category &#x27;Workspace&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_Xhuj menu__link menu__link--sublist menu__link--active" href="/sdk/4.6.0/category/guides"><span title="Guides" class="categoryLinkLabel_yxVI">Guides</span></a><button aria-label="Collapse sidebar category &#x27;Guides&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/data-helpers-guide"><span title="Data Helpers" class="linkLabel_xNzX">Data Helpers</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/now-include-guide"><span title="Now.include" class="linkLabel_xNzX">Now.include</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/now-attach-guide"><span title="Now.attach" class="linkLabel_xNzX">Now.attach</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/now-ref-guide"><span title="Now.ref" class="linkLabel_xNzX">Now.ref</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/keys-file-guide"><span title="Keys File" class="linkLabel_xNzX">Keys File</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/application-menu-guide"><span title="Application Menus" class="linkLabel_xNzX">Application Menus</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/atf-guide"><span title="Implementing Tests Guide" class="linkLabel_xNzX">Implementing Tests Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/sdk/4.6.0/guides/building-ai-agents-guide"><span title="Building AI Agents Guide" class="linkLabel_xNzX">Building AI Agents Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/business-rule-guide"><span title="Business Rules" class="linkLabel_xNzX">Business Rules</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/client-script-guide"><span title="Client Scripts" class="linkLabel_xNzX">Client Scripts</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/creating-workspaces-guide"><span title="Creating Workspaces Guide" class="linkLabel_xNzX">Creating Workspaces Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/cross-scope-privilege-guide"><span title="Cross-Scope Privileges" class="linkLabel_xNzX">Cross-Scope Privileges</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/developing-apps-guide"><span title="Developing ServiceNow Apps with the Now SDK" class="linkLabel_xNzX">Developing ServiceNow Apps with the Now SDK</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/email-notification-guide"><span title="Email Notification Guide" class="linkLabel_xNzX">Email Notification Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/external-services-guide"><span title="Configuring External Services Guide" class="linkLabel_xNzX">Configuring External Services Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/fluent-overview"><span title="ServiceNow Fluent Overview" class="linkLabel_xNzX">ServiceNow Fluent Overview</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/importing-data-guide"><span title="Importing Data" class="linkLabel_xNzX">Importing Data</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/instance-scan-guide"><span title="Instance Scan Guide" class="linkLabel_xNzX">Instance Scan Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/module-guide"><span title="JavaScript Modules" class="linkLabel_xNzX">JavaScript Modules</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/nowassist-skills-guide"><span title="Now Assist Skills Guide" class="linkLabel_xNzX">Now Assist Skills Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/platform-view-guide"><span title="Platform Views &amp; UI Layout Control" class="linkLabel_xNzX">Platform Views &amp; UI Layout Control</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/platform-view-lists-guide"><span title="Platform Views, Lists &amp; Relationships" class="linkLabel_xNzX">Platform Views, Lists &amp; Relationships</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/property-guide"><span title="System Properties" class="linkLabel_xNzX">System Properties</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/registering-events-guide"><span title="Registering Events Guide" class="linkLabel_xNzX">Registering Events Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/scheduled-script-guide"><span title="Scheduled Script Guide" class="linkLabel_xNzX">Scheduled Script Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/script-include-guide"><span title="Script Includes" class="linkLabel_xNzX">Script Includes</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/scripted-rest-api-guide"><span title="Scripted REST APIs" class="linkLabel_xNzX">Scripted REST APIs</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/security-guide"><span title="Implementing Security Guide" class="linkLabel_xNzX">Implementing Security Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/service-catalog-guide"><span title="Service Catalog" class="linkLabel_xNzX">Service Catalog</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/service-catalog-variables-guide"><span title="Service Catalog Variables" class="linkLabel_xNzX">Service Catalog Variables</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/service-portal-guide"><span title="Service Portal" class="linkLabel_xNzX">Service Portal</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/service-portal-reference-guide"><span title="Service Portal Extended Reference" class="linkLabel_xNzX">Service Portal Extended Reference</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/table-guide"><span title="Tables, Columns, and Relationships Guide" class="linkLabel_xNzX">Tables, Columns, and Relationships Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/ui-page-guide"><span title="UI Pages" class="linkLabel_xNzX">UI Pages</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/ui-page-patterns-guide"><span title="UI Page Patterns" class="linkLabel_xNzX">UI Page Patterns</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/ui-page-theming-guide"><span title="UI Page Theming" class="linkLabel_xNzX">UI Page Theming</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/wfa-custom-action-guide"><span title="Workflow Automation Custom Action Guide" class="linkLabel_xNzX">Workflow Automation Custom Action Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/wfa-flow-actions-guide"><span title="Workflow Automation Flow Actions Guide" class="linkLabel_xNzX">Workflow Automation Flow Actions Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/wfa-flow-guide"><span title="Workflow Automation Flow Guide" class="linkLabel_xNzX">Workflow Automation Flow Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/wfa-subflow-guide"><span title="Workflow Automation Subflow Guide" class="linkLabel_xNzX">Workflow Automation Subflow Guide</span></a></li></ul></li></ul></nav></div></div></aside><main class="docMainContainer_ewJd"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_wOuX"><div class="docItemContainer_emeC"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_nCEY" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/sdk/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_h8Qu"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/sdk/4.6.0/category/guides"><span>Guides</span></a></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">Building AI Agents Guide</span></li></ul></nav><span class="theme-doc-version-badge badge badge--secondary">Version: 4.6.0</span><div class="tocCollapsible_WKXj theme-doc-toc-mobile tocMobile_x5G0"><button type="button" class="clean-btn tocCollapsibleButton_Gmjs">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Building AI Agents Guide</h1></header>
+<p>Build and configure ServiceNow AI Agents and AI Agentic Workflows using the Fluent SDK. AI Agents perform tasks with tools (CRUD, script, OOB, reference-based), while AI Agentic Workflows orchestrate multiple agents as a team. This guide covers end-to-end creation: authentication, tool configuration, instructions authoring, triggers, ACL deployment, and editing existing agents. Requires SDK 4.4.0 or higher.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="when-to-use">When to Use<a href="#when-to-use" class="hash-link" aria-label="Direct link to When to Use" title="Direct link to When to Use" translate="no">​</a></h2>
+<ul>
+<li class="">Creating a new AI Agent in ServiceNow</li>
+<li class="">Creating AI Agentic Workflows that orchestrate multiple agents</li>
+<li class="">Modifying existing agents or agentic workflows (adding tools, changing auth, updating instructions)</li>
+<li class="">Configuring agent authentication and security (Dynamic User vs AI User)</li>
+<li class="">Selecting and configuring agent tools (CRUD, script, OOB tools)</li>
+<li class="">Setting up triggers for agents or agentic workflows</li>
+<li class="">Defining team members for agentic workflows</li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="workflow-vs-single-agent-decision-tree">Workflow vs Single Agent Decision Tree<a href="#workflow-vs-single-agent-decision-tree" class="hash-link" aria-label="Direct link to Workflow vs Single Agent Decision Tree" title="Direct link to Workflow vs Single Agent Decision Tree" translate="no">​</a></h2>
+<div class="language-text codeBlockContainer_vMYm theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_CbbD"><pre tabindex="0" class="prism-code language-text codeBlock_EV2w thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_nCEi"><span class="token-line" style="color:#F8F8F2"><span class="token plain">User Request</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    |</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">Does it involve multiple tasks? (AND, THEN, followed by)</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    | NO  -&gt; USE SINGLE AI AGENT</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    | YES</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        |</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    Do the tasks require DIFFERENT capability types?</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    (e.g., search + summarize, fetch from table A + update table B)</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        | NO  -&gt; USE SINGLE AI AGENT (multiple tools, one agent)</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        | YES -&gt; USE AI AGENTIC WORKFLOW</span><br></span></code></pre></div></div>
+<p><strong>Pattern Recognition:</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>User Says</th><th>Type</th><th>Why</th></tr></thead><tbody><tr><td>&quot;Fetch X AND do Y&quot; (different capabilities)</td><td>Workflow</td><td>Different capability types working together</td></tr><tr><td>&quot;Get data THEN process it&quot; (different agents)</td><td>Workflow</td><td>Sequential operations needing different specializations</td></tr><tr><td>&quot;Look up and update an incident&quot;</td><td>Single Agent</td><td>Same table, same capability type (CRUD), multiple tools</td></tr><tr><td>&quot;Search for incidents by priority&quot;</td><td>Single Agent</td><td>Single task</td></tr></tbody></table>
+<p><strong>Key distinction:</strong> Multiple <em>tools</em> on the same table or same capability type = single agent with multiple tools. Multiple <em>capability types</em> requiring different specializations = workflow with multiple agents.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="ai-agent-vs-ai-agentic-workflow">AI Agent vs AI Agentic Workflow<a href="#ai-agent-vs-ai-agentic-workflow" class="hash-link" aria-label="Direct link to AI Agent vs AI Agentic Workflow" title="Direct link to AI Agent vs AI Agentic Workflow" translate="no">​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Feature</th><th>AI Agent</th><th>AI Agentic Workflow</th></tr></thead><tbody><tr><td>Purpose</td><td>Single agent performing tasks</td><td>Multiple agents working as a team</td></tr><tr><td>Import</td><td><code>AiAgent</code> from <code>@servicenow/sdk/core</code></td><td><code>AiAgenticWorkflow</code> from <code>@servicenow/sdk/core</code></td></tr><tr><td>Configuration</td><td><code>tools</code> array</td><td><code>team: { $id, name, members: [...] }</code></td></tr><tr><td>Version array</td><td><code>versionDetails</code></td><td><code>versions</code></td></tr><tr><td>Record identity</td><td><code>$id</code> (explicit ID)</td><td><code>$id</code> (explicit ID)</td></tr><tr><td>Security</td><td><code>securityAcl</code> (mandatory, auto-generates ACL)</td><td><code>securityAcl</code> (mandatory, auto-generates ACL)</td></tr><tr><td>Run-as user</td><td><code>runAsUser</code></td><td><code>runAs</code></td></tr><tr><td>Execution mode</td><td><code>executionMode</code> on tools</td><td><code>executionMode</code> at workflow level (default: <code>&#x27;copilot&#x27;</code>)</td></tr><tr><td>Trigger channel</td><td><code>&#x27;nap&#x27;</code> / <code>&#x27;nap_and_va&#x27;</code> (agent-level <code>channel</code>)</td><td><code>&quot;Now Assist Panel&quot;</code> (trigger-level, mandatory)</td></tr><tr><td>Processing messages</td><td><code>processingMessage</code>, <code>postProcessingMessage</code></td><td>Not available</td></tr></tbody></table>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="security-acl-securityacl">Security ACL (<code>securityAcl</code>)<a href="#security-acl-securityacl" class="hash-link" aria-label="Direct link to security-acl-securityacl" title="Direct link to security-acl-securityacl" translate="no">​</a></h2>
+<p><code>securityAcl</code> is <strong>mandatory</strong> on both <code>AiAgent</code> and <code>AiAgenticWorkflow</code>. It controls <strong>who can invoke</strong> the agent/workflow and auto-generates the <code>sys_security_acl</code> and <code>sys_security_acl_role</code> records. It is a discriminated union on the <code>type</code> field — each variant also requires a <code>$id</code> to identify the generated ACL record.</p>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="access-types">Access Types<a href="#access-types" class="hash-link" aria-label="Direct link to Access Types" title="Direct link to Access Types" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th><code>type</code></th><th>Who can invoke</th><th>Extra fields</th></tr></thead><tbody><tr><td><code>&#x27;Any authenticated user&#x27;</code></td><td>Any logged-in user</td><td>None</td></tr><tr><td><code>&#x27;Specific role&#x27;</code></td><td>Only users with listed roles</td><td><code>roles: [...]</code> (required)</td></tr><tr><td><code>&#x27;Public&#x27;</code></td><td>Anyone, no auth required</td><td>None</td></tr></tbody></table>
+<div class="language-typescript codeBlockContainer_vMYm theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_CbbD"><pre tabindex="0" class="prism-code language-typescript codeBlock_EV2w thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_nCEi"><span class="token-line" style="color:#F8F8F2"><span class="token comment" style="color:rgb(98, 114, 164)">// Any authenticated user</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">securityAcl</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    $id</span><span class="token operator">:</span><span class="token plain"> </span><span class="token maybe-class-name">Now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token constant" style="color:rgb(189, 147, 249)">ID</span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;my_agent_acl&#x27;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    type</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;Any authenticated user&#x27;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token comment" style="color:rgb(98, 114, 164)">// Specific roles only</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">securityAcl</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    $id</span><span class="token operator">:</span><span class="token plain"> </span><span class="token maybe-class-name">Now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token constant" style="color:rgb(189, 147, 249)">ID</span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;my_agent_acl&#x27;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    type</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;Specific role&#x27;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    roles</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;282bf1fac6112285017366cb5f867469&#x27;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain">  </span><span class="token comment" style="color:rgb(98, 114, 164)">// itil role sys_id</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;b05926fa0a0a0aa7000130023e0bde98&#x27;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain">  </span><span class="token comment" style="color:rgb(98, 114, 164)">// user role sys_id</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><br></span></code></pre></div></div>
+<blockquote>
+<p><strong>Important distinction:</strong> <code>securityAcl</code> controls <em>who can invoke</em> the agent. <code>runAsUser</code> (agent) / <code>runAs</code> (workflow) and <code>dataAccess</code> are separate — they control <em>which user identity the agent runs under</em> when executing.</p>
+</blockquote>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="execution-identity-runasuser--dataaccess">Execution Identity (<code>runAsUser</code> / <code>dataAccess</code>)<a href="#execution-identity-runasuser--dataaccess" class="hash-link" aria-label="Direct link to execution-identity-runasuser--dataaccess" title="Direct link to execution-identity-runasuser--dataaccess" translate="no">​</a></h3>
+<p>Set <strong>either</strong> <code>runAsUser</code> (agent) or <code>dataAccess</code> — not both:</p>
+<ul>
+<li class=""><strong><code>runAsUser</code></strong> — agent always runs as the specified sys_user sys_id regardless of invoker</li>
+<li class=""><strong><code>dataAccess.roleList</code></strong> — agent runs as the invoking user, restricted to the listed roles. <strong>Required when <code>runAsUser</code> is not set.</strong> For workflows, use <code>dataAccess</code> when <code>runAs</code> is not set.</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="role-discovery">Role Discovery<a href="#role-discovery" class="hash-link" aria-label="Direct link to Role Discovery" title="Direct link to Role Discovery" translate="no">​</a></h3>
+<ol>
+<li class="">Identify target tables from the agent&#x27;s CRUD tools</li>
+<li class="">Query <code>sys_security_acl_role</code> for each table (encodedQuery: <code>sys_security_acl.nameLIKE&lt;table_name&gt;</code>)</li>
+<li class="">Add discovered role sys_ids to <code>securityAcl.roles</code> and/or <code>dataAccess.roleList</code></li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="common-role-sys_ids">Common Role sys_ids<a href="#common-role-sys_ids" class="hash-link" aria-label="Direct link to Common Role sys_ids" title="Direct link to Common Role sys_ids" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Role</th><th>sys_id</th></tr></thead><tbody><tr><td>admin</td><td><code>2831a114c611228501d4ea6c309d626d</code></td></tr><tr><td>itil</td><td><code>282bf1fac6112285017366cb5f867469</code></td></tr><tr><td>user</td><td><code>b05926fa0a0a0aa7000130023e0bde98</code></td></tr></tbody></table>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="tool-types-and-selection">Tool Types and Selection<a href="#tool-types-and-selection" class="hash-link" aria-label="Direct link to Tool Types and Selection" title="Direct link to Tool Types and Selection" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="selection-priority">Selection Priority<a href="#selection-priority" class="hash-link" aria-label="Direct link to Selection Priority" title="Direct link to Selection Priority" translate="no">​</a></h3>
+<ol>
+<li class=""><strong>OOB tools</strong> when available (e.g., Web Search, RAG, Knowledge Graph)</li>
+<li class=""><strong>Reference-based tools</strong> (action, subflow, capability, catalog, topic)</li>
+<li class=""><strong>CRUD tools</strong> for database operations</li>
+<li class=""><strong>Script tools</strong> only when no other tool type fits</li>
+</ol>
+<p>Never use CRUD tools for journal fields (<code>work_notes</code>, <code>comments</code>). Always use Script tools with <code>GlideRecordSecure</code>.</p>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="tool-selection-guide">Tool Selection Guide<a href="#tool-selection-guide" class="hash-link" aria-label="Direct link to Tool Selection Guide" title="Direct link to Tool Selection Guide" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Need</th><th>Tool Type</th><th>Why</th></tr></thead><tbody><tr><td>Read/search records</td><td>CRUD (<code>lookup</code>)</td><td>Direct table query</td></tr><tr><td>Create new records</td><td>CRUD (<code>create</code>)</td><td>Maps inputs to columns</td></tr><tr><td>Modify records</td><td>CRUD (<code>update</code>)</td><td>Query + field update</td></tr><tr><td>Custom logic</td><td>Script</td><td>Full JavaScript control</td></tr><tr><td>Web information</td><td>OOB (<code>web_automation</code>)</td><td>Auto-linked OOB tool</td></tr><tr><td>Knowledge retrieval</td><td>OOB (<code>rag</code>)</td><td>RAG Search Retrieval</td></tr><tr><td>Graph-based search</td><td>OOB (<code>knowledge_graph</code>)</td><td>Knowledge Graph tool</td></tr><tr><td>File ingestion</td><td>OOB (<code>file_upload</code>)</td><td>File Uploader tool</td></tr><tr><td>In-depth research</td><td>OOB (<code>deep_research</code>)</td><td>Deep Research tool</td></tr><tr><td>Desktop tasks</td><td>OOB (<code>desktop_automation</code>)</td><td>Desktop Automation tool</td></tr><tr><td>MCP integration</td><td>OOB (<code>mcp</code>)</td><td>MCP tool</td></tr><tr><td>Flow Designer action</td><td>Action (<code>action</code>)</td><td>Triggers existing flows</td></tr><tr><td>Now Assist skill</td><td>Capability (<code>capability</code>)</td><td>Links to skills</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="inputs-format-by-tool-type"><code>inputs</code> Format by Tool Type<a href="#inputs-format-by-tool-type" class="hash-link" aria-label="Direct link to inputs-format-by-tool-type" title="Direct link to inputs-format-by-tool-type" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Tool type</th><th><code>inputs</code> format</th><th>Has <code>script</code> field?</th></tr></thead><tbody><tr><td><code>crud</code></td><td><strong>Object</strong> (<code>ToolInputType</code>) with <code>operationName</code>, <code>table</code>, <code>inputFields</code>, etc.</td><td>No (auto-generated)</td></tr><tr><td><code>script</code></td><td><strong>Array</strong> of <code>[{ name, description, mandatory, value? }]</code></td><td>Yes</td></tr><tr><td><code>web_automation</code></td><td>Omit (plugin provides defaults)</td><td>No</td></tr><tr><td>Reference types</td><td>Omit (platform resolves at runtime)</td><td>No</td></tr><tr><td>Other OOB types</td><td>Omit (plugin provides defaults)</td><td>No</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="required-tool-properties">Required Tool Properties<a href="#required-tool-properties" class="hash-link" aria-label="Direct link to Required Tool Properties" title="Direct link to Required Tool Properties" translate="no">​</a></h3>
+<p>Every tool <strong>must</strong> have <code>name</code> and <code>type</code>. <code>preMessage</code> and <code>postMessage</code> are strongly recommended. Every agent <strong>must</strong> have <code>processingMessage</code> and <code>postProcessingMessage</code> (not available on workflows).</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="crud-tools">CRUD Tools<a href="#crud-tools" class="hash-link" aria-label="Direct link to CRUD Tools" title="Direct link to CRUD Tools" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="operations">Operations<a href="#operations" class="hash-link" aria-label="Direct link to Operations" title="Direct link to Operations" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Operation</th><th>Required Fields</th></tr></thead><tbody><tr><td><code>create</code></td><td><code>table</code>, <code>inputFields</code> with <code>mappedToColumn</code></td></tr><tr><td><code>lookup</code></td><td><code>table</code>, <code>queryCondition</code>, <code>returnFields</code> (mandatory)</td></tr><tr><td><code>update</code></td><td><code>table</code>, <code>queryCondition</code>, <code>inputFields</code> with <code>mappedToColumn</code></td></tr><tr><td><code>delete</code></td><td><code>table</code>, <code>queryCondition</code></td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="querycondition-syntax">queryCondition Syntax<a href="#querycondition-syntax" class="hash-link" aria-label="Direct link to queryCondition Syntax" title="Direct link to queryCondition Syntax" translate="no">​</a></h3>
+<p>Format: <code>&quot;column_name=={{input_field_name}}&quot;</code>. Always verify column names by querying <code>sys_dictionary</code> before writing tools.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Operator</th><th>Syntax</th><th>Example</th></tr></thead><tbody><tr><td>Equals</td><td><code>field=value</code></td><td><code>state=1</code></td></tr><tr><td>Not equals</td><td><code>field!=value</code></td><td><code>state!=7</code></td></tr><tr><td>Contains</td><td><code>fieldLIKEvalue</code></td><td><code>short_descriptionLIKEnetwork</code></td></tr><tr><td>Is empty</td><td><code>fieldISEMPTY</code></td><td><code>assigned_toISEMPTY</code></td></tr><tr><td>OR</td><td><code>^OR</code></td><td><code>priority=1^ORpriority=2</code></td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="lookup-best-practices">Lookup Best Practices<a href="#lookup-best-practices" class="hash-link" aria-label="Direct link to Lookup Best Practices" title="Direct link to Lookup Best Practices" translate="no">​</a></h3>
+<ul>
+<li class="">Use <code>LIKE</code> operator for text-based searches</li>
+<li class="">Use multiple keyword inputs with <code>OR</code> for natural language</li>
+<li class="">Prefer <code>number</code> over <code>sys_id</code> as primary filter: <code>number={{id}}^ORsys_id={{id}}</code></li>
+<li class="">For reference fields in <code>returnFields</code>, include <code>referenceConfig</code>: <code>{ table: &quot;sys_user&quot;, field: &quot;name&quot; }</code></li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="script-tools">Script Tools<a href="#script-tools" class="hash-link" aria-label="Direct link to Script Tools" title="Direct link to Script Tools" translate="no">​</a></h2>
+<p>All script inputs are <strong>strings</strong> at runtime. Parse with <code>parseInt()</code>, <code>JSON.parse()</code>, etc. The <code>inputs</code> field for script tools is a <strong>simple array</strong> of input field definitions (unlike CRUD tools which use an object).</p>
+<div class="language-javascript codeBlockContainer_vMYm theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_CbbD"><pre tabindex="0" class="prism-code language-javascript codeBlock_EV2w thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_nCEi"><span class="token-line" style="color:#F8F8F2"><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">function</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token parameter">inputs</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">var</span><span class="token plain"> impact </span><span class="token operator">=</span><span class="token plain"> </span><span class="token function" style="color:rgb(80, 250, 123)">parseInt</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token plain">inputs</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token property-access">impact</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token number">10</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">var</span><span class="token plain"> urgency </span><span class="token operator">=</span><span class="token plain"> </span><span class="token function" style="color:rgb(80, 250, 123)">parseInt</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token plain">inputs</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token property-access">urgency</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token number">10</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token comment" style="color:rgb(98, 114, 164)">// ... logic</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token keyword control-flow" style="color:rgb(189, 147, 249);font-style:italic">return</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"> </span><span class="token literal-property property">priority</span><span class="token operator">:</span><span class="token plain"> result</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token literal-property property">status</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;success&#x27;</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token plain">inputs</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><br></span></code></pre></div></div>
+<ul>
+<li class="">Always use <code>GlideRecordSecure</code> (not <code>GlideRecord</code>)</li>
+<li class="">Do NOT add CDATA tags (plugin handles automatically)</li>
+<li class=""><code>inputSchema</code> is auto-generated from <code>inputs</code> — do not specify it manually</li>
+<li class="">Use module imports for server-side script files (or <code>Now.include()</code> for legacy scripts)</li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="reference-based-tools">Reference-Based Tools<a href="#reference-based-tools" class="hash-link" aria-label="Direct link to Reference-Based Tools" title="Direct link to Reference-Based Tools" translate="no">​</a></h2>
+<p>Each requires a type-specific reference field containing the target record&#x27;s sys_id. Do NOT add <code>inputs</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Tool Type</th><th>Required Field</th><th>Target Table</th></tr></thead><tbody><tr><td><code>action</code></td><td><code>flowActionId</code></td><td><code>sys_hub_action_type_definition</code></td></tr><tr><td><code>capability</code></td><td><code>capabilityId</code></td><td><code>sn_nowassist_skill_config</code></td></tr><tr><td><code>subflow</code></td><td><code>subflowId</code></td><td><code>sys_hub_flow</code></td></tr><tr><td><code>catalog</code></td><td><code>catalogItemId</code></td><td><code>sc_cat_item</code></td></tr><tr><td><code>topic</code></td><td><code>virtualAgentId</code></td><td><code>sys_cs_topic</code></td></tr><tr><td><code>topic_block</code></td><td><code>virtualAgentId</code></td><td><code>sys_cs_topic</code></td></tr></tbody></table>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="oob-tools">OOB Tools<a href="#oob-tools" class="hash-link" aria-label="Direct link to OOB Tools" title="Direct link to OOB Tools" translate="no">​</a></h2>
+<p>OOB tools only require <code>type</code> and <code>name</code>. The plugin auto-links to the existing OOB tool record.</p>
+<div class="language-typescript codeBlockContainer_vMYm theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_CbbD"><pre tabindex="0" class="prism-code language-typescript codeBlock_EV2w thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_nCEi"><span class="token-line" style="color:#F8F8F2"><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    type</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;web_automation&#x27;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    name</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;AIA Web Search&#x27;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    preMessage</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;Searching the web...&#x27;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    postMessage</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;Web search results retrieved.&#x27;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><br></span></code></pre></div></div>
+<p>Other supported OOB types: <code>&#x27;rag&#x27;</code>, <code>&#x27;knowledge_graph&#x27;</code>, <code>&#x27;file_upload&#x27;</code>, <code>&#x27;deep_research&#x27;</code>, <code>&#x27;desktop_automation&#x27;</code>, <code>&#x27;mcp&#x27;</code>.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="instructions-authoring">Instructions Authoring<a href="#instructions-authoring" class="hash-link" aria-label="Direct link to Instructions Authoring" title="Direct link to Instructions Authoring" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="three-key-fields">Three Key Fields<a href="#three-key-fields" class="hash-link" aria-label="Direct link to Three Key Fields" title="Direct link to Three Key Fields" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Field</th><th>Purpose</th><th>Answers</th></tr></thead><tbody><tr><td><code>description</code></td><td>Scope</td><td>&quot;What problem does this agent solve?&quot;</td></tr><tr><td><code>agentRole</code></td><td>Identity (agents only)</td><td>&quot;Who am I?&quot;</td></tr><tr><td><code>instructions</code></td><td>Behavior</td><td>&quot;How should I act and use my tools?&quot;</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="writing-principles">Writing Principles<a href="#writing-principles" class="hash-link" aria-label="Direct link to Writing Principles" title="Direct link to Writing Principles" translate="no">​</a></h3>
+<ul>
+<li class=""><strong>Actionable steps</strong>: Every step must bind to a tool action or concrete output</li>
+<li class=""><strong>Explicit tool references</strong>: Name tools explicitly in instructions</li>
+<li class=""><strong>Contingencies</strong>: Handle failures with gates: <code>&quot;DO NOT PROCEED if details are missing&quot;</code></li>
+<li class=""><strong>Trigger context</strong>: Use &quot;from the task&quot; or &quot;from the context&quot; -- NOT &quot;from the triggering record&quot;</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="scaling-by-complexity">Scaling by Complexity<a href="#scaling-by-complexity" class="hash-link" aria-label="Direct link to Scaling by Complexity" title="Direct link to Scaling by Complexity" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Complexity</th><th>Tools/Agents</th><th>Instructions Length</th></tr></thead><tbody><tr><td>Simple</td><td>1-2 tools</td><td>5-10 lines</td></tr><tr><td>Moderate</td><td>3-4 tools</td><td>10-20 lines</td></tr><tr><td>Complex</td><td>5+ tools</td><td>20-30 lines</td></tr><tr><td>Workflow</td><td>2-10 agents</td><td>15-30 lines</td></tr></tbody></table>
+<p>If instructions exceed ~30 lines, split into multiple agents orchestrated by a workflow.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="trigger-configuration">Trigger Configuration<a href="#trigger-configuration" class="hash-link" aria-label="Direct link to Trigger Configuration" title="Direct link to Trigger Configuration" translate="no">​</a></h2>
+<p>Triggers are optional. Agents/workflows can operate without them via Now Assist Panel.</p>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="trigger-types">Trigger Types<a href="#trigger-types" class="hash-link" aria-label="Direct link to Trigger Types" title="Direct link to Trigger Types" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code>record_create</code></td><td>On new record creation</td></tr><tr><td><code>record_update</code></td><td>On record update</td></tr><tr><td><code>record_create_or_update</code></td><td>On both</td></tr><tr><td><code>email</code></td><td>On email receipt</td></tr><tr><td><code>scheduled</code></td><td>On a repeating interval</td></tr><tr><td><code>daily</code> / <code>weekly</code> / <code>monthly</code></td><td>Scheduled at specific times</td></tr><tr><td><code>ui_action</code> (workflows only)</td><td>From a UI action button</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="key-differences-agent-vs-workflow-triggers">Key Differences: Agent vs Workflow Triggers<a href="#key-differences-agent-vs-workflow-triggers" class="hash-link" aria-label="Direct link to Key Differences: Agent vs Workflow Triggers" title="Direct link to Key Differences: Agent vs Workflow Triggers" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Property</th><th>Agent trigger</th><th>Workflow trigger</th></tr></thead><tbody><tr><td><code>channel</code></td><td><code>&quot;nap&quot;</code> or <code>&quot;nap_and_va&quot;</code></td><td><code>&quot;Now Assist Panel&quot;</code> (mandatory)</td></tr><tr><td><code>triggerCondition</code></td><td>Optional</td><td>Mandatory for record-based</td></tr><tr><td><code>objectiveTemplate</code></td><td>Required (defaults to <code>&quot;&quot;</code>)</td><td>Optional</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="scheduled-trigger-fields">Scheduled Trigger Fields<a href="#scheduled-trigger-fields" class="hash-link" aria-label="Direct link to Scheduled Trigger Fields" title="Direct link to Scheduled Trigger Fields" translate="no">​</a></h3>
+<p>The <code>schedule</code> object is used when <code>triggerFlowDefinitionType</code> is <code>&#x27;scheduled&#x27;</code>, <code>&#x27;daily&#x27;</code>, <code>&#x27;weekly&#x27;</code>, or <code>&#x27;monthly&#x27;</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Type</th><th>Required Fields (inside <code>schedule</code> object)</th></tr></thead><tbody><tr><td><code>daily</code></td><td><code>schedule.time</code></td></tr><tr><td><code>weekly</code></td><td><code>schedule.runDayOfWeek</code> (1=Sun to 7=Sat), <code>schedule.time</code></td></tr><tr><td><code>monthly</code></td><td><code>schedule.runDayOfMonth</code> (1-31), <code>schedule.time</code></td></tr><tr><td><code>scheduled</code></td><td><code>schedule.repeatInterval</code> (e.g., <code>&#x27;1970-01-05 12:00:00&#x27;</code> = every 5 days)</td></tr></tbody></table>
+<p>Time format: <code>&quot;1970-01-01 HH:MM:SS&quot;</code>.</p>
+<p>The <code>schedule.triggerStrategy</code> field controls repeat behavior. Values differ by entity type:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Entity</th><th>Valid <code>triggerStrategy</code> values</th></tr></thead><tbody><tr><td>AI Agent</td><td><code>&#x27;every&#x27;</code>, <code>&#x27;once&#x27;</code>, <code>&#x27;unique_changes&#x27;</code>, <code>&#x27;always&#x27;</code></td></tr><tr><td>AI Agentic Workflow</td><td><code>&#x27;every&#x27;</code>, <code>&#x27;immediate&#x27;</code>, <code>&#x27;manual&#x27;</code>, <code>&#x27;once&#x27;</code>, <code>&#x27;repeat_every&#x27;</code>, <code>&#x27;unique_changes&#x27;</code></td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="run-as-configuration">Run-As Configuration<a href="#run-as-configuration" class="hash-link" aria-label="Direct link to Run-As Configuration" title="Direct link to Run-As Configuration" translate="no">​</a></h3>
+<p>For record-based triggers, use one of:</p>
+<ul>
+<li class=""><code>runAs: &quot;&lt;column_name&gt;&quot;</code> — column-based (the column on the target table that holds the user reference)</li>
+<li class=""><code>runAsUser: &quot;&lt;sys_id&gt;&quot;</code> — run as a specific user</li>
+<li class=""><code>runAsScript</code> — a script returning a user sys_id for dynamic resolution</li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="acl-deployment">ACL Deployment<a href="#acl-deployment" class="hash-link" aria-label="Direct link to ACL Deployment" title="Direct link to ACL Deployment" translate="no">​</a></h2>
+<p>Both AI Agents and AI Agentic Workflows use <code>securityAcl</code>. The plugin <strong>automatically generates</strong> <code>sys_security_acl</code> and <code>sys_security_acl_role</code> records — no manual two-step deployment is needed.</p>
+<p>The generated ACL name follows the format: <code>{domain}.{scope}.{name}</code></p>
+<div class="language-typescript codeBlockContainer_vMYm theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_CbbD"><pre tabindex="0" class="prism-code language-typescript codeBlock_EV2w thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_nCEi"><span class="token-line" style="color:#F8F8F2"><span class="token comment" style="color:rgb(98, 114, 164)">// Works the same for both AiAgent and AiAgenticWorkflow</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">securityAcl</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    $id</span><span class="token operator">:</span><span class="token plain"> </span><span class="token maybe-class-name">Now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token constant" style="color:rgb(189, 147, 249)">ID</span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;my_agent_acl&#x27;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    type</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;Specific role&#x27;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    roles</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;282bf1fac6112285017366cb5f867469&#x27;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain">  </span><span class="token comment" style="color:rgb(98, 114, 164)">// itil</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;b05926fa0a0a0aa7000130023e0bde98&#x27;</span><span class="token plain">   </span><span class="token comment" style="color:rgb(98, 114, 164)">// user</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><br></span></code></pre></div></div>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="workflow-configuration">Workflow Configuration<a href="#workflow-configuration" class="hash-link" aria-label="Direct link to Workflow Configuration" title="Direct link to Workflow Configuration" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="team-structure">Team Structure<a href="#team-structure" class="hash-link" aria-label="Direct link to Team Structure" title="Direct link to Team Structure" translate="no">​</a></h3>
+<p>Workflows use <code>$id</code> for record identity (just like agents). The <code>team</code> object also requires its own <code>$id</code>.</p>
+<div class="language-typescript codeBlockContainer_vMYm theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_CbbD"><pre tabindex="0" class="prism-code language-typescript codeBlock_EV2w thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_nCEi"><span class="token-line" style="color:#F8F8F2"><span class="token plain">team</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    $id</span><span class="token operator">:</span><span class="token plain"> </span><span class="token maybe-class-name">Now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token constant" style="color:rgb(189, 147, 249)">ID</span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token string" style="color:rgb(255, 121, 198)">&quot;workflow_team&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain">  </span><span class="token comment" style="color:rgb(98, 114, 164)">// MANDATORY on team</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    name</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;Workflow Team&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token comment" style="color:rgb(98, 114, 164)">// description is auto-populated from workflow.description — do not set it</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    members</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;62826bf03710200044e0bfc8bcbe5df1&quot;</span><span class="token plain">  </span><span class="token comment" style="color:rgb(98, 114, 164)">// Agent sys_id from sn_aia_agent table</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><br></span></code></pre></div></div>
+<p>Team members can also be specified using the <code>Record</code> API (recommended for portability across instances):</p>
+<div class="language-typescript codeBlockContainer_vMYm theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_CbbD"><pre tabindex="0" class="prism-code language-typescript codeBlock_EV2w thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_nCEi"><span class="token-line" style="color:#F8F8F2"><span class="token keyword module" style="color:rgb(189, 147, 249);font-style:italic">import</span><span class="token plain"> </span><span class="token imports punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token imports"> </span><span class="token imports maybe-class-name">AiAgenticWorkflow</span><span class="token imports punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token imports"> </span><span class="token imports maybe-class-name">Record</span><span class="token imports"> </span><span class="token imports punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"> </span><span class="token keyword module" style="color:rgb(189, 147, 249);font-style:italic">from</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;@servicenow/sdk/core&#x27;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">const</span><span class="token plain"> lookupAgent </span><span class="token operator">=</span><span class="token plain"> </span><span class="token function maybe-class-name" style="color:rgb(80, 250, 123)">Record</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"> table</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;sn_aia_agent&#x27;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> $id</span><span class="token operator">:</span><span class="token plain"> </span><span class="token maybe-class-name">Now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token constant" style="color:rgb(189, 147, 249)">ID</span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;lookup_agent&#x27;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> data</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"> name</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;Lookup Agent&#x27;</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">const</span><span class="token plain"> analysisAgent </span><span class="token operator">=</span><span class="token plain"> </span><span class="token function maybe-class-name" style="color:rgb(80, 250, 123)">Record</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"> table</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;sn_aia_agent&#x27;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> $id</span><span class="token operator">:</span><span class="token plain"> </span><span class="token maybe-class-name">Now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token constant" style="color:rgb(189, 147, 249)">ID</span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;analysis_agent&#x27;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> data</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"> name</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;Analysis Agent&#x27;</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token function maybe-class-name" style="color:rgb(80, 250, 123)">AiAgenticWorkflow</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token comment" style="color:rgb(98, 114, 164)">// ...</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    team</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        $id</span><span class="token operator">:</span><span class="token plain"> </span><span class="token maybe-class-name">Now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token constant" style="color:rgb(189, 147, 249)">ID</span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;my_team&#x27;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        name</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;My Team&#x27;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        members</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token plain">lookupAgent</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> analysisAgent</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><br></span></code></pre></div></div>
+<p>Agents <strong>must</strong> be deployed before creating workflows.</p>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="workflow-level-fields">Workflow-Level Fields<a href="#workflow-level-fields" class="hash-link" aria-label="Direct link to Workflow-Level Fields" title="Direct link to Workflow-Level Fields" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Field</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead><tbody><tr><td><code>executionMode</code></td><td><code>&#x27;copilot&#x27; | &#x27;autopilot&#x27;</code></td><td><code>&#x27;copilot&#x27;</code></td><td>Execution mode for the workflow</td></tr><tr><td><code>memoryScope</code></td><td><code>string</code></td><td><code>&#x27;global&#x27;</code></td><td>Memory scope for team members</td></tr><tr><td><code>active</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Omit if active (default)</td></tr><tr><td><code>sysDomain</code></td><td><code>string</code></td><td><code>&#x27;global&#x27;</code></td><td>Omit if global (default)</td></tr></tbody></table>
+<p>Only specify fields that differ from their defaults — the plugin suppresses default values in the transform output.</p>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="deployment-order">Deployment Order<a href="#deployment-order" class="hash-link" aria-label="Direct link to Deployment Order" title="Direct link to Deployment Order" translate="no">​</a></h3>
+<ol>
+<li class="">Create and deploy AI Agents (with <code>securityAcl</code>)</li>
+<li class="">Get agent sys_ids from <code>sn_aia_agent</code></li>
+<li class="">Create and deploy workflow with <code>securityAcl</code> and agent sys_ids</li>
+<li class="">Verify with <code>run_query</code> on <code>sn_aia_usecase</code></li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="contextprocessingscript">contextProcessingScript<a href="#contextprocessingscript" class="hash-link" aria-label="Direct link to contextProcessingScript" title="Direct link to contextProcessingScript" translate="no">​</a></h3>
+<p>Supports inline scripts or <code>Now.include()</code> for external files:</p>
+<div class="language-javascript codeBlockContainer_vMYm theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_CbbD"><pre tabindex="0" class="prism-code language-javascript codeBlock_EV2w thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_nCEi"><span class="token-line" style="color:#F8F8F2"><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">function</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token parameter">task</span><span class="token parameter punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token parameter"> user_utterance</span><span class="token parameter punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token parameter"> workflow_id</span><span class="token parameter punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token parameter"> context</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token keyword control-flow" style="color:rgb(189, 147, 249);font-style:italic">return</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token literal-property property">pageContext</span><span class="token operator">:</span><span class="token plain"> context</span><span class="token operator">?.</span><span class="token plain">pageContext</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token literal-property property">triggerContext</span><span class="token operator">:</span><span class="token plain"> context</span><span class="token operator">?.</span><span class="token plain">triggerContext</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token plain">task</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> user_utterance</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> workflow_id</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> context</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><br></span></code></pre></div></div>
+<div class="language-typescript codeBlockContainer_vMYm theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_CbbD"><pre tabindex="0" class="prism-code language-typescript codeBlock_EV2w thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_nCEi"><span class="token-line" style="color:#F8F8F2"><span class="token comment" style="color:rgb(98, 114, 164)">// Preferred: external file</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">contextProcessingScript</span><span class="token operator">:</span><span class="token plain"> </span><span class="token maybe-class-name">Now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token method function property-access" style="color:rgb(80, 250, 123)">include</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;./context-processing-script.js&#x27;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><br></span></code></pre></div></div>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="complete-ai-agent-example">Complete AI Agent Example<a href="#complete-ai-agent-example" class="hash-link" aria-label="Direct link to Complete AI Agent Example" title="Direct link to Complete AI Agent Example" translate="no">​</a></h2>
+<div class="language-typescript codeBlockContainer_vMYm theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_CbbD"><pre tabindex="0" class="prism-code language-typescript codeBlock_EV2w thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_nCEi"><span class="token-line" style="color:#F8F8F2"><span class="token keyword module" style="color:rgb(189, 147, 249);font-style:italic">import</span><span class="token plain"> </span><span class="token imports punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token imports"> </span><span class="token imports maybe-class-name">AiAgent</span><span class="token imports"> </span><span class="token imports punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"> </span><span class="token keyword module" style="color:rgb(189, 147, 249);font-style:italic">from</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;@servicenow/sdk/core&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token keyword module" style="color:rgb(189, 147, 249);font-style:italic">export</span><span class="token plain"> </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">const</span><span class="token plain"> incidentHelperAgent </span><span class="token operator">=</span><span class="token plain"> </span><span class="token function maybe-class-name" style="color:rgb(80, 250, 123)">AiAgent</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    $id</span><span class="token operator">:</span><span class="token plain"> </span><span class="token maybe-class-name">Now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token constant" style="color:rgb(189, 147, 249)">ID</span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token string" style="color:rgb(255, 121, 198)">&quot;incident_helper_agent&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    name</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;Incident Helper Agent&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    description</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;Retrieves incident details and searches for resolution guidance.&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    agentRole</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;You are an ITSM incident specialist.&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token comment" style="color:rgb(98, 114, 164)">// Security — auto-generates ACL records</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    securityAcl</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        $id</span><span class="token operator">:</span><span class="token plain"> </span><span class="token maybe-class-name">Now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token constant" style="color:rgb(189, 147, 249)">ID</span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;incident_helper_agent_acl&#x27;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        type</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;Specific role&#x27;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        roles</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">            </span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;282bf1fac6112285017366cb5f867469&#x27;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain">  </span><span class="token comment" style="color:rgb(98, 114, 164)">// itil</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">            </span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;b05926fa0a0a0aa7000130023e0bde98&#x27;</span><span class="token plain">   </span><span class="token comment" style="color:rgb(98, 114, 164)">// user</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    channel</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;nap_and_va&#x27;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    recordType</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;custom&#x27;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    processingMessage</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;Analyzing your incident request...&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    postProcessingMessage</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;Incident analysis complete.&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    versionDetails</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        name</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;V1&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token builtin" style="color:rgb(189, 147, 249)">number</span><span class="token operator">:</span><span class="token plain"> </span><span class="token number">1</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        state</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;published&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        instructions</span><span class="token operator">:</span><span class="token plain"> </span><span class="token template-string template-punctuation string" style="color:rgb(255, 121, 198)">`</span><span class="token template-string string" style="color:rgb(255, 121, 198)">Step 1: Extract the incident number from the user&#x27;s request.</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token template-string string" style="color:rgb(255, 121, 198)">Step 2: Use the Lookup Incident tool to fetch details.</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token template-string string" style="color:rgb(255, 121, 198)">Step 3: Present details in bullet-point format.</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token template-string string" style="color:rgb(255, 121, 198)">Step 4: Use AIA Web Search for resolution guidance.</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token template-string string" style="color:rgb(255, 121, 198)">Step 5: Recommend next steps. NEVER modify without user approval.</span><span class="token template-string template-punctuation string" style="color:rgb(255, 121, 198)">`</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    tools</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">            active</span><span class="token operator">:</span><span class="token plain"> </span><span class="token boolean">true</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">            name</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;Lookup Incident&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">            description</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;Searches for incidents by number&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">            executionMode</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;autopilot&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">            type</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;crud&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">            recordType</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;custom&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">            preMessage</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;Searching for the incident...&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">            postMessage</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;Incident details retrieved.&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">            inputs</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">                operationName</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;lookup&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">                table</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;incident&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">                inputFields</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">                    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"> name</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;incident_number&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> description</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;Incident number&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> mandatory</span><span class="token operator">:</span><span class="token plain"> </span><span class="token boolean">false</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">                </span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">                queryCondition</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;number={{incident_number}}&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">                returnFields</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">                    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"> name</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;number&quot;</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">                    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"> name</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;short_description&quot;</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">                    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"> name</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;state&quot;</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">                    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"> name</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;priority&quot;</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">                    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"> name</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;assigned_to&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> referenceConfig</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"> table</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;sys_user&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> field</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;name&quot;</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">                </span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">            </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">            type</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;web_automation&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">            name</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;AIA Web Search&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">            active</span><span class="token operator">:</span><span class="token plain"> </span><span class="token boolean">true</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">            preMessage</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;Searching the web...&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">            postMessage</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;Web search results retrieved.&quot;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    triggerConfig</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><br></span></code></pre></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="complete-workflow-example">Complete Workflow Example<a href="#complete-workflow-example" class="hash-link" aria-label="Direct link to Complete Workflow Example" title="Direct link to Complete Workflow Example" translate="no">​</a></h2>
+<div class="language-typescript codeBlockContainer_vMYm theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_CbbD"><pre tabindex="0" class="prism-code language-typescript codeBlock_EV2w thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_nCEi"><span class="token-line" style="color:#F8F8F2"><span class="token keyword module" style="color:rgb(189, 147, 249);font-style:italic">import</span><span class="token plain"> </span><span class="token imports punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token imports"> </span><span class="token imports maybe-class-name">AiAgenticWorkflow</span><span class="token imports"> </span><span class="token imports punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"> </span><span class="token keyword module" style="color:rgb(189, 147, 249);font-style:italic">from</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;@servicenow/sdk/core&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token keyword module" style="color:rgb(189, 147, 249);font-style:italic">export</span><span class="token plain"> </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">const</span><span class="token plain"> incidentAnalysisWorkflow </span><span class="token operator">=</span><span class="token plain"> </span><span class="token function maybe-class-name" style="color:rgb(80, 250, 123)">AiAgenticWorkflow</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    $id</span><span class="token operator">:</span><span class="token plain"> </span><span class="token maybe-class-name">Now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token constant" style="color:rgb(189, 147, 249)">ID</span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token string" style="color:rgb(255, 121, 198)">&quot;incident_analysis_workflow&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    name</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;Incident Analysis Workflow&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    description</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;Orchestrates two agents to retrieve and analyze incidents.&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    recordType</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;custom&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token comment" style="color:rgb(98, 114, 164)">// Security — auto-generates ACL records (mandatory)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    securityAcl</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        $id</span><span class="token operator">:</span><span class="token plain"> </span><span class="token maybe-class-name">Now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token constant" style="color:rgb(189, 147, 249)">ID</span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;incident_analysis_workflow_acl&#x27;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        type</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;Specific role&#x27;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        roles</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">            </span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;282bf1fac6112285017366cb5f867469&#x27;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain">  </span><span class="token comment" style="color:rgb(98, 114, 164)">// itil</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">            </span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;b05926fa0a0a0aa7000130023e0bde98&#x27;</span><span class="token plain">   </span><span class="token comment" style="color:rgb(98, 114, 164)">// user</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token comment" style="color:rgb(98, 114, 164)">// dataAccess required when runAs is omitted (dynamic user identity)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    dataAccess</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        roleList</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">            </span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;282bf1fac6112285017366cb5f867469&#x27;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">            </span><span class="token string" style="color:rgb(255, 121, 198)">&#x27;b05926fa0a0a0aa7000130023e0bde98&#x27;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    team</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        $id</span><span class="token operator">:</span><span class="token plain"> </span><span class="token maybe-class-name">Now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token constant" style="color:rgb(189, 147, 249)">ID</span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token string" style="color:rgb(255, 121, 198)">&quot;incident_analysis_team&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        name</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;Incident Analysis Team&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token comment" style="color:rgb(98, 114, 164)">// description is auto-populated from workflow description</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        members</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">            </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;62826bf03710200044e0bfc8bcbe5df1&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">            </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;274b465a7d5f42e581664209557b2b18&quot;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    versions</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        name</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;V1&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token builtin" style="color:rgb(189, 147, 249)">number</span><span class="token operator">:</span><span class="token plain"> </span><span class="token number">1</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        state</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;published&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        instructions</span><span class="token operator">:</span><span class="token plain"> </span><span class="token template-string template-punctuation string" style="color:rgb(255, 121, 198)">`</span><span class="token template-string string" style="color:rgb(255, 121, 198)">Step 1: Use the Incident Lookup Agent to fetch details.</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token template-string string" style="color:rgb(255, 121, 198)">Step 2: Use the Analysis Agent to examine patterns.</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token template-string string" style="color:rgb(255, 121, 198)">Step 3: Present findings. NEVER modify without user approval.</span><span class="token template-string template-punctuation string" style="color:rgb(255, 121, 198)">`</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    triggerConfig</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        name</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;high_priority_incident&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        channel</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;Now Assist Panel&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        targetTable</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;incident&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        triggerFlowDefinitionType</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;record_create&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        triggerCondition</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;priority&lt;=2&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        objectiveTemplate</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;Analyze high priority incident ${number}&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        showNotifications</span><span class="token operator">:</span><span class="token plain"> </span><span class="token boolean">true</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        runAsScript</span><span class="token operator">:</span><span class="token plain"> </span><span class="token template-string template-punctuation string" style="color:rgb(255, 121, 198)">`</span><span class="token template-string string" style="color:rgb(255, 121, 198)">(function(current) {</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token template-string string" style="color:rgb(255, 121, 198)">            return current.assigned_to || &quot;6816f79cc0a8016401c5a33be04be441&quot;;</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token template-string string" style="color:rgb(255, 121, 198)">        })(current);</span><span class="token template-string template-punctuation string" style="color:rgb(255, 121, 198)">`</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><br></span></code></pre></div></div>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="editing-existing-agentsworkflows">Editing Existing Agents/Workflows<a href="#editing-existing-agentsworkflows" class="hash-link" aria-label="Direct link to Editing Existing Agents/Workflows" title="Direct link to Editing Existing Agents/Workflows" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="safe-edit-workflow">Safe Edit Workflow<a href="#safe-edit-workflow" class="hash-link" aria-label="Direct link to Safe Edit Workflow" title="Direct link to Safe Edit Workflow" translate="no">​</a></h3>
+<ol>
+<li class="">Locate the <code>.now.ts</code> file</li>
+<li class="">Read the entire current configuration</li>
+<li class="">Identify scope of changes (see Change Impact Matrix)</li>
+<li class="">Apply only the requested changes</li>
+<li class="">Redeploy and verify with <code>run_query</code></li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="change-impact-matrix">Change Impact Matrix<a href="#change-impact-matrix" class="hash-link" aria-label="Direct link to Change Impact Matrix" title="Direct link to Change Impact Matrix" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Change</th><th>Also Update</th></tr></thead><tbody><tr><td>Add CRUD tool</td><td>Verify columns, update instructions, check executionMode</td></tr><tr><td>Remove tool</td><td>Remove instruction references, check dependencies</td></tr><tr><td>Change auth mode</td><td>Update <code>securityAcl.type</code>, add/remove <code>roles</code> as needed</td></tr><tr><td>Add trigger</td><td>Add to <code>triggerConfig</code>, verify target table</td></tr><tr><td>Add team member (workflow)</td><td>Deploy agent first, get sys_id, update instructions</td></tr><tr><td>Update instructions</td><td>Ensure all referenced tool/agent names still exist</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="rollback">Rollback<a href="#rollback" class="hash-link" aria-label="Direct link to Rollback" title="Direct link to Rollback" translate="no">​</a></h3>
+<p>Set current published version to <code>state: &quot;withdrawn&quot;</code>, set previous version to <code>state: &quot;published&quot;</code>, redeploy.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="validation-and-enums">Validation and Enums<a href="#validation-and-enums" class="hash-link" aria-label="Direct link to Validation and Enums" title="Direct link to Validation and Enums" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="required-fields">Required Fields<a href="#required-fields" class="hash-link" aria-label="Direct link to Required Fields" title="Direct link to Required Fields" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Entity</th><th>Mandatory Fields</th></tr></thead><tbody><tr><td>AI Agent</td><td><code>$id</code>, <code>name</code>, <code>description</code>, <code>agentRole</code>, <code>securityAcl</code></td></tr><tr><td>AI Agentic Workflow</td><td><code>$id</code>, <code>name</code>, <code>description</code>, <code>securityAcl</code>, <code>team.$id</code></td></tr><tr><td>CRUD tool</td><td><code>name</code>, <code>type</code>, <code>inputs.operationName</code>, <code>inputs.table</code>, <code>inputs.inputFields</code></td></tr><tr><td>Script tool</td><td><code>name</code>, <code>type</code>, <code>script</code></td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="valid-enums">Valid Enums<a href="#valid-enums" class="hash-link" aria-label="Direct link to Valid Enums" title="Direct link to Valid Enums" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Property</th><th>Valid Values</th></tr></thead><tbody><tr><td><code>recordType</code> (agent)</td><td><code>&quot;custom&quot;</code>, <code>&quot;template&quot;</code>, <code>&quot;aia_internal&quot;</code>, <code>&quot;promoted&quot;</code> (default: <code>&quot;template&quot;</code>)</td></tr><tr><td><code>recordType</code> (workflow)</td><td><code>&quot;custom&quot;</code>, <code>&quot;template&quot;</code>, <code>&quot;aia_internal&quot;</code> (default: <code>&quot;template&quot;</code>)</td></tr><tr><td><code>executionMode</code> (tool)</td><td><code>&quot;autopilot&quot;</code>, <code>&quot;copilot&quot;</code></td></tr><tr><td><code>executionMode</code> (workflow)</td><td><code>&quot;autopilot&quot;</code>, <code>&quot;copilot&quot;</code> (default: <code>&quot;copilot&quot;</code>)</td></tr><tr><td><code>state</code> (version)</td><td><code>&quot;draft&quot;</code>, <code>&quot;committed&quot;</code>, <code>&quot;published&quot;</code>, <code>&quot;withdrawn&quot;</code> (default: <code>&quot;draft&quot;</code>)</td></tr><tr><td><code>tool.type</code></td><td><code>&quot;script&quot;</code>, <code>&quot;crud&quot;</code>, <code>&quot;capability&quot;</code>, <code>&quot;subflow&quot;</code>, <code>&quot;action&quot;</code>, <code>&quot;catalog&quot;</code>, <code>&quot;topic&quot;</code>, <code>&quot;topic_block&quot;</code>, <code>&quot;web_automation&quot;</code>, <code>&quot;rag&quot;</code>, <code>&quot;knowledge_graph&quot;</code>, <code>&quot;file_upload&quot;</code>, <code>&quot;deep_research&quot;</code>, <code>&quot;desktop_automation&quot;</code>, <code>&quot;mcp&quot;</code></td></tr><tr><td><code>securityAcl.type</code></td><td><code>&#x27;Any authenticated user&#x27;</code>, <code>&#x27;Specific role&#x27;</code>, <code>&#x27;Public&#x27;</code></td></tr><tr><td><code>agentType</code></td><td><code>&quot;internal&quot;</code>, <code>&quot;external&quot;</code>, <code>&quot;voice&quot;</code>, <code>&quot;aia_internal&quot;</code></td></tr><tr><td><code>channel</code> (agent)</td><td><code>&quot;nap&quot;</code>, <code>&quot;nap_and_va&quot;</code> (default: <code>&quot;nap_and_va&quot;</code>)</td></tr><tr><td><code>schedule.triggerStrategy</code> (agent)</td><td><code>&quot;every&quot;</code>, <code>&quot;once&quot;</code>, <code>&quot;unique_changes&quot;</code>, <code>&quot;always&quot;</code></td></tr><tr><td><code>schedule.triggerStrategy</code> (workflow)</td><td><code>&quot;every&quot;</code>, <code>&quot;immediate&quot;</code>, <code>&quot;manual&quot;</code>, <code>&quot;once&quot;</code>, <code>&quot;repeat_every&quot;</code>, <code>&quot;unique_changes&quot;</code></td></tr><tr><td><code>outputTransformationStrategy</code></td><td><code>&quot;abstract_summary&quot;</code>, <code>&quot;custom&quot;</code>, <code>&quot;none&quot;</code>, <code>&quot;paraphrase&quot;</code>, <code>&quot;summary&quot;</code>, <code>&quot;summary_for_search_results&quot;</code></td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="common-hallucinations-to-avoid">Common Hallucinations to Avoid<a href="#common-hallucinations-to-avoid" class="hash-link" aria-label="Direct link to Common Hallucinations to Avoid" title="Direct link to Common Hallucinations to Avoid" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Wrong</th><th>Correct</th></tr></thead><tbody><tr><td><code>&quot;standard&quot;</code></td><td><code>&quot;custom&quot;</code> (recordType)</td></tr><tr><td><code>&quot;automatic&quot;</code></td><td><code>&quot;autopilot&quot;</code> (executionMode)</td></tr><tr><td><code>&quot;active&quot;</code></td><td><code>&quot;published&quot;</code> (state)</td></tr><tr><td><code>&quot;database&quot;</code></td><td><code>&quot;crud&quot;</code> (tool.type)</td></tr><tr><td><code>versions</code> (for agents)</td><td><code>versionDetails</code></td></tr><tr><td><code>versionDetails</code> (for workflows)</td><td><code>versions</code></td></tr><tr><td><code>runAs</code> (for agents)</td><td><code>runAsUser</code></td></tr><tr><td><code>&quot;nap&quot;</code> (for workflow triggers)</td><td><code>&quot;Now Assist Panel&quot;</code></td></tr><tr><td><code>acl: &quot;...&quot;</code> (for agents or workflows)</td><td><code>securityAcl: { $id, type, roles? }</code> (mandatory for both)</td></tr><tr><td>Missing <code>securityAcl</code> on workflows</td><td><code>securityAcl</code> is mandatory for workflows too, not just agents</td></tr><tr><td><code>securityAcl: { userAccess: &#x27;dynamic_user&#x27; }</code></td><td><code>securityAcl: { $id, type: &#x27;Any authenticated user&#x27; | &#x27;Specific role&#x27; | &#x27;Public&#x27; }</code></td></tr><tr><td>Missing <code>$id</code> at workflow top level</td><td>Workflows use <code>$id</code> just like agents — always include it</td></tr><tr><td><code>processingMessage</code> on workflows</td><td>Agent-only field — not valid on <code>AiAgenticWorkflow</code></td></tr><tr><td><code>postProcessingMessage</code> on workflows</td><td>Agent-only field — not valid on <code>AiAgenticWorkflow</code></td></tr><tr><td><code>team.description</code> set manually</td><td>Auto-populated from workflow <code>description</code> — do not set</td></tr><tr><td>Manual <code>inputSchema</code></td><td>Auto-generated from <code>inputs</code> — never set manually</td></tr><tr><td><code>inputs: {...}</code> for script tools</td><td><code>inputs: [...]</code> (array, not object) for script tools</td></tr><tr><td><code>dataAccess</code> omitted when <code>runAs</code> absent (workflow)</td><td><code>dataAccess</code> is mandatory for workflows when <code>runAs</code> is not set</td></tr></tbody></table>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="error-recovery">Error Recovery<a href="#error-recovery" class="hash-link" aria-label="Direct link to Error Recovery" title="Direct link to Error Recovery" translate="no">​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Error Pattern</th><th>Category</th><th>Resolution</th></tr></thead><tbody><tr><td><code>dataAccess.roleList is mandatory</code></td><td>Missing roles</td><td>Add <code>dataAccess.roleList</code> with role sys_ids (required when <code>runAsUser</code>/<code>runAs</code> is not set)</td></tr><tr><td><code>Table not found</code></td><td>Bad table name</td><td>Query <code>sys_db_object</code> to verify</td></tr><tr><td><code>Record not found</code> / <code>Invalid reference</code></td><td>Bad sys_id</td><td>Query appropriate table for correct sys_id</td></tr><tr><td><code>Duplicate name</code></td><td>Name collision</td><td>Query both <code>sn_aia_agent</code> and <code>sn_aia_usecase</code></td></tr><tr><td>ACL / permission error</td><td>ACL misconfiguration</td><td>Verify <code>securityAcl</code> is set correctly</td></tr></tbody></table>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="database-tables">Database Tables<a href="#database-tables" class="hash-link" aria-label="Direct link to Database Tables" title="Direct link to Database Tables" translate="no">​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Table</th><th>Purpose</th></tr></thead><tbody><tr><td><code>sn_aia_agent</code></td><td>AI Agent records</td></tr><tr><td><code>sn_aia_agent_config</code></td><td>Agent configuration and settings</td></tr><tr><td><code>sn_aia_usecase</code></td><td>AI Agentic Workflow records</td></tr><tr><td><code>sn_aia_usecase_config_override</code></td><td>Configuration overrides for workflows</td></tr><tr><td><code>sn_aia_team</code></td><td>Team configuration</td></tr><tr><td><code>sn_aia_team_member</code></td><td>Team member records</td></tr><tr><td><code>sn_aia_version</code></td><td>Version information</td></tr><tr><td><code>sn_aia_tool</code></td><td>Tool definitions</td></tr><tr><td><code>sn_aia_agent_tool_m2m</code></td><td>Agent-to-tool relationships</td></tr><tr><td><code>sn_aia_trigger_configuration</code></td><td>Trigger configuration</td></tr><tr><td><code>sn_aia_trigger_agent_usecase_m2m</code></td><td>Trigger-agent-usecase mappings</td></tr><tr><td><code>sys_agent_access_role_configuration</code></td><td>Role-based data access controls</td></tr><tr><td><code>sys_security_acl</code></td><td>ACL records (auto-generated by <code>securityAcl</code>)</td></tr><tr><td><code>sys_user_role</code></td><td>Role records</td></tr></tbody></table></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-tags-row"><div class="col"><b>Tags:</b><ul class="tags_JAWU padding--none margin-left--sm"><li class="tag_DE5p"><a rel="tag" class="tag_LwhQ tagRegular_fLVC" href="/sdk/4.6.0/tags/ai-agent">ai-agent</a></li><li class="tag_DE5p"><a rel="tag" class="tag_LwhQ tagRegular_fLVC" href="/sdk/4.6.0/tags/agentic-workflow">agentic-workflow</a></li><li class="tag_DE5p"><a rel="tag" class="tag_LwhQ tagRegular_fLVC" href="/sdk/4.6.0/tags/agent-studio">agent-studio</a></li><li class="tag_DE5p"><a rel="tag" class="tag_LwhQ tagRegular_fLVC" href="/sdk/4.6.0/tags/sn-aia-agent">sn_aia_agent</a></li><li class="tag_DE5p"><a rel="tag" class="tag_LwhQ tagRegular_fLVC" href="/sdk/4.6.0/tags/sn-aia-usecase">sn_aia_usecase</a></li><li class="tag_DE5p"><a rel="tag" class="tag_LwhQ tagRegular_fLVC" href="/sdk/4.6.0/tags/ai-automation">ai-automation</a></li><li class="tag_DE5p"><a rel="tag" class="tag_LwhQ tagRegular_fLVC" href="/sdk/4.6.0/tags/tools">tools</a></li><li class="tag_DE5p"><a rel="tag" class="tag_LwhQ tagRegular_fLVC" href="/sdk/4.6.0/tags/triggers">triggers</a></li><li class="tag_DE5p"><a rel="tag" class="tag_LwhQ tagRegular_fLVC" href="/sdk/4.6.0/tags/authentication">authentication</a></li></ul></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/sdk/4.6.0/guides/atf-guide"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Implementing Tests Guide</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/sdk/4.6.0/guides/business-rule-guide"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Business Rules</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_vU8W thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#when-to-use" class="table-of-contents__link toc-highlight">When to Use</a></li><li><a href="#workflow-vs-single-agent-decision-tree" class="table-of-contents__link toc-highlight">Workflow vs Single Agent Decision Tree</a></li><li><a href="#ai-agent-vs-ai-agentic-workflow" class="table-of-contents__link toc-highlight">AI Agent vs AI Agentic Workflow</a></li><li><a href="#security-acl-securityacl" class="table-of-contents__link toc-highlight">Security ACL (<code>securityAcl</code>)</a><ul><li><a href="#access-types" class="table-of-contents__link toc-highlight">Access Types</a></li><li><a href="#execution-identity-runasuser--dataaccess" class="table-of-contents__link toc-highlight">Execution Identity (<code>runAsUser</code> / <code>dataAccess</code>)</a></li><li><a href="#role-discovery" class="table-of-contents__link toc-highlight">Role Discovery</a></li><li><a href="#common-role-sys_ids" class="table-of-contents__link toc-highlight">Common Role sys_ids</a></li></ul></li><li><a href="#tool-types-and-selection" class="table-of-contents__link toc-highlight">Tool Types and Selection</a><ul><li><a href="#selection-priority" class="table-of-contents__link toc-highlight">Selection Priority</a></li><li><a href="#tool-selection-guide" class="table-of-contents__link toc-highlight">Tool Selection Guide</a></li><li><a href="#inputs-format-by-tool-type" class="table-of-contents__link toc-highlight"><code>inputs</code> Format by Tool Type</a></li><li><a href="#required-tool-properties" class="table-of-contents__link toc-highlight">Required Tool Properties</a></li></ul></li><li><a href="#crud-tools" class="table-of-contents__link toc-highlight">CRUD Tools</a><ul><li><a href="#operations" class="table-of-contents__link toc-highlight">Operations</a></li><li><a href="#querycondition-syntax" class="table-of-contents__link toc-highlight">queryCondition Syntax</a></li><li><a href="#lookup-best-practices" class="table-of-contents__link toc-highlight">Lookup Best Practices</a></li></ul></li><li><a href="#script-tools" class="table-of-contents__link toc-highlight">Script Tools</a></li><li><a href="#reference-based-tools" class="table-of-contents__link toc-highlight">Reference-Based Tools</a></li><li><a href="#oob-tools" class="table-of-contents__link toc-highlight">OOB Tools</a></li><li><a href="#instructions-authoring" class="table-of-contents__link toc-highlight">Instructions Authoring</a><ul><li><a href="#three-key-fields" class="table-of-contents__link toc-highlight">Three Key Fields</a></li><li><a href="#writing-principles" class="table-of-contents__link toc-highlight">Writing Principles</a></li><li><a href="#scaling-by-complexity" class="table-of-contents__link toc-highlight">Scaling by Complexity</a></li></ul></li><li><a href="#trigger-configuration" class="table-of-contents__link toc-highlight">Trigger Configuration</a><ul><li><a href="#trigger-types" class="table-of-contents__link toc-highlight">Trigger Types</a></li><li><a href="#key-differences-agent-vs-workflow-triggers" class="table-of-contents__link toc-highlight">Key Differences: Agent vs Workflow Triggers</a></li><li><a href="#scheduled-trigger-fields" class="table-of-contents__link toc-highlight">Scheduled Trigger Fields</a></li><li><a href="#run-as-configuration" class="table-of-contents__link toc-highlight">Run-As Configuration</a></li></ul></li><li><a href="#acl-deployment" class="table-of-contents__link toc-highlight">ACL Deployment</a></li><li><a href="#workflow-configuration" class="table-of-contents__link toc-highlight">Workflow Configuration</a><ul><li><a href="#team-structure" class="table-of-contents__link toc-highlight">Team Structure</a></li><li><a href="#workflow-level-fields" class="table-of-contents__link toc-highlight">Workflow-Level Fields</a></li><li><a href="#deployment-order" class="table-of-contents__link toc-highlight">Deployment Order</a></li><li><a href="#contextprocessingscript" class="table-of-contents__link toc-highlight">contextProcessingScript</a></li></ul></li><li><a href="#complete-ai-agent-example" class="table-of-contents__link toc-highlight">Complete AI Agent Example</a></li><li><a href="#complete-workflow-example" class="table-of-contents__link toc-highlight">Complete Workflow Example</a></li><li><a href="#editing-existing-agentsworkflows" class="table-of-contents__link toc-highlight">Editing Existing Agents/Workflows</a><ul><li><a href="#safe-edit-workflow" class="table-of-contents__link toc-highlight">Safe Edit Workflow</a></li><li><a href="#change-impact-matrix" class="table-of-contents__link toc-highlight">Change Impact Matrix</a></li><li><a href="#rollback" class="table-of-contents__link toc-highlight">Rollback</a></li></ul></li><li><a href="#validation-and-enums" class="table-of-contents__link toc-highlight">Validation and Enums</a><ul><li><a href="#required-fields" class="table-of-contents__link toc-highlight">Required Fields</a></li><li><a href="#valid-enums" class="table-of-contents__link toc-highlight">Valid Enums</a></li><li><a href="#common-hallucinations-to-avoid" class="table-of-contents__link toc-highlight">Common Hallucinations to Avoid</a></li></ul></li><li><a href="#error-recovery" class="table-of-contents__link toc-highlight">Error Recovery</a></li><li><a href="#database-tables" class="table-of-contents__link toc-highlight">Database Tables</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Resources</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://www.npmjs.com/package/@servicenow/sdk" target="_blank" rel="noopener noreferrer" class="footer__link-item">NPM Package<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_cHRo"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://github.com/servicenow/sdk-examples" target="_blank" rel="noopener noreferrer" class="footer__link-item">SDK Examples<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_cHRo"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://github.com/servicenow/sdk/releases" target="_blank" rel="noopener noreferrer" class="footer__link-item">Release Notes<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_cHRo"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Help &amp; Community</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/ServiceNow/sdk/discussions" target="_blank" rel="noopener noreferrer" class="footer__link-item">Discussions<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_cHRo"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2026 ServiceNow.</div></div></div></footer></div>
+</body>
+</html>

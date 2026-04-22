@@ -1,0 +1,841 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-4.6.0 docs-doc-page docs-doc-id-guides/service-portal-reference-guide" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.9.2">
+<title data-rh="true">Service Portal Extended Reference | ServiceNow SDK</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://servicenow.github.io/sdk/4.6.0/guides/service-portal-reference-guide"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="keywords" content="fluent, servicenow, sdk, api, reference, documentation"><meta data-rh="true" name="docusaurus_version" content="4.6.0"><meta data-rh="true" name="docusaurus_tag" content="docs-default-4.6.0"><meta data-rh="true" name="docsearch:version" content="4.6.0"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-4.6.0"><meta data-rh="true" property="og:title" content="Service Portal Extended Reference | ServiceNow SDK"><meta data-rh="true" name="description" content="Extended reference for ServiceNow Service Portal covering menus, angular providers, widget dependencies, headers/footers, CSS/theming, out-of-the-box widgets and pages, and troubleshooting."><meta data-rh="true" property="og:description" content="Extended reference for ServiceNow Service Portal covering menus, angular providers, widget dependencies, headers/footers, CSS/theming, out-of-the-box widgets and pages, and troubleshooting."><link data-rh="true" rel="icon" href="/sdk/img/logo.png"><link data-rh="true" rel="canonical" href="https://servicenow.github.io/sdk/4.6.0/guides/service-portal-reference-guide"><link data-rh="true" rel="alternate" href="https://servicenow.github.io/sdk/4.6.0/guides/service-portal-reference-guide" hreflang="en"><link data-rh="true" rel="alternate" href="https://servicenow.github.io/sdk/4.6.0/guides/service-portal-reference-guide" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Guides","item":"https://servicenow.github.io/sdk/4.6.0/category/guides"},{"@type":"ListItem","position":2,"name":"Service Portal Extended Reference","item":"https://servicenow.github.io/sdk/4.6.0/guides/service-portal-reference-guide"}]}</script><link rel="stylesheet" href="/sdk/assets/css/styles.2cb8ee13.css">
+<script src="/sdk/assets/js/runtime~main.88d7d254.js" defer="defer"></script>
+<script src="/sdk/assets/js/main.439ea9a2.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||"dark"),document.documentElement.setAttribute("data-theme-choice",t||"dark")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_kMH0" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/sdk/"><div class="navbar__logo"><img src="/sdk/img/logo.png" alt="ServiceNow SDK Logo" class="themedComponent_MLPj themedComponent--light_i1cx"><img src="/sdk/img/logo.png" alt="ServiceNow SDK Logo" class="themedComponent_MLPj themedComponent--dark_aJ6v"></div><b class="navbar__title text--truncate">ServiceNow SDK</b></a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><div class="navbar__item dropdown dropdown--hoverable dropdown--right"><a aria-current="page" class="navbar__link active" aria-haspopup="true" aria-expanded="false" role="button" href="/sdk/4.6.0/guides/service-portal-reference-guide">4.6.0</a><ul class="dropdown__menu"><li><a class="dropdown__link" href="/sdk/guides/service-portal-reference-guide">Latest (4.6.0)</a></li><li><a aria-current="page" class="dropdown__link dropdown__link--active" href="/sdk/4.6.0/guides/service-portal-reference-guide">4.6.0</a></li><li><a class="dropdown__link" href="/sdk/4.5.0">4.5.0</a></li></ul></div><a href="https://github.com/ServiceNow/sdk" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_cHRo"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_ShCj colorModeToggle_LDxI"><button class="clean-btn toggleButton_OTnK toggleButtonDisabled_ntyj" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_Y5m7 lightToggleIcon_yEjM"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_Y5m7 darkToggleIcon_HeV7"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_Y5m7 systemToggleIcon_ZBs5"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_Yqy7"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_7az8"><div class="docsWrapper_RH9T"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_rzEd" type="button"></button><div class="docRoot_tbyW"><aside class="theme-doc-sidebar-container docSidebarContainer_QVaV"><div class="sidebarViewport_nPYj"><div class="sidebar_ts_A"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_DRhj"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/sdk/4.6.0"><span title="ServiceNow SDK API Reference" class="linkLabel_xNzX">ServiceNow SDK API Reference</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_Xhuj menu__link menu__link--sublist" href="/sdk/4.6.0/category/configuration"><span title="Configuration" class="categoryLinkLabel_yxVI">Configuration</span></a><button aria-label="Collapse sidebar category &#x27;Configuration&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/config/now-config-reference"><span title="now.config.json" class="linkLabel_xNzX">now.config.json</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_Xhuj menu__link menu__link--sublist" href="/sdk/4.6.0/category/api-reference"><span title="API Reference" class="categoryLinkLabel_yxVI">API Reference</span></a><button aria-label="Collapse sidebar category &#x27;API Reference&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/acl-api"><span title="Acl" class="linkLabel_xNzX">Acl</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/aiagent-api"><span title="AiAgent" class="linkLabel_xNzX">AiAgent</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/aiagenticworkflow-api"><span title="AiAgenticWorkflow" class="linkLabel_xNzX">AiAgenticWorkflow</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/applicationmenu-api"><span title="ApplicationMenu" class="linkLabel_xNzX">ApplicationMenu</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/businessrule-api"><span title="BusinessRule" class="linkLabel_xNzX">BusinessRule</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/clientscript-api"><span title="ClientScript" class="linkLabel_xNzX">ClientScript</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/crossscopeprivilege-api"><span title="CrossScopePrivilege" class="linkLabel_xNzX">CrossScopePrivilege</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/emailnotification-api"><span title="EmailNotification" class="linkLabel_xNzX">EmailNotification</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_Xhuj menu__link menu__link--sublist" tabindex="0" href="/sdk/4.6.0/category/flow"><span title="Flow" class="categoryLinkLabel_yxVI">Flow</span></a><button aria-label="Expand sidebar category &#x27;Flow&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/form-api"><span title="Form" class="linkLabel_xNzX">Form</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/importset-api"><span title="ImportSet" class="linkLabel_xNzX">ImportSet</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/inboundemailaction-api"><span title="InboundEmailAction" class="linkLabel_xNzX">InboundEmailAction</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_Xhuj menu__link menu__link--sublist" tabindex="0" href="/sdk/4.6.0/category/instance-scan"><span title="Instance Scan" class="categoryLinkLabel_yxVI">Instance Scan</span></a><button aria-label="Expand sidebar category &#x27;Instance Scan&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/list-api"><span title="List" class="linkLabel_xNzX">List</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/nowassistskillconfig-api"><span title="NowAssistSkillConfig" class="linkLabel_xNzX">NowAssistSkillConfig</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/property-api"><span title="Property" class="linkLabel_xNzX">Property</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/record-api"><span title="Record" class="linkLabel_xNzX">Record</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/restapi-api"><span title="RestApi" class="linkLabel_xNzX">RestApi</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/role-api"><span title="Role" class="linkLabel_xNzX">Role</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/scheduledscript-api"><span title="ScheduledScript" class="linkLabel_xNzX">ScheduledScript</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/scriptaction-api"><span title="ScriptAction" class="linkLabel_xNzX">ScriptAction</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/scriptinclude-api"><span title="ScriptInclude" class="linkLabel_xNzX">ScriptInclude</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_Xhuj menu__link menu__link--sublist" tabindex="0" href="/sdk/4.6.0/category/service-catalog"><span title="Service Catalog" class="categoryLinkLabel_yxVI">Service Catalog</span></a><button aria-label="Expand sidebar category &#x27;Service Catalog&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_Xhuj menu__link menu__link--sublist" tabindex="0" href="/sdk/4.6.0/category/service-portal"><span title="Service Portal" class="categoryLinkLabel_yxVI">Service Portal</span></a><button aria-label="Expand sidebar category &#x27;Service Portal&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/sla-api"><span title="Sla" class="linkLabel_xNzX">Sla</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_Xhuj menu__link menu__link--sublist" tabindex="0" href="/sdk/4.6.0/category/table"><span title="Table" class="categoryLinkLabel_yxVI">Table</span></a><button aria-label="Expand sidebar category &#x27;Table&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/test-api"><span title="Test" class="linkLabel_xNzX">Test</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/uiaction-api"><span title="UiAction" class="linkLabel_xNzX">UiAction</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/uipage-api"><span title="UiPage" class="linkLabel_xNzX">UiPage</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/uipolicy-api"><span title="UiPolicy" class="linkLabel_xNzX">UiPolicy</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/api/userpreference-api"><span title="UserPreference" class="linkLabel_xNzX">UserPreference</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_Xhuj menu__link menu__link--sublist" tabindex="0" href="/sdk/4.6.0/category/workspace"><span title="Workspace" class="categoryLinkLabel_yxVI">Workspace</span></a><button aria-label="Expand sidebar category &#x27;Workspace&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_Xhuj menu__link menu__link--sublist menu__link--active" href="/sdk/4.6.0/category/guides"><span title="Guides" class="categoryLinkLabel_yxVI">Guides</span></a><button aria-label="Collapse sidebar category &#x27;Guides&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/data-helpers-guide"><span title="Data Helpers" class="linkLabel_xNzX">Data Helpers</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/now-include-guide"><span title="Now.include" class="linkLabel_xNzX">Now.include</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/now-attach-guide"><span title="Now.attach" class="linkLabel_xNzX">Now.attach</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/now-ref-guide"><span title="Now.ref" class="linkLabel_xNzX">Now.ref</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/keys-file-guide"><span title="Keys File" class="linkLabel_xNzX">Keys File</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/application-menu-guide"><span title="Application Menus" class="linkLabel_xNzX">Application Menus</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/atf-guide"><span title="Implementing Tests Guide" class="linkLabel_xNzX">Implementing Tests Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/building-ai-agents-guide"><span title="Building AI Agents Guide" class="linkLabel_xNzX">Building AI Agents Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/business-rule-guide"><span title="Business Rules" class="linkLabel_xNzX">Business Rules</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/client-script-guide"><span title="Client Scripts" class="linkLabel_xNzX">Client Scripts</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/creating-workspaces-guide"><span title="Creating Workspaces Guide" class="linkLabel_xNzX">Creating Workspaces Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/cross-scope-privilege-guide"><span title="Cross-Scope Privileges" class="linkLabel_xNzX">Cross-Scope Privileges</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/developing-apps-guide"><span title="Developing ServiceNow Apps with the Now SDK" class="linkLabel_xNzX">Developing ServiceNow Apps with the Now SDK</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/email-notification-guide"><span title="Email Notification Guide" class="linkLabel_xNzX">Email Notification Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/external-services-guide"><span title="Configuring External Services Guide" class="linkLabel_xNzX">Configuring External Services Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/fluent-overview"><span title="ServiceNow Fluent Overview" class="linkLabel_xNzX">ServiceNow Fluent Overview</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/importing-data-guide"><span title="Importing Data" class="linkLabel_xNzX">Importing Data</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/instance-scan-guide"><span title="Instance Scan Guide" class="linkLabel_xNzX">Instance Scan Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/module-guide"><span title="JavaScript Modules" class="linkLabel_xNzX">JavaScript Modules</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/nowassist-skills-guide"><span title="Now Assist Skills Guide" class="linkLabel_xNzX">Now Assist Skills Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/platform-view-guide"><span title="Platform Views &amp; UI Layout Control" class="linkLabel_xNzX">Platform Views &amp; UI Layout Control</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/platform-view-lists-guide"><span title="Platform Views, Lists &amp; Relationships" class="linkLabel_xNzX">Platform Views, Lists &amp; Relationships</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/property-guide"><span title="System Properties" class="linkLabel_xNzX">System Properties</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/registering-events-guide"><span title="Registering Events Guide" class="linkLabel_xNzX">Registering Events Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/scheduled-script-guide"><span title="Scheduled Script Guide" class="linkLabel_xNzX">Scheduled Script Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/script-include-guide"><span title="Script Includes" class="linkLabel_xNzX">Script Includes</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/scripted-rest-api-guide"><span title="Scripted REST APIs" class="linkLabel_xNzX">Scripted REST APIs</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/security-guide"><span title="Implementing Security Guide" class="linkLabel_xNzX">Implementing Security Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/service-catalog-guide"><span title="Service Catalog" class="linkLabel_xNzX">Service Catalog</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/service-catalog-variables-guide"><span title="Service Catalog Variables" class="linkLabel_xNzX">Service Catalog Variables</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/service-portal-guide"><span title="Service Portal" class="linkLabel_xNzX">Service Portal</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/sdk/4.6.0/guides/service-portal-reference-guide"><span title="Service Portal Extended Reference" class="linkLabel_xNzX">Service Portal Extended Reference</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/table-guide"><span title="Tables, Columns, and Relationships Guide" class="linkLabel_xNzX">Tables, Columns, and Relationships Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/ui-page-guide"><span title="UI Pages" class="linkLabel_xNzX">UI Pages</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/ui-page-patterns-guide"><span title="UI Page Patterns" class="linkLabel_xNzX">UI Page Patterns</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/ui-page-theming-guide"><span title="UI Page Theming" class="linkLabel_xNzX">UI Page Theming</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/wfa-custom-action-guide"><span title="Workflow Automation Custom Action Guide" class="linkLabel_xNzX">Workflow Automation Custom Action Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/wfa-flow-actions-guide"><span title="Workflow Automation Flow Actions Guide" class="linkLabel_xNzX">Workflow Automation Flow Actions Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/wfa-flow-guide"><span title="Workflow Automation Flow Guide" class="linkLabel_xNzX">Workflow Automation Flow Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/4.6.0/guides/wfa-subflow-guide"><span title="Workflow Automation Subflow Guide" class="linkLabel_xNzX">Workflow Automation Subflow Guide</span></a></li></ul></li></ul></nav></div></div></aside><main class="docMainContainer_ewJd"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_wOuX"><div class="docItemContainer_emeC"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_nCEY" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/sdk/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_h8Qu"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/sdk/4.6.0/category/guides"><span>Guides</span></a></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">Service Portal Extended Reference</span></li></ul></nav><span class="theme-doc-version-badge badge badge--secondary">Version: 4.6.0</span><div class="tocCollapsible_WKXj theme-doc-toc-mobile tocMobile_x5G0"><button type="button" class="clean-btn tocCollapsibleButton_Gmjs">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Service Portal Extended Reference</h1></header>
+<p>Extended reference for ServiceNow Service Portal covering menus, angular providers, widget dependencies, headers/footers, CSS/theming, out-of-the-box widgets and pages, and troubleshooting.</p>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="api-reference-menu-sp_instance_menu">API Reference: Menu (sp_instance_menu)<a href="#api-reference-menu-sp_instance_menu" class="hash-link" aria-label="Direct link to API Reference: Menu (sp_instance_menu)" title="Direct link to API Reference: Menu (sp_instance_menu)" translate="no">​</a></h2>
+<p>For the full property reference (menus and menu items), see the <code>spmenu-api</code> topic.</p>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="menu-item-types">Menu Item Types<a href="#menu-item-types" class="hash-link" aria-label="Direct link to Menu Item Types" title="Direct link to Menu Item Types" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Type</th><th>Additional Fields</th><th>Description</th></tr></thead><tbody><tr><td><code>page</code></td><td><code>page</code> (reference, required)</td><td>Links to an SP page</td></tr><tr><td><code>url</code></td><td><code>url</code>, <code>urlTarget</code></td><td>External or internal URL</td></tr><tr><td><code>sc</code></td><td>(none)</td><td>Service Catalog home</td></tr><tr><td><code>sc_category</code></td><td><code>scCategory</code>, <code>page</code></td><td>Service Catalog category</td></tr><tr><td><code>sc_cat_item</code></td><td><code>catItem</code>, <code>page</code></td><td>Specific catalog item</td></tr><tr><td><code>kb</code></td><td>(none)</td><td>Knowledge Base home</td></tr><tr><td><code>kb_topic</code></td><td><code>kbTopic</code>, <code>page</code></td><td>Knowledge topic</td></tr><tr><td><code>kb_article</code></td><td><code>kbArticle</code>, <code>page</code></td><td>Specific knowledge article</td></tr><tr><td><code>kb_category</code></td><td><code>kbCategory</code>, <code>page</code></td><td>Knowledge category</td></tr><tr><td><code>filtered</code></td><td><code>table</code>, <code>filter</code>, display fields</td><td>Dynamic content based on filter</td></tr><tr><td><code>scripted</code></td><td><code>script</code></td><td>Server-side generated items</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="menu-widget-selection">Menu Widget Selection<a href="#menu-widget-selection" class="hash-link" aria-label="Direct link to Menu Widget Selection" title="Direct link to Menu Widget Selection" translate="no">​</a></h3>
+<p>Always use an existing OOTB menu widget. Always set the <code>widget</code> field on menu records.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Widget Name</th><th>Typical sys_id (verify on instance)</th><th>Recommended Use</th></tr></thead><tbody><tr><td>Header Menu</td><td><code>5ef595c1cb12020000f8d856634c9c6e</code></td><td>Standard portal navigation</td></tr><tr><td>Icon Menu List</td><td><code>88979930cb01020000f8d856634c9caa</code></td><td>Menu with icon per item</td></tr><tr><td>Single Icon Menu</td><td><code>5edf4c21cb21020000f8d856634c9cba</code></td><td>Compact icon dropdown</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="menu-example">Menu Example<a href="#menu-example" class="hash-link" aria-label="Direct link to Menu Example" title="Direct link to Menu Example" translate="no">​</a></h3>
+<div class="language-typescript codeBlockContainer_vMYm theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_CbbD"><pre tabindex="0" class="prism-code language-typescript codeBlock_EV2w thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_nCEi"><span class="token-line" style="color:#F8F8F2"><span class="token keyword module" style="color:rgb(189, 147, 249);font-style:italic">import</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;@servicenow/sdk/global&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token keyword module" style="color:rgb(189, 147, 249);font-style:italic">import</span><span class="token plain"> </span><span class="token imports punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token imports"> </span><span class="token imports maybe-class-name">SPMenu</span><span class="token imports"> </span><span class="token imports punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"> </span><span class="token keyword module" style="color:rgb(189, 147, 249);font-style:italic">from</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;@servicenow/sdk/core&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token keyword module" style="color:rgb(189, 147, 249);font-style:italic">export</span><span class="token plain"> </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">const</span><span class="token plain"> mainMenu </span><span class="token operator">=</span><span class="token plain"> </span><span class="token function maybe-class-name" style="color:rgb(80, 250, 123)">SPMenu</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  $id</span><span class="token operator">:</span><span class="token plain"> </span><span class="token maybe-class-name">Now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token constant" style="color:rgb(189, 147, 249)">ID</span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token string" style="color:rgb(255, 121, 198)">&quot;main_menu&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  title</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;Main Menu&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  widget</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;5ef595c1cb12020000f8d856634c9c6e&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  items</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">      $id</span><span class="token operator">:</span><span class="token plain"> </span><span class="token maybe-class-name">Now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token constant" style="color:rgb(189, 147, 249)">ID</span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token string" style="color:rgb(255, 121, 198)">&quot;home_item&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">      type</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;page&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">      label</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;Home&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">      page</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;&lt;home_page_sys_id&gt;&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">      glyph</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;home&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">      order</span><span class="token operator">:</span><span class="token plain"> </span><span class="token number">100</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">      $id</span><span class="token operator">:</span><span class="token plain"> </span><span class="token maybe-class-name">Now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token constant" style="color:rgb(189, 147, 249)">ID</span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token string" style="color:rgb(255, 121, 198)">&quot;services_item&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">      type</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;sc&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">      label</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;Services&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">      glyph</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;briefcase&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">      order</span><span class="token operator">:</span><span class="token plain"> </span><span class="token number">200</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">      childItems</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">          $id</span><span class="token operator">:</span><span class="token plain"> </span><span class="token maybe-class-name">Now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token constant" style="color:rgb(189, 147, 249)">ID</span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token string" style="color:rgb(255, 121, 198)">&quot;it_services&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">          type</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;sc_category&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">          label</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;IT Services&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">          scCategory</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;&lt;it_category_sys_id&gt;&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">          page</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;&lt;catalog_page_sys_id&gt;&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">          order</span><span class="token operator">:</span><span class="token plain"> </span><span class="token number">100</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">      $id</span><span class="token operator">:</span><span class="token plain"> </span><span class="token maybe-class-name">Now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token constant" style="color:rgb(189, 147, 249)">ID</span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token string" style="color:rgb(255, 121, 198)">&quot;kb_item&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">      type</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;kb&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">      label</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;Knowledge&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">      glyph</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;book&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">      order</span><span class="token operator">:</span><span class="token plain"> </span><span class="token number">300</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><br></span></code></pre></div></div>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="api-reference-angular-provider-sp_angular_provider">API Reference: Angular Provider (sp_angular_provider)<a href="#api-reference-angular-provider-sp_angular_provider" class="hash-link" aria-label="Direct link to API Reference: Angular Provider (sp_angular_provider)" title="Direct link to API Reference: Angular Provider (sp_angular_provider)" translate="no">​</a></h2>
+<p>For the full property reference, see the <code>spangularprovider-api</code> topic.</p>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="provider-types">Provider Types<a href="#provider-types" class="hash-link" aria-label="Direct link to Provider Types" title="Direct link to Provider Types" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Type</th><th>Returns</th><th>When to Use</th></tr></thead><tbody><tr><td><code>directive</code></td><td>Directive Definition Object (DDO)</td><td>Custom HTML elements/attributes, reusable UI</td></tr><tr><td><code>service</code></td><td>Object with methods</td><td>Shared logic, state management, utility functions</td></tr><tr><td><code>factory</code></td><td>Object or primitive</td><td>Configurable objects, API integration layers</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="provider-guidelines">Provider Guidelines<a href="#provider-guidelines" class="hash-link" aria-label="Direct link to Provider Guidelines" title="Direct link to Provider Guidelines" translate="no">​</a></h3>
+<ul>
+<li class="">Function name MUST match the <code>name</code> field exactly</li>
+<li class="">Services and factories must return an object (not <code>this</code>, not primitives)</li>
+<li class="">Directives must return a Directive Definition Object</li>
+<li class="">Link providers to widgets via <code>angularProviders</code> array in <code>SPWidget()</code></li>
+<li class="">Avoid circular dependencies between providers</li>
+<li class="">Use string concatenation for HTML inside template literals to avoid quote conflicts</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="provider-example-service">Provider Example: Service<a href="#provider-example-service" class="hash-link" aria-label="Direct link to Provider Example: Service" title="Direct link to Provider Example: Service" translate="no">​</a></h3>
+<div class="language-typescript codeBlockContainer_vMYm theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_CbbD"><pre tabindex="0" class="prism-code language-typescript codeBlock_EV2w thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_nCEi"><span class="token-line" style="color:#F8F8F2"><span class="token keyword module" style="color:rgb(189, 147, 249);font-style:italic">import</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;@servicenow/sdk/global&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token keyword module" style="color:rgb(189, 147, 249);font-style:italic">import</span><span class="token plain"> </span><span class="token imports punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token imports"> </span><span class="token imports maybe-class-name">SPAngularProvider</span><span class="token imports"> </span><span class="token imports punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"> </span><span class="token keyword module" style="color:rgb(189, 147, 249);font-style:italic">from</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;@servicenow/sdk/core&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token keyword module" style="color:rgb(189, 147, 249);font-style:italic">export</span><span class="token plain"> </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">const</span><span class="token plain"> dataService </span><span class="token operator">=</span><span class="token plain"> </span><span class="token function maybe-class-name" style="color:rgb(80, 250, 123)">SPAngularProvider</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  $id</span><span class="token operator">:</span><span class="token plain"> </span><span class="token maybe-class-name">Now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token constant" style="color:rgb(189, 147, 249)">ID</span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token string" style="color:rgb(255, 121, 198)">&quot;data_service&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  name</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;dataService&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  type</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;service&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  script</span><span class="token operator">:</span><span class="token plain"> </span><span class="token template-string template-punctuation string" style="color:rgb(255, 121, 198)">`</span><span class="token template-string string" style="color:rgb(255, 121, 198)"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token template-string string" style="color:rgb(255, 121, 198)">    function dataService($http) {</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token template-string string" style="color:rgb(255, 121, 198)">      return {</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token template-string string" style="color:rgb(255, 121, 198)">        getRecords: function(table, limit) {</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token template-string string" style="color:rgb(255, 121, 198)">          return $http.get(&#x27;/api/now/table/&#x27; + table, {</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token template-string string" style="color:rgb(255, 121, 198)">            params: { sysparm_limit: limit || 10 }</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token template-string string" style="color:rgb(255, 121, 198)">          });</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token template-string string" style="color:rgb(255, 121, 198)">        }</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token template-string string" style="color:rgb(255, 121, 198)">      };</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token template-string string" style="color:rgb(255, 121, 198)">    }</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token template-string string" style="color:rgb(255, 121, 198)">  </span><span class="token template-string template-punctuation string" style="color:rgb(255, 121, 198)">`</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><br></span></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="linking-provider-to-widget">Linking Provider to Widget<a href="#linking-provider-to-widget" class="hash-link" aria-label="Direct link to Linking Provider to Widget" title="Direct link to Linking Provider to Widget" translate="no">​</a></h3>
+<p>Widget client scripts, server scripts, HTML, and CSS use <code>Now.include()</code> because the Service Portal widget runtime does not support modules.</p>
+<div class="language-typescript codeBlockContainer_vMYm theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_CbbD"><pre tabindex="0" class="prism-code language-typescript codeBlock_EV2w thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_nCEi"><span class="token-line" style="color:#F8F8F2"><span class="token keyword module" style="color:rgb(189, 147, 249);font-style:italic">import</span><span class="token plain"> </span><span class="token imports punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token imports"> </span><span class="token imports maybe-class-name">SPWidget</span><span class="token imports"> </span><span class="token imports punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"> </span><span class="token keyword module" style="color:rgb(189, 147, 249);font-style:italic">from</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;@servicenow/sdk/core&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token keyword module" style="color:rgb(189, 147, 249);font-style:italic">import</span><span class="token plain"> </span><span class="token imports punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token imports"> dataService </span><span class="token imports punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"> </span><span class="token keyword module" style="color:rgb(189, 147, 249);font-style:italic">from</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;../../sp-angular-provider/provider.now&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token keyword module" style="color:rgb(189, 147, 249);font-style:italic">export</span><span class="token plain"> </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">const</span><span class="token plain"> myWidget </span><span class="token operator">=</span><span class="token plain"> </span><span class="token function maybe-class-name" style="color:rgb(80, 250, 123)">SPWidget</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  $id</span><span class="token operator">:</span><span class="token plain"> </span><span class="token maybe-class-name">Now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token constant" style="color:rgb(189, 147, 249)">ID</span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token string" style="color:rgb(255, 121, 198)">&quot;my_widget&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  name</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;My Widget&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  angularProviders</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token plain">dataService</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  clientScript</span><span class="token operator">:</span><span class="token plain"> </span><span class="token maybe-class-name">Now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token method function property-access" style="color:rgb(80, 250, 123)">include</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token string" style="color:rgb(255, 121, 198)">&quot;./client_script.js&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  htmlTemplate</span><span class="token operator">:</span><span class="token plain"> </span><span class="token maybe-class-name">Now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token method function property-access" style="color:rgb(80, 250, 123)">include</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token string" style="color:rgb(255, 121, 198)">&quot;./template.html&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  serverScript</span><span class="token operator">:</span><span class="token plain"> </span><span class="token maybe-class-name">Now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token method function property-access" style="color:rgb(80, 250, 123)">include</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token string" style="color:rgb(255, 121, 198)">&quot;./server_script.js&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><br></span></code></pre></div></div>
+<div class="language-javascript codeBlockContainer_vMYm theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_CbbD"><pre tabindex="0" class="prism-code language-javascript codeBlock_EV2w thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_nCEi"><span class="token-line" style="color:#F8F8F2"><span class="token comment" style="color:rgb(98, 114, 164)">// client_script.js</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">api</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token method-variable function-variable method function property-access" style="color:rgb(80, 250, 123)">controller</span><span class="token plain"> </span><span class="token operator">=</span><span class="token plain"> </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">function</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token parameter">dataService</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">var</span><span class="token plain"> c </span><span class="token operator">=</span><span class="token plain"> </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">this</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  dataService</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token method function property-access" style="color:rgb(80, 250, 123)">getRecords</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token string" style="color:rgb(255, 121, 198)">&quot;incident&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"> </span><span class="token number">5</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token method function property-access" style="color:rgb(80, 250, 123)">then</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">function</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token parameter">response</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    c</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token property-access">data</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token property-access">records</span><span class="token plain"> </span><span class="token operator">=</span><span class="token plain"> response</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token property-access">data</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token property-access">result</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><br></span></code></pre></div></div>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="api-reference-widget-dependency-sp_dependency">API Reference: Widget Dependency (sp_dependency)<a href="#api-reference-widget-dependency-sp_dependency" class="hash-link" aria-label="Direct link to API Reference: Widget Dependency (sp_dependency)" title="Direct link to API Reference: Widget Dependency (sp_dependency)" translate="no">​</a></h2>
+<p>For the full property reference (dependencies, JsInclude, CssInclude), see the <code>spwidgetdependency-api</code> topic.</p>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="bundled-libraries-do-not-re-add">Bundled Libraries (Do NOT Re-Add)<a href="#bundled-libraries-do-not-re-add" class="hash-link" aria-label="Direct link to Bundled Libraries (Do NOT Re-Add)" title="Direct link to Bundled Libraries (Do NOT Re-Add)" translate="no">​</a></h3>
+<p>SP already includes these globally. Adding them again causes version conflicts:</p>
+<ul>
+<li class="">jQuery</li>
+<li class="">AngularJS</li>
+<li class="">Bootstrap 3 CSS/JS</li>
+<li class="">Bootstrap 3 Glyphicons</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="dependency-guidelines">Dependency Guidelines<a href="#dependency-guidelines" class="hash-link" aria-label="Direct link to Dependency Guidelines" title="Direct link to Dependency Guidelines" translate="no">​</a></h3>
+<ul>
+<li class="">Lower <code>order</code> numbers load first. Always load base libraries before plugins.</li>
+<li class="">Use minified CDN URLs with version pinning (e.g., <code>library@4.17.21</code>)</li>
+<li class="">One dependency per library -- share across multiple widgets</li>
+<li class="">Always use HTTPS URLs</li>
+<li class="">Link dependencies to widgets via <code>dependencies</code> array in <code>SPWidget()</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="dependency-example">Dependency Example<a href="#dependency-example" class="hash-link" aria-label="Direct link to Dependency Example" title="Direct link to Dependency Example" translate="no">​</a></h3>
+<div class="language-typescript codeBlockContainer_vMYm theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_CbbD"><pre tabindex="0" class="prism-code language-typescript codeBlock_EV2w thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_nCEi"><span class="token-line" style="color:#F8F8F2"><span class="token keyword module" style="color:rgb(189, 147, 249);font-style:italic">import</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;@servicenow/sdk/global&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token keyword module" style="color:rgb(189, 147, 249);font-style:italic">import</span><span class="token plain"> </span><span class="token imports punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token imports"> </span><span class="token imports maybe-class-name">SPWidgetDependency</span><span class="token imports punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token imports"> </span><span class="token imports maybe-class-name">JsInclude</span><span class="token imports punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token imports"> </span><span class="token imports maybe-class-name">CssInclude</span><span class="token imports"> </span><span class="token imports punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"> </span><span class="token keyword module" style="color:rgb(189, 147, 249);font-style:italic">from</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;@servicenow/sdk/core&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token keyword module" style="color:rgb(189, 147, 249);font-style:italic">export</span><span class="token plain"> </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">const</span><span class="token plain"> select2Dep </span><span class="token operator">=</span><span class="token plain"> </span><span class="token function maybe-class-name" style="color:rgb(80, 250, 123)">SPWidgetDependency</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  $id</span><span class="token operator">:</span><span class="token plain"> </span><span class="token maybe-class-name">Now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token constant" style="color:rgb(189, 147, 249)">ID</span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token string" style="color:rgb(255, 121, 198)">&quot;select2_dep&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  name</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;Select2&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  jsIncludes</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">      order</span><span class="token operator">:</span><span class="token plain"> </span><span class="token number">100</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">      include</span><span class="token operator">:</span><span class="token plain"> </span><span class="token function maybe-class-name" style="color:rgb(80, 250, 123)">JsInclude</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        $id</span><span class="token operator">:</span><span class="token plain"> </span><span class="token maybe-class-name">Now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token constant" style="color:rgb(189, 147, 249)">ID</span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token string" style="color:rgb(255, 121, 198)">&quot;select2_js&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        name</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;Select2 JS&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        url</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js&quot;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  cssIncludes</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">      order</span><span class="token operator">:</span><span class="token plain"> </span><span class="token number">100</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">      include</span><span class="token operator">:</span><span class="token plain"> </span><span class="token function maybe-class-name" style="color:rgb(80, 250, 123)">CssInclude</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        $id</span><span class="token operator">:</span><span class="token plain"> </span><span class="token maybe-class-name">Now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token constant" style="color:rgb(189, 147, 249)">ID</span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token string" style="color:rgb(255, 121, 198)">&quot;select2_css&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        name</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;Select2 CSS&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">        url</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css&quot;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><br></span></code></pre></div></div>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="api-reference-headerfooter-sp_header_footer">API Reference: Header/Footer (sp_header_footer)<a href="#api-reference-headerfooter-sp_header_footer" class="hash-link" aria-label="Direct link to API Reference: Header/Footer (sp_header_footer)" title="Direct link to API Reference: Header/Footer (sp_header_footer)" translate="no">​</a></h2>
+<p>Headers and footers have no dedicated Fluent API. Use the generic <code>Record()</code> constructor. For the property reference, see the <code>SPHeaderFooter</code> topic.</p>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="ootb-headers-and-footers">OOTB Headers and Footers<a href="#ootb-headers-and-footers" class="hash-link" aria-label="Direct link to OOTB Headers and Footers" title="Direct link to OOTB Headers and Footers" translate="no">​</a></h3>
+<p>Always reuse OOTB headers and footers first. Only create custom when explicitly requested.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Record</th><th>Sys ID</th></tr></thead><tbody><tr><td>Stock Header</td><td><code>bf5ec2f2cb10120000f8d856634c9c0c</code></td></tr><tr><td>Sample Footer</td><td><code>feb4f763df121200ba13a4836bf26320</code></td></tr></tbody></table>
+<p>Always verify existence on instance: <code>{ table: &quot;sp_header_footer&quot;, encodedQuery: &quot;sys_id=&lt;sys_id&gt;&quot; }</code></p>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="header-example">Header Example<a href="#header-example" class="hash-link" aria-label="Direct link to Header Example" title="Direct link to Header Example" translate="no">​</a></h3>
+<div class="language-typescript codeBlockContainer_vMYm theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_CbbD"><pre tabindex="0" class="prism-code language-typescript codeBlock_EV2w thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_nCEi"><span class="token-line" style="color:#F8F8F2"><span class="token keyword module" style="color:rgb(189, 147, 249);font-style:italic">import</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;@servicenow/sdk/global&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token keyword module" style="color:rgb(189, 147, 249);font-style:italic">import</span><span class="token plain"> </span><span class="token imports punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token imports"> </span><span class="token imports maybe-class-name">Record</span><span class="token imports"> </span><span class="token imports punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"> </span><span class="token keyword module" style="color:rgb(189, 147, 249);font-style:italic">from</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;@servicenow/sdk/core&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token keyword module" style="color:rgb(189, 147, 249);font-style:italic">export</span><span class="token plain"> </span><span class="token keyword" style="color:rgb(189, 147, 249);font-style:italic">const</span><span class="token plain"> customHeader </span><span class="token operator">=</span><span class="token plain"> </span><span class="token function maybe-class-name" style="color:rgb(80, 250, 123)">Record</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  $id</span><span class="token operator">:</span><span class="token plain"> </span><span class="token maybe-class-name">Now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token constant" style="color:rgb(189, 147, 249)">ID</span><span class="token punctuation" style="color:rgb(248, 248, 242)">[</span><span class="token string" style="color:rgb(255, 121, 198)">&quot;custom_header&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">]</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  table</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;sp_header_footer&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  data</span><span class="token operator">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    name</span><span class="token operator">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(255, 121, 198)">&quot;Custom Portal Header&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    template</span><span class="token operator">:</span><span class="token plain"> </span><span class="token maybe-class-name">Now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token method function property-access" style="color:rgb(80, 250, 123)">include</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token string" style="color:rgb(255, 121, 198)">&quot;./header_template.html&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    client_script</span><span class="token operator">:</span><span class="token plain"> </span><span class="token maybe-class-name">Now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token method function property-access" style="color:rgb(80, 250, 123)">include</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token string" style="color:rgb(255, 121, 198)">&quot;./header_client.js&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    css</span><span class="token operator">:</span><span class="token plain"> </span><span class="token maybe-class-name">Now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token method function property-access" style="color:rgb(80, 250, 123)">include</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token string" style="color:rgb(255, 121, 198)">&quot;./header_styles.css&quot;</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><br></span></code></pre></div></div>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="css-and-theming-reference">CSS and Theming Reference<a href="#css-and-theming-reference" class="hash-link" aria-label="Direct link to CSS and Theming Reference" title="Direct link to CSS and Theming Reference" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="scss-variable-rules-for-widget-css">SCSS Variable Rules for Widget CSS<a href="#scss-variable-rules-for-widget-css" class="hash-link" aria-label="Direct link to SCSS Variable Rules for Widget CSS" title="Direct link to SCSS Variable Rules for Widget CSS" translate="no">​</a></h3>
+<p>Never invent custom SCSS variable names. Service Portal compiles widget CSS as SCSS with only the portal theme&#x27;s <code>css_variables</code> injected. Undefined variables are silently dropped.</p>
+<p>Before writing any widget CSS:</p>
+<ol>
+<li class="">Look up the portal&#x27;s theme from the portal definition</li>
+<li class="">Only use SCSS variables from the theme&#x27;s <code>css_variables</code> or from the extended Bootstrap/SP defaults</li>
+<li class="">If a needed variable does not exist, use SCSS functions (<code>darken()</code>, <code>lighten()</code>, <code>rgba()</code>) on an existing variable</li>
+<li class="">Never use hardcoded hex, rgb, or rgba values</li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="extended-bootstrapsp-defaults-always-available">Extended Bootstrap/SP Defaults (Always Available)<a href="#extended-bootstrapsp-defaults-always-available" class="hash-link" aria-label="Direct link to Extended Bootstrap/SP Defaults (Always Available)" title="Direct link to Extended Bootstrap/SP Defaults (Always Available)" translate="no">​</a></h3>
+<p><code>$border-radius-base</code> -- <code>$border-radius-large</code> -- <code>$border-radius-small</code> -- <code>$font-size-base</code> -- <code>$font-size-small</code> -- <code>$font-size-large</code> -- <code>$btn-primary-color</code> -- <code>$panel-primary-text</code> -- <code>$link-color</code> -- <code>$state-success-bg</code> -- <code>$state-warning-bg</code> -- <code>$state-danger-bg</code> -- <code>$state-info-bg</code> -- <code>$alert-success-border</code> -- <code>$alert-warning-border</code> -- <code>$alert-danger-border</code> -- <code>$alert-info-border</code> -- <code>$body-bg</code> -- <code>$component-active-bg</code> -- <code>$btn-default-border</code> -- <code>$panel-border-color</code> -- <code>$input-border</code> -- <code>$input-border-focus</code></p>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="coral-theme-scss-variable-reference">Coral Theme SCSS Variable Reference<a href="#coral-theme-scss-variable-reference" class="hash-link" aria-label="Direct link to Coral Theme SCSS Variable Reference" title="Direct link to Coral Theme SCSS Variable Reference" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_FatF" id="backgrounds">Backgrounds<a href="#backgrounds" class="hash-link" aria-label="Direct link to Backgrounds" title="Direct link to Backgrounds" translate="no">​</a></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Use Case</th><th>Variable</th></tr></thead><tbody><tr><td>Card / surface background</td><td><code>$background-primary</code></td></tr><tr><td>Page background</td><td><code>$sp-page-bg</code></td></tr><tr><td>Subtle / muted background</td><td><code>$background-secondary</code></td></tr><tr><td>Heavier subtle background</td><td><code>$background-tertiary</code></td></tr><tr><td>Input field background</td><td><code>$sp-form-field--background-color</code></td></tr></tbody></table>
+<h4 class="anchor anchorTargetStickyNavbar_FatF" id="borders">Borders<a href="#borders" class="hash-link" aria-label="Direct link to Borders" title="Direct link to Borders" translate="no">​</a></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Use Case</th><th>Variable</th></tr></thead><tbody><tr><td>Default border (cards, dividers)</td><td><code>$border-tertiary</code></td></tr><tr><td>Medium emphasis border</td><td><code>$border-secondary</code></td></tr><tr><td>Strong emphasis border</td><td><code>$border-primary</code></td></tr></tbody></table>
+<h4 class="anchor anchorTargetStickyNavbar_FatF" id="text">Text<a href="#text" class="hash-link" aria-label="Direct link to Text" title="Direct link to Text" translate="no">​</a></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Use Case</th><th>Variable</th></tr></thead><tbody><tr><td>Primary text</td><td><code>$text-color</code></td></tr><tr><td>Secondary text</td><td><code>$text-secondary</code></td></tr><tr><td>Muted / helper text</td><td><code>$text-muted</code></td></tr><tr><td>White text (on dark backgrounds)</td><td><code>$btn-primary-color</code></td></tr></tbody></table>
+<h4 class="anchor anchorTargetStickyNavbar_FatF" id="brand-colors">Brand Colors<a href="#brand-colors" class="hash-link" aria-label="Direct link to Brand Colors" title="Direct link to Brand Colors" translate="no">​</a></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Use Case</th><th>Variable</th></tr></thead><tbody><tr><td>Primary brand</td><td><code>$brand-primary</code></td></tr><tr><td>Primary dark (hover)</td><td><code>$brand-primary-dark</code></td></tr><tr><td>Primary lighter (highlights)</td><td><code>$brand-primary-lighter</code></td></tr><tr><td>Success</td><td><code>$brand-success</code></td></tr><tr><td>Warning</td><td><code>$brand-warning</code></td></tr><tr><td>Danger</td><td><code>$brand-danger</code></td></tr><tr><td>Info</td><td><code>$brand-info</code></td></tr><tr><td>Link color</td><td><code>$link-color</code></td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="spacing-scale">Spacing Scale<a href="#spacing-scale" class="hash-link" aria-label="Direct link to Spacing Scale" title="Direct link to Spacing Scale" translate="no">​</a></h3>
+<p>Use only these values. Never use arbitrary pixel values.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Variable</th><th>Value</th><th>Use Case</th></tr></thead><tbody><tr><td><code>$sp-space-1</code></td><td>4px</td><td>Icon gaps, badge padding</td></tr><tr><td><code>$sp-space-2</code></td><td>8px</td><td>Input padding, label gaps</td></tr><tr><td><code>$sp-space-3</code></td><td>12px</td><td>Button padding Y, tight sections</td></tr><tr><td><code>$sp-space-4</code></td><td>16px</td><td>Base unit -- form group gap</td></tr><tr><td><code>$sp-space-5</code></td><td>24px</td><td>Card padding, section gap</td></tr><tr><td><code>$sp-space-6</code></td><td>32px</td><td>Between major sections</td></tr><tr><td><code>$sp-space-7</code></td><td>48px</td><td>Page top padding, empty states</td></tr><tr><td><code>$sp-space-8</code></td><td>64px</td><td>Full-bleed sections</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="typography-scale">Typography Scale<a href="#typography-scale" class="hash-link" aria-label="Direct link to Typography Scale" title="Direct link to Typography Scale" translate="no">​</a></h3>
+<p>Every <code>font-size</code> must use a theme variable -- never a raw pixel value.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Variable</th><th>Value</th><th>Use Case</th></tr></thead><tbody><tr><td><code>$sp-text-xs</code></td><td>12px</td><td>Badges, timestamps, captions</td></tr><tr><td><code>$sp-text-sm</code></td><td>14px</td><td>Helper text, table metadata</td></tr><tr><td><code>$sp-text-base</code></td><td>16px</td><td>Body, labels, table cells</td></tr><tr><td><code>$sp-text-md</code></td><td>18px</td><td>Card titles, sub-headings</td></tr><tr><td><code>$sp-text-lg</code></td><td>22px</td><td>Section headings</td></tr><tr><td><code>$sp-text-xl</code></td><td>26px</td><td>Page title</td></tr><tr><td><code>$sp-text-2xl</code></td><td>32px</td><td>Hero / banner headings</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="icon-size-scale">Icon Size Scale<a href="#icon-size-scale" class="hash-link" aria-label="Direct link to Icon Size Scale" title="Direct link to Icon Size Scale" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Variable</th><th>Value</th><th>Use Case</th></tr></thead><tbody><tr><td><code>$sp-icon-xs</code></td><td>12px</td><td>Badge / chevron icons</td></tr><tr><td><code>$sp-icon-sm</code></td><td>16px</td><td>Button / inline / alert icons</td></tr><tr><td><code>$sp-icon-md</code></td><td>20px</td><td>Card / stat tile icons</td></tr><tr><td><code>$sp-icon-lg</code></td><td>32px</td><td>Section / feature icons</td></tr><tr><td><code>$sp-icon-xl</code></td><td>48px</td><td>Empty state / hero icons</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="bootstrap-grid-patterns">Bootstrap Grid Patterns<a href="#bootstrap-grid-patterns" class="hash-link" aria-label="Direct link to Bootstrap Grid Patterns" title="Direct link to Bootstrap Grid Patterns" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Layout Type</th><th>Bootstrap Classes</th></tr></thead><tbody><tr><td>Full-width</td><td><code>col-md-12</code></td></tr><tr><td>Main + sidebar</td><td><code>col-md-8</code> + <code>col-md-4</code></td></tr><tr><td>Equal 2-column</td><td><code>col-md-6 col-xs-12</code> x 2</td></tr><tr><td>3-column cards</td><td><code>col-md-4 col-sm-6 col-xs-12</code> x 3</td></tr><tr><td>4-column stat tiles</td><td><code>col-md-3 col-sm-6 col-xs-12</code> x 4</td></tr></tbody></table>
+<p>Always add <code>col-xs-12</code> -- every column must stack on mobile.</p>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="css-anti-patterns">CSS Anti-Patterns<a href="#css-anti-patterns" class="hash-link" aria-label="Direct link to CSS Anti-Patterns" title="Direct link to CSS Anti-Patterns" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Anti-Pattern</th><th>Correct Replacement</th></tr></thead><tbody><tr><td><code>style=&quot;&quot;</code> inline on elements</td><td>Use SCSS class</td></tr><tr><td>Raw hex values in widget CSS</td><td>Use <code>$brand-primary</code>, <code>$text-color</code> etc.</td></tr><tr><td><code>&lt;br&gt;</code> tags for spacing</td><td>Use margin/padding utilities</td></tr><tr><td><code>!important</code> in widget CSS</td><td>Increase selector specificity</td></tr><tr><td>Input without <code>&lt;label&gt;</code></td><td>Every input paired with label and matching id</td></tr><tr><td><code>ng-repeat</code> without <code>track by</code></td><td>Always <code>track by item.sys_id</code></td></tr><tr><td>Missing <code>type</code> on <code>&lt;button&gt;</code></td><td>Always <code>type=&quot;button&quot;</code> or <code>type=&quot;submit&quot;</code></td></tr><tr><td><code>GlideRecord</code> without <code>setLimit()</code></td><td>Always <code>setLimit(n)</code></td></tr></tbody></table>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="ootb-widgets-reference">OOTB Widgets Reference<a href="#ootb-widgets-reference" class="hash-link" aria-label="Direct link to OOTB Widgets Reference" title="Direct link to OOTB Widgets Reference" translate="no">​</a></h2>
+<p>Before creating any custom widget, check these commonly reusable OOTB widgets:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Name</th><th>Sys ID</th><th>Widget ID</th><th>Use Case</th></tr></thead><tbody><tr><td>Data Table</td><td><code>5001b062d7101200b0b044580e6103eb</code></td><td><code>widget-data-table</code></td><td>Record list/table views</td></tr><tr><td>Form</td><td><code>fd1f4ec347730200ba13a5554ee490c0</code></td><td><code>widget-form</code></td><td>Full ServiceNow form</td></tr><tr><td>Typeahead Search</td><td><code>fa20ec02cb31020000f8d856634c9ce9</code></td><td><code>typeahead-search</code></td><td>Search with autocomplete</td></tr><tr><td>Faceted Search</td><td><code>12fbe2d287330300a785940307cb0b1b</code></td><td><code>faceted_search</code></td><td>Filtered search results</td></tr><tr><td>Login</td><td><code>6506d341cb33020000f8d856634c9cdc</code></td><td><code>widget-login</code></td><td>Portal login form</td></tr><tr><td>User Profile</td><td><code>6e6ac664d710120023c84f80de610318</code></td><td><code>user-profile</code></td><td>User profile card</td></tr><tr><td>Ticket Conversations</td><td><code>85357f52cb30020000f8d856634c9c24</code></td><td><code>widget-ticket-conversation</code></td><td>Activity stream</td></tr><tr><td>Ticket Attachments</td><td><code>9ee37281d7033100a9ad1e173e24d457</code></td><td><code>widget-ticket-attachments</code></td><td>File upload/attachment list</td></tr><tr><td>breadcrumbs</td><td><code>0fb269305b3212000d7ec7ad31f91ae2</code></td><td><code>breadcrumbs</code></td><td>Navigation breadcrumb trail</td></tr><tr><td>Homepage Search</td><td><code>200fbd96cb20020000f8d856634c9ca1</code></td><td>--</td><td>Large search bar for landing</td></tr><tr><td>sp-user-menu</td><td><code>3333b2ba5b1032000d7ec7ad31f91a27</code></td><td><code>sp-user-menu</code></td><td>User dropdown in header</td></tr><tr><td>Stock Header</td><td><code>bf5ec2f2cb10120000f8d856634c9c0c</code></td><td>--</td><td>Default portal header</td></tr><tr><td>Sample Footer</td><td><code>feb4f763df121200ba13a4836bf26320</code></td><td>--</td><td>Default portal footer</td></tr><tr><td>Header Menu</td><td><code>5ef595c1cb12020000f8d856634c9c6e</code></td><td>--</td><td>Top navigation menu widget</td></tr><tr><td>Simple List</td><td><code>5b255672cb03020000f8d856634c9c28</code></td><td><code>widget-simple-list</code></td><td>Minimal record list</td></tr><tr><td>Approvals</td><td><code>f37aa302cb70020000f8d856634c9cfc</code></td><td>--</td><td>Pending approvals list</td></tr><tr><td>KB View</td><td><code>e7ef8eb847101200ba13a5554ee49010</code></td><td>--</td><td>Knowledge article reader</td></tr><tr><td>KB Categories</td><td><code>122ac7f0d7101200a9addd173e24d411</code></td><td>--</td><td>Knowledge category browsing</td></tr><tr><td>My Requests</td><td><code>f1672671d7301200a9addd173e24d47d</code></td><td>--</td><td>User&#x27;s open requests</td></tr><tr><td>Carousel</td><td><code>cf1a5153cb21020000f8d856634c9c3c</code></td><td>--</td><td>Image/content carousel</td></tr></tbody></table>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="ootb-pages-reference">OOTB Pages Reference<a href="#ootb-pages-reference" class="hash-link" aria-label="Direct link to OOTB Pages Reference" title="Direct link to OOTB Pages Reference" translate="no">​</a></h2>
+<p>Before creating any custom page, check these commonly reusable OOTB pages:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Title</th><th>Page ID</th><th>Sys ID</th><th>Use Case</th></tr></thead><tbody><tr><td>Form</td><td><code>form</code></td><td><code>ed5f8ec347730200ba13a5554ee49046</code></td><td>Generic record form</td></tr><tr><td>List</td><td><code>list</code></td><td><code>b574e51147132100ba13a5554ee4903e</code></td><td>Generic record list</td></tr><tr><td>Ticket Form</td><td><code>ticket</code></td><td><code>84af292247132100ba13a5554ee4909e</code></td><td>Ticket/case detail</td></tr><tr><td>Login</td><td><code>login</code></td><td><code>6995a144cb11120000f8d856634c9c25</code></td><td>Portal login</td></tr><tr><td>Not Found</td><td><code>404</code></td><td><code>3c2c9063cb11020000f8d856634c9c1f</code></td><td>404 error page</td></tr><tr><td>Search</td><td><code>search</code></td><td><code>87466b63c3223100c8b837659bba8feb</code></td><td>Search results</td></tr><tr><td>Approvals</td><td><code>approvals</code></td><td><code>d3485112cb13310000f8d856634c9c3e</code></td><td>Approval list</td></tr><tr><td>My Requests</td><td><code>requests</code></td><td><code>31ed6a51d7130200a9ad1e173e24d479</code></td><td>User&#x27;s requests</td></tr><tr><td>User Profile</td><td><code>user_profile</code></td><td><code>edcbce64d710120023c84f80de610305</code></td><td>User profile</td></tr><tr><td>Catalog Home (v2)</td><td><code>sc_landing</code></td><td><code>53261e3487100300e0ef0cf888cb0b7c</code></td><td>Service Catalog landing</td></tr><tr><td>Catalog Item</td><td><code>sc_cat_item</code></td><td><code>9f12251147132100ba13a5554ee490f4</code></td><td>Catalog item order form</td></tr><tr><td>KB View</td><td><code>kb_view</code></td><td><code>db9fcab847101200ba13a5554ee490cf</code></td><td>Knowledge base home</td></tr><tr><td>KB Article</td><td><code>kb_article</code></td><td><code>dea5792147132100ba13a5554ee4902d</code></td><td>Knowledge article reader</td></tr></tbody></table>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_FatF" id="troubleshooting">Troubleshooting<a href="#troubleshooting" class="hash-link" aria-label="Direct link to Troubleshooting" title="Direct link to Troubleshooting" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="portal-not-accessible">Portal not accessible<a href="#portal-not-accessible" class="hash-link" aria-label="Direct link to Portal not accessible" title="Direct link to Portal not accessible" translate="no">​</a></h3>
+<ul>
+<li class="">Verify <code>urlSuffix</code> is unique and does not conflict with existing portals</li>
+<li class="">Check user has access permissions</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="theme-not-applying">Theme not applying<a href="#theme-not-applying" class="hash-link" aria-label="Direct link to Theme not applying" title="Direct link to Theme not applying" translate="no">​</a></h3>
+<ul>
+<li class="">Confirm theme sys_id exists on the instance</li>
+<li class="">Verify theme is linked to portal (<code>sp_portal.theme</code>)</li>
+<li class="">Check SCSS compilation errors in browser console</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="navigation-menu-not-showing-most-common">Navigation menu not showing (most common)<a href="#navigation-menu-not-showing-most-common" class="hash-link" aria-label="Direct link to Navigation menu not showing (most common)" title="Direct link to Navigation menu not showing (most common)" translate="no">​</a></h3>
+<ul>
+<li class="">Verify portal has <code>theme</code> configured</li>
+<li class="">Verify theme has <code>header</code> configured (<code>sp_header_footer</code>)</li>
+<li class="">Verify portal has <code>mainMenu</code> configured</li>
+<li class="">Query <code>sp_widget</code> to confirm the menu widget sys_id is correct on this instance</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="widget-not-displaying">Widget not displaying<a href="#widget-not-displaying" class="hash-link" aria-label="Direct link to Widget not displaying" title="Direct link to Widget not displaying" translate="no">​</a></h3>
+<ul>
+<li class="">Check widget is active</li>
+<li class="">Verify page/instance configuration</li>
+<li class="">Check browser console for JavaScript errors</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="data-not-updating-in-widget">Data not updating in widget<a href="#data-not-updating-in-widget" class="hash-link" aria-label="Direct link to Data not updating in widget" title="Direct link to Data not updating in widget" translate="no">​</a></h3>
+<ul>
+<li class="">Verify server script IIFE syntax is correct</li>
+<li class="">Check <code>c.server.get()</code> / <code>c.server.update()</code> calls match <code>input.action</code> handling in server script</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="styling-issues">Styling issues<a href="#styling-issues" class="hash-link" aria-label="Direct link to Styling issues" title="Direct link to Styling issues" translate="no">​</a></h3>
+<ul>
+<li class="">Confirm SCSS token variables are used (not raw hex)</li>
+<li class="">Check Bootstrap 3 class names (not Bootstrap 4/5)</li>
+<li class="">Confirm <code>turnOffScssCompilation</code> is <code>false</code> on theme</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="css-variables-not-working">CSS variables not working<a href="#css-variables-not-working" class="hash-link" aria-label="Direct link to CSS variables not working" title="Direct link to CSS variables not working" translate="no">​</a></h3>
+<ul>
+<li class="">Verify <code>sp-rgb()</code> is only used when a <code>--now-*</code> token exists</li>
+<li class="">Never invent token names -- use hex directly when no token exists</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="library-not-loading">Library not loading<a href="#library-not-loading" class="hash-link" aria-label="Direct link to Library not loading" title="Direct link to Library not loading" translate="no">​</a></h3>
+<ul>
+<li class="">Verify CDN URL is accessible from the instance network</li>
+<li class="">Check <code>order</code> values -- base libraries must load before plugins</li>
+<li class="">Confirm dependency is linked to widget via <code>dependencies</code> array</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_FatF" id="provider-not-available-in-widget">Provider not available in widget<a href="#provider-not-available-in-widget" class="hash-link" aria-label="Direct link to Provider not available in widget" title="Direct link to Provider not available in widget" translate="no">​</a></h3>
+<ul>
+<li class="">Verify provider is in <code>angularProviders</code> array on <code>SPWidget()</code></li>
+<li class="">Check function name matches <code>name</code> field exactly</li>
+<li class="">Verify script syntax is valid</li>
+</ul></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-tags-row"><div class="col"><b>Tags:</b><ul class="tags_JAWU padding--none margin-left--sm"><li class="tag_DE5p"><a rel="tag" class="tag_LwhQ tagRegular_fLVC" href="/sdk/4.6.0/tags/service-portal-menu">service portal menu</a></li><li class="tag_DE5p"><a rel="tag" class="tag_LwhQ tagRegular_fLVC" href="/sdk/4.6.0/tags/angular-provider">angular provider</a></li><li class="tag_DE5p"><a rel="tag" class="tag_LwhQ tagRegular_fLVC" href="/sdk/4.6.0/tags/widget-dependency">widget dependency</a></li><li class="tag_DE5p"><a rel="tag" class="tag_LwhQ tagRegular_fLVC" href="/sdk/4.6.0/tags/header-footer">header footer</a></li><li class="tag_DE5p"><a rel="tag" class="tag_LwhQ tagRegular_fLVC" href="/sdk/4.6.0/tags/portal-css">portal css</a></li><li class="tag_DE5p"><a rel="tag" class="tag_LwhQ tagRegular_fLVC" href="/sdk/4.6.0/tags/scss">scss</a></li><li class="tag_DE5p"><a rel="tag" class="tag_LwhQ tagRegular_fLVC" href="/sdk/4.6.0/tags/ootb-widgets">ootb widgets</a></li><li class="tag_DE5p"><a rel="tag" class="tag_LwhQ tagRegular_fLVC" href="/sdk/4.6.0/tags/ootb-pages">ootb pages</a></li><li class="tag_DE5p"><a rel="tag" class="tag_LwhQ tagRegular_fLVC" href="/sdk/4.6.0/tags/bootstrap">bootstrap</a></li><li class="tag_DE5p"><a rel="tag" class="tag_LwhQ tagRegular_fLVC" href="/sdk/4.6.0/tags/sp-instance-menu">sp_instance_menu</a></li><li class="tag_DE5p"><a rel="tag" class="tag_LwhQ tagRegular_fLVC" href="/sdk/4.6.0/tags/sp-angular-provider">sp_angular_provider</a></li><li class="tag_DE5p"><a rel="tag" class="tag_LwhQ tagRegular_fLVC" href="/sdk/4.6.0/tags/sp-dependency">sp_dependency</a></li><li class="tag_DE5p"><a rel="tag" class="tag_LwhQ tagRegular_fLVC" href="/sdk/4.6.0/tags/sp-header-footer">sp_header_footer</a></li></ul></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/sdk/4.6.0/guides/service-portal-guide"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Service Portal</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/sdk/4.6.0/guides/table-guide"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Tables, Columns, and Relationships Guide</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_vU8W thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#api-reference-menu-sp_instance_menu" class="table-of-contents__link toc-highlight">API Reference: Menu (sp_instance_menu)</a><ul><li><a href="#menu-item-types" class="table-of-contents__link toc-highlight">Menu Item Types</a></li><li><a href="#menu-widget-selection" class="table-of-contents__link toc-highlight">Menu Widget Selection</a></li><li><a href="#menu-example" class="table-of-contents__link toc-highlight">Menu Example</a></li></ul></li><li><a href="#api-reference-angular-provider-sp_angular_provider" class="table-of-contents__link toc-highlight">API Reference: Angular Provider (sp_angular_provider)</a><ul><li><a href="#provider-types" class="table-of-contents__link toc-highlight">Provider Types</a></li><li><a href="#provider-guidelines" class="table-of-contents__link toc-highlight">Provider Guidelines</a></li><li><a href="#provider-example-service" class="table-of-contents__link toc-highlight">Provider Example: Service</a></li><li><a href="#linking-provider-to-widget" class="table-of-contents__link toc-highlight">Linking Provider to Widget</a></li></ul></li><li><a href="#api-reference-widget-dependency-sp_dependency" class="table-of-contents__link toc-highlight">API Reference: Widget Dependency (sp_dependency)</a><ul><li><a href="#bundled-libraries-do-not-re-add" class="table-of-contents__link toc-highlight">Bundled Libraries (Do NOT Re-Add)</a></li><li><a href="#dependency-guidelines" class="table-of-contents__link toc-highlight">Dependency Guidelines</a></li><li><a href="#dependency-example" class="table-of-contents__link toc-highlight">Dependency Example</a></li></ul></li><li><a href="#api-reference-headerfooter-sp_header_footer" class="table-of-contents__link toc-highlight">API Reference: Header/Footer (sp_header_footer)</a><ul><li><a href="#ootb-headers-and-footers" class="table-of-contents__link toc-highlight">OOTB Headers and Footers</a></li><li><a href="#header-example" class="table-of-contents__link toc-highlight">Header Example</a></li></ul></li><li><a href="#css-and-theming-reference" class="table-of-contents__link toc-highlight">CSS and Theming Reference</a><ul><li><a href="#scss-variable-rules-for-widget-css" class="table-of-contents__link toc-highlight">SCSS Variable Rules for Widget CSS</a></li><li><a href="#extended-bootstrapsp-defaults-always-available" class="table-of-contents__link toc-highlight">Extended Bootstrap/SP Defaults (Always Available)</a></li><li><a href="#coral-theme-scss-variable-reference" class="table-of-contents__link toc-highlight">Coral Theme SCSS Variable Reference</a></li><li><a href="#spacing-scale" class="table-of-contents__link toc-highlight">Spacing Scale</a></li><li><a href="#typography-scale" class="table-of-contents__link toc-highlight">Typography Scale</a></li><li><a href="#icon-size-scale" class="table-of-contents__link toc-highlight">Icon Size Scale</a></li><li><a href="#bootstrap-grid-patterns" class="table-of-contents__link toc-highlight">Bootstrap Grid Patterns</a></li><li><a href="#css-anti-patterns" class="table-of-contents__link toc-highlight">CSS Anti-Patterns</a></li></ul></li><li><a href="#ootb-widgets-reference" class="table-of-contents__link toc-highlight">OOTB Widgets Reference</a></li><li><a href="#ootb-pages-reference" class="table-of-contents__link toc-highlight">OOTB Pages Reference</a></li><li><a href="#troubleshooting" class="table-of-contents__link toc-highlight">Troubleshooting</a><ul><li><a href="#portal-not-accessible" class="table-of-contents__link toc-highlight">Portal not accessible</a></li><li><a href="#theme-not-applying" class="table-of-contents__link toc-highlight">Theme not applying</a></li><li><a href="#navigation-menu-not-showing-most-common" class="table-of-contents__link toc-highlight">Navigation menu not showing (most common)</a></li><li><a href="#widget-not-displaying" class="table-of-contents__link toc-highlight">Widget not displaying</a></li><li><a href="#data-not-updating-in-widget" class="table-of-contents__link toc-highlight">Data not updating in widget</a></li><li><a href="#styling-issues" class="table-of-contents__link toc-highlight">Styling issues</a></li><li><a href="#css-variables-not-working" class="table-of-contents__link toc-highlight">CSS variables not working</a></li><li><a href="#library-not-loading" class="table-of-contents__link toc-highlight">Library not loading</a></li><li><a href="#provider-not-available-in-widget" class="table-of-contents__link toc-highlight">Provider not available in widget</a></li></ul></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Resources</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://www.npmjs.com/package/@servicenow/sdk" target="_blank" rel="noopener noreferrer" class="footer__link-item">NPM Package<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_cHRo"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://github.com/servicenow/sdk-examples" target="_blank" rel="noopener noreferrer" class="footer__link-item">SDK Examples<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_cHRo"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://github.com/servicenow/sdk/releases" target="_blank" rel="noopener noreferrer" class="footer__link-item">Release Notes<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_cHRo"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Help &amp; Community</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/ServiceNow/sdk/discussions" target="_blank" rel="noopener noreferrer" class="footer__link-item">Discussions<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_cHRo"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2026 ServiceNow.</div></div></div></footer></div>
+</body>
+</html>
