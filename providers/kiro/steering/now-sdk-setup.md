@@ -1,5 +1,5 @@
 ---
-inclusion: manual
+inclusion: auto
 name: Now Sdk Setup
 description: Configure the environment so now-sdk explain is usable. Run before now-sdk-explain
   if the command is not found or returns errors.
