@@ -1,9 +1,9 @@
 ---
-inclusion: manual
+inclusion: auto
 name: Now Sdk Explain
 description: Use whenever the user mentions fluent, ServiceNow, or the now-sdk, OR
   when the user prompts for edits within a fluent application (identified by a now.config.json
-  at the project root). Fetches SDK do…
+  at the project root). Fetches SDK docs for topics that are relevant to the user's query.
 ---
 
 ## Usage
