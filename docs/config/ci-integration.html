@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-config/ci-integration" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.10.1">
+<title data-rh="true">CI Integration | ServiceNow SDK</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://servicenow.github.io/sdk/config/ci-integration"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="keywords" content="fluent, servicenow, sdk, api, reference, documentation"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="CI Integration | ServiceNow SDK"><meta data-rh="true" name="description" content="Guide for running the Now SDK in CI/CD pipelines: non-interactive authentication for now-sdk install, validating that keys.ts is committed via now-sdk build --frozenKeys, and the conventions that keep pipeline runs reproducible."><meta data-rh="true" property="og:description" content="Guide for running the Now SDK in CI/CD pipelines: non-interactive authentication for now-sdk install, validating that keys.ts is committed via now-sdk build --frozenKeys, and the conventions that keep pipeline runs reproducible."><link data-rh="true" rel="icon" href="/sdk/img/logo.png"><link data-rh="true" rel="canonical" href="https://servicenow.github.io/sdk/config/ci-integration"><link data-rh="true" rel="alternate" href="https://servicenow.github.io/sdk/config/ci-integration" hreflang="en"><link data-rh="true" rel="alternate" href="https://servicenow.github.io/sdk/config/ci-integration" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Configuration","item":"https://servicenow.github.io/sdk/category/configuration"},{"@type":"ListItem","position":2,"name":"CI Integration","item":"https://servicenow.github.io/sdk/config/ci-integration"}]}</script><link rel="stylesheet" href="/sdk/assets/css/styles.6ec47962.css">
+<script src="/sdk/assets/js/runtime~main.46a42bf0.js" defer="defer"></script>
+<script src="/sdk/assets/js/main.4dcda05d.js" defer="defer"></script>
+</head>
+<body>
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||"dark"),document.documentElement.setAttribute("data-theme-choice",t||"dark")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_oERa" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/sdk/"><div class="navbar__logo"><img src="/sdk/img/logo.png" alt="ServiceNow SDK Logo" class="themedComponent_ALix themedComponent--light_yJj9"><img src="/sdk/img/logo.png" alt="ServiceNow SDK Logo" class="themedComponent_ALix themedComponent--dark_TMvu"></div><b class="navbar__title text--truncate">ServiceNow SDK</b></a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><div class="navbar__item dropdown dropdown--hoverable dropdown--right"><a aria-current="page" class="navbar__link active" aria-haspopup="true" aria-expanded="false" role="button" href="/sdk/config/ci-integration">Latest (4.7.0)</a><ul class="dropdown__menu"><li><a aria-current="page" class="dropdown__link dropdown__link--active" href="/sdk/config/ci-integration">Latest (4.7.0)</a></li><li><a class="dropdown__link" href="/sdk/4.7.0/config/ci-integration">4.7.0</a></li><li><a class="dropdown__link" href="/sdk/4.6.0">4.6.0</a></li><li><a class="dropdown__link" href="/sdk/4.5.0">4.5.0</a></li></ul></div><a href="https://github.com/ServiceNow/sdk" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_HvTi"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_tXJM colorModeToggle_a_7i"><button class="clean-btn toggleButton_iOdZ toggleButtonDisabled_Z8Z8" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_BUNm lightToggleIcon_DqGA"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_BUNm darkToggleIcon_RwGI"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_BUNm systemToggleIcon_dL3Z"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_lR11"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper__vRr"><div class="docsWrapper_fSPO"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_cNgO" type="button"></button><div class="docRoot_yPRZ"><aside class="theme-doc-sidebar-container docSidebarContainer_C_8K"><div class="sidebarViewport_dQ16"><div class="sidebar_xdck"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_Nvaz"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/sdk/"><span title="ServiceNow SDK API Reference" class="linkLabel_zP50">ServiceNow SDK API Reference</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_bNui menu__link menu__link--sublist menu__link--active" href="/sdk/category/configuration"><span title="Configuration" class="categoryLinkLabel_FdR3">Configuration</span></a><button aria-label="Collapse sidebar category &#x27;Configuration&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/config/keys-file"><span title="Keys File" class="linkLabel_zP50">Keys File</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/sdk/config/ci-integration"><span title="CI Integration" class="linkLabel_zP50">CI Integration</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/config/now-config-reference"><span title="now.config.json" class="linkLabel_zP50">now.config.json</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_bNui menu__link menu__link--sublist" href="/sdk/category/api-reference"><span title="API Reference" class="categoryLinkLabel_FdR3">API Reference</span></a><button aria-label="Collapse sidebar category &#x27;API Reference&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/api/acl-api"><span title="Acl" class="linkLabel_zP50">Acl</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/api/aiagent-api"><span title="AiAgent (sn_aia_agent)" class="linkLabel_zP50">AiAgent (sn_aia_agent)</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/api/aiagenticworkflow-api"><span title="AiAgenticWorkflow (sn_aia_usecase)" class="linkLabel_zP50">AiAgenticWorkflow (sn_aia_usecase)</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/api/applicationmenu-api"><span title="ApplicationMenu" class="linkLabel_zP50">ApplicationMenu</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/api/businessrule-api"><span title="BusinessRule" class="linkLabel_zP50">BusinessRule</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/api/clientscript-api"><span title="ClientScript" class="linkLabel_zP50">ClientScript</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/api/crossscopeprivilege-api"><span title="CrossScopePrivilege" class="linkLabel_zP50">CrossScopePrivilege</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/api/datapolicy-api"><span title="Function: DataPolicy(config)" class="linkLabel_zP50">Function: DataPolicy(config)</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/api/emailnotification-api"><span title="EmailNotification" class="linkLabel_zP50">EmailNotification</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_bNui menu__link menu__link--sublist" tabindex="0" href="/sdk/category/flow"><span title="Flow" class="categoryLinkLabel_FdR3">Flow</span></a><button aria-label="Expand sidebar category &#x27;Flow&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/api/form-api"><span title="Form" class="linkLabel_zP50">Form</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/api/importset-api"><span title="ImportSet" class="linkLabel_zP50">ImportSet</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/api/inboundemailaction-api"><span title="InboundEmailAction" class="linkLabel_zP50">InboundEmailAction</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_bNui menu__link menu__link--sublist" tabindex="0" href="/sdk/category/instance-scan"><span title="Instance Scan" class="categoryLinkLabel_FdR3">Instance Scan</span></a><button aria-label="Expand sidebar category &#x27;Instance Scan&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/api/list-api"><span title="List" class="linkLabel_zP50">List</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/api/nowassistskillconfig-api"><span title="Function: NowAssistSkillConfig(definition, promptConfig)" class="linkLabel_zP50">Function: NowAssistSkillConfig(definition, promptConfig)</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/api/property-api"><span title="Property" class="linkLabel_zP50">Property</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/api/record-api"><span title="Record" class="linkLabel_zP50">Record</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/api/restapi-api"><span title="RestApi" class="linkLabel_zP50">RestApi</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/api/role-api"><span title="Role" class="linkLabel_zP50">Role</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/api/scheduledscript-api"><span title="ScheduledScript" class="linkLabel_zP50">ScheduledScript</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/api/scriptaction-api"><span title="ScriptAction" class="linkLabel_zP50">ScriptAction</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/api/scriptinclude-api"><span title="ScriptInclude" class="linkLabel_zP50">ScriptInclude</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_bNui menu__link menu__link--sublist" tabindex="0" href="/sdk/category/service-catalog"><span title="Service Catalog" class="categoryLinkLabel_FdR3">Service Catalog</span></a><button aria-label="Expand sidebar category &#x27;Service Catalog&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_bNui menu__link menu__link--sublist" tabindex="0" href="/sdk/category/service-portal"><span title="Service Portal" class="categoryLinkLabel_FdR3">Service Portal</span></a><button aria-label="Expand sidebar category &#x27;Service Portal&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/api/sla-api"><span title="Sla" class="linkLabel_zP50">Sla</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_bNui menu__link menu__link--sublist" tabindex="0" href="/sdk/category/table"><span title="Table" class="categoryLinkLabel_FdR3">Table</span></a><button aria-label="Expand sidebar category &#x27;Table&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/api/test-api"><span title="Test" class="linkLabel_zP50">Test</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/api/uiaction-api"><span title="UiAction" class="linkLabel_zP50">UiAction</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/api/uipage-api"><span title="UiPage" class="linkLabel_zP50">UiPage</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/api/uipolicy-api"><span title="UiPolicy" class="linkLabel_zP50">UiPolicy</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/api/userpreference-api"><span title="UserPreference" class="linkLabel_zP50">UserPreference</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_bNui menu__link menu__link--sublist" tabindex="0" href="/sdk/category/workspace"><span title="Workspace" class="categoryLinkLabel_FdR3">Workspace</span></a><button aria-label="Expand sidebar category &#x27;Workspace&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_bNui menu__link menu__link--sublist" href="/sdk/category/fluent-language"><span title="Fluent Language" class="categoryLinkLabel_FdR3">Fluent Language</span></a><button aria-label="Collapse sidebar category &#x27;Fluent Language&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/fluent/data-helpers-guide"><span title="Data Helpers" class="linkLabel_zP50">Data Helpers</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/fluent/now-include-guide"><span title="Now.include" class="linkLabel_zP50">Now.include</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/fluent/now-attach-guide"><span title="Now.attach" class="linkLabel_zP50">Now.attach</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/fluent/now-ref-guide"><span title="Now.ref" class="linkLabel_zP50">Now.ref</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/sdk/fluent/override-guide"><span title="$override" class="linkLabel_zP50">$override</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_bNui menu__link menu__link--sublist" href="/sdk/category/guides"><span title="Guides" class="categoryLinkLabel_FdR3">Guides</span></a><button aria-label="Expand sidebar category &#x27;Guides&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li></ul></nav></div></div></aside><main class="docMainContainer_VuC8"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_szLJ"><div class="docItemContainer_jhyk"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_r8CR" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/sdk/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_gjCg"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/sdk/category/configuration"><span>Configuration</span></a></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">CI Integration</span></li></ul></nav><span class="theme-doc-version-badge badge badge--secondary">Version: Latest (4.7.0)</span><div class="tocCollapsible_Uos4 theme-doc-toc-mobile tocMobile_li7L"><button type="button" class="clean-btn tocCollapsibleButton_NPzK">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>CI Integration</h1></header>
+<p>Guide for running the Now SDK in CI/CD pipelines: non-interactive authentication for <code>now-sdk install</code>, validating that <code>keys.ts</code> is committed via <code>now-sdk build --frozenKeys</code>, and the conventions that keep pipeline runs reproducible.</p>
+<h2 class="anchor anchorTargetStickyNavbar_IdaJ" id="when-to-use">When to Use<a href="#when-to-use" class="hash-link" aria-label="Direct link to When to Use" title="Direct link to When to Use" translate="no">​</a></h2>
+<ul>
+<li class="">CI/CD pipelines (GitHub Actions, GitLab CI, Jenkins, etc.) building or installing a Fluent app.</li>
+<li class="">Container builds, scheduled jobs, or scripted environments where interactive prompts aren&#x27;t possible.</li>
+<li class="">Pre-merge checks that need to fail fast when developers forget to commit generated artifacts.</li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_IdaJ" id="builds---frozenkeys">Builds: <code>--frozenKeys</code><a href="#builds---frozenkeys" class="hash-link" aria-label="Direct link to builds---frozenkeys" title="Direct link to builds---frozenkeys" translate="no">​</a></h2>
+<p><code>now-sdk build</code> regenerates <code>src/fluent/generated/keys.ts</code> (the registry mapping <code>Now.ID[&#x27;...&#x27;]</code> identifiers to ServiceNow sys_ids) every time it runs. When a developer adds new Fluent records, the build appends a new entry to <code>src/fluent/generated/keys.ts</code>. <strong>That generated file must be committed to source control</strong> along with the Fluent code that introduced the identifier — see the <a class="" href="/sdk/config/keys-file">keys.ts guide</a>.</p>
+<p><code>--frozenKeys</code> is the CI-side enforcement of that rule.  This will ensure that keys was not modified by the build, and if any change a build error will occur.</p>
+<h3 class="anchor anchorTargetStickyNavbar_IdaJ" id="usage">Usage<a href="#usage" class="hash-link" aria-label="Direct link to Usage" title="Direct link to Usage" translate="no">​</a></h3>
+<div class="language-bash codeBlockContainer_dGla theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_zbX2"><pre tabindex="0" class="prism-code language-bash codeBlock_E32c thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_Jyti"><div class="token-line" style="color:#F8F8F2"><span class="token plain">now-sdk build --frozenKeys</span><br></div></code></pre></div></div>
+<p>After building, the CLI compares <code>keys.ts</code> content before and after. If anything changed during the build, it fails with:</p>
+<div class="language-text codeBlockContainer_dGla theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_zbX2"><pre tabindex="0" class="prism-code language-text codeBlock_E32c thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_Jyti"><div class="token-line" style="color:#F8F8F2"><span class="token plain">Keys file is out-of-date. To update it, run the build again without frozen keys.</span><br></div></code></pre></div></div>
+<p>This means a developer pushed Fluent code that introduces a new or modified identifier (or modifies a coalesce key) without checking in the updated <code>keys.ts</code>.</p>
+<h3 class="anchor anchorTargetStickyNavbar_IdaJ" id="why-this-matters">Why this matters<a href="#why-this-matters" class="hash-link" aria-label="Direct link to Why this matters" title="Direct link to Why this matters" translate="no">​</a></h3>
+<p><code>keys.ts</code> is the source of truth for record identity. If a pipeline builds without it being committed:</p>
+<ul>
+<li class=""><strong>Deploys produce different sys_ids on every machine.</strong> The same <code>Now.ID[&#x27;my-rule&#x27;]</code> resolves to a freshly-generated sys_id on each developer/CI machine, so the same logical record ends up with different IDs across environments.</li>
+<li class=""><strong>Updates become inserts.</strong> ServiceNow uses sys_id for record identity. A mismatch means the install creates a duplicate record instead of updating the existing one — corrupting the target instance.</li>
+<li class=""><strong>Subsequent merges hide the problem.</strong> Once a stale <code>keys.ts</code> lands in <code>main</code>, every later branch picks up the wrong IDs.</li>
+</ul>
+<p>Running <code>--frozenKeys</code> in CI catches this before merge. It&#x27;s the same build the developer should have run locally, with a guard that errors instead of silently rewriting the file.</p>
+<h3 class="anchor anchorTargetStickyNavbar_IdaJ" id="recommended-placement-in-the-pipeline">Recommended placement in the pipeline<a href="#recommended-placement-in-the-pipeline" class="hash-link" aria-label="Direct link to Recommended placement in the pipeline" title="Direct link to Recommended placement in the pipeline" translate="no">​</a></h3>
+<p>Run <code>now-sdk build --frozenKeys</code> as a pre-merge / pull-request check, before the install step:</p>
+<div class="language-yaml codeBlockContainer_dGla theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_zbX2"><pre tabindex="0" class="prism-code language-yaml codeBlock_E32c thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_Jyti"><div class="token-line" style="color:#F8F8F2"><span class="token comment" style="color:rgb(98, 114, 164)"># GitHub Actions example</span><span class="token plain"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token punctuation" style="color:rgb(248, 248, 242)">-</span><span class="token plain"> </span><span class="token key atrule">name</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> Verify keys.ts is up to date</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token key atrule">run</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> now</span><span class="token punctuation" style="color:rgb(248, 248, 242)">-</span><span class="token plain">sdk build </span><span class="token punctuation" style="color:rgb(248, 248, 242)">-</span><span class="token punctuation" style="color:rgb(248, 248, 242)">-</span><span class="token plain">frozenKeys</span><br></div></code></pre></div></div>
+<p>If the keys check fails, the developer&#x27;s fix is simple: run <code>now-sdk build</code> locally, commit the updated <code>keys.ts</code>, and push.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_IdaJ" id="authentication-for-now-sdk-install">Authentication for <code>now-sdk install</code><a href="#authentication-for-now-sdk-install" class="hash-link" aria-label="Direct link to authentication-for-now-sdk-install" title="Direct link to authentication-for-now-sdk-install" translate="no">​</a></h2>
+<p>Non-interactive authentication for <code>now-sdk install</code>. The CLI reads credentials from environment variables instead of the local keychain, so it works in CI/CD pipelines and other headless environments. Two auth types are supported: <strong>basic</strong> (username + password) and <strong>oauth</strong> (OAuth 2.0 <code>client_credentials</code> grant).</p>
+<h3 class="anchor anchorTargetStickyNavbar_IdaJ" id="when-to-run-now-sdk-install-from-ci">When to Run <code>now-sdk install</code> from CI<a href="#when-to-run-now-sdk-install-from-ci" class="hash-link" aria-label="Direct link to when-to-run-now-sdk-install-from-ci" title="Direct link to when-to-run-now-sdk-install-from-ci" translate="no">​</a></h3>
+<p>Use this for a <strong>main-branch pipeline that deploys changes to the next-stage instance</strong> (typically a shared <strong>test</strong> / integration / dev instance). The pipeline installs the just-built app to that instance so QA, integration tests, and downstream environments can pick up the latest changes automatically after merge.</p>
+<p><strong>Do not use <code>now-sdk install</code> from CI to deploy to production instances.</strong> Production deploys should go through ServiceNow&#x27;s standard application promotion mechanisms — the App Repo, or guided application install/upgrade — so that change management, approvals, and rollback work the way the platform expects.</p>
+<h3 class="anchor anchorTargetStickyNavbar_IdaJ" id="enabling-ci-mode">Enabling CI Mode<a href="#enabling-ci-mode" class="hash-link" aria-label="Direct link to Enabling CI Mode" title="Direct link to Enabling CI Mode" translate="no">​</a></h3>
+<p>CI mode is gated by a single env var:</p>
+<div class="language-bash codeBlockContainer_dGla theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_zbX2"><pre tabindex="0" class="prism-code language-bash codeBlock_E32c thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_Jyti"><div class="token-line" style="color:#F8F8F2"><span class="token plain">export SN_SDK_NODE_ENV=SN_SDK_CI_INSTALL</span><br></div></code></pre></div></div>
+<p>When set, the CLI reads credentials from env vars instead of the keychain. Choose the auth type with <code>SN_SDK_AUTH_TYPE</code>:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th><code>SN_SDK_AUTH_TYPE</code></th><th>Behavior</th></tr></thead><tbody><tr><td>unset or <code>basic</code></td><td>Use <code>SN_SDK_USER</code> + <code>SN_SDK_USER_PWD</code> (basic auth). Default for backward compatibility.</td></tr><tr><td><code>oauth</code></td><td>Use <code>SN_SDK_OAUTH_CLIENT_ID</code> + <code>SN_SDK_OAUTH_CLIENT_SECRET</code> (OAuth <code>client_credentials</code>).</td></tr></tbody></table>
+<p>Any other value is rejected with an error before any network call.</p>
+<h3 class="anchor anchorTargetStickyNavbar_IdaJ" id="basic-auth">Basic Auth<a href="#basic-auth" class="hash-link" aria-label="Direct link to Basic Auth" title="Direct link to Basic Auth" translate="no">​</a></h3>
+<p>Simplest setup — username and password of an instance user.</p>
+<h4 class="anchor anchorTargetStickyNavbar_IdaJ" id="environment-variables">Environment Variables<a href="#environment-variables" class="hash-link" aria-label="Direct link to Environment Variables" title="Direct link to Environment Variables" translate="no">​</a></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Variable</th><th>Required</th><th>Value</th></tr></thead><tbody><tr><td><code>SN_SDK_NODE_ENV</code></td><td>yes</td><td><code>SN_SDK_CI_INSTALL</code></td></tr><tr><td><code>SN_SDK_AUTH_TYPE</code></td><td>no</td><td><code>basic</code> (or unset)</td></tr><tr><td><code>SN_SDK_INSTANCE_URL</code></td><td>yes</td><td>Full instance URL, e.g. <code>https://your-instance.service-now.com</code></td></tr><tr><td><code>SN_SDK_USER</code></td><td>yes</td><td>Username</td></tr><tr><td><code>SN_SDK_USER_PWD</code></td><td>yes</td><td>Password</td></tr></tbody></table>
+<h4 class="anchor anchorTargetStickyNavbar_IdaJ" id="example">Example<a href="#example" class="hash-link" aria-label="Direct link to Example" title="Direct link to Example" translate="no">​</a></h4>
+<div class="language-bash codeBlockContainer_dGla theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_zbX2"><pre tabindex="0" class="prism-code language-bash codeBlock_E32c thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_Jyti"><div class="token-line" style="color:#F8F8F2"><span class="token plain">export SN_SDK_NODE_ENV=SN_SDK_CI_INSTALL</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">export SN_SDK_AUTH_TYPE=basic</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">export SN_SDK_INSTANCE_URL=https://your-instance.service-now.com</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">export SN_SDK_USER=ci-user</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">export SN_SDK_USER_PWD=...</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">now-sdk install</span><br></div></code></pre></div></div>
+<h4 class="anchor anchorTargetStickyNavbar_IdaJ" id="when-to-choose-basic">When to Choose Basic<a href="#when-to-choose-basic" class="hash-link" aria-label="Direct link to When to Choose Basic" title="Direct link to When to Choose Basic" translate="no">​</a></h4>
+<ul>
+<li class="">PDIs, sandbox instances, fast iteration where OAuth setup overhead isn&#x27;t worth it.</li>
+<li class="">Existing pipelines already wired for username/password.</li>
+</ul>
+<p>Avoid for production CI: every run sends the password to the instance, and rotating it means rotating in every pipeline secret store.</p>
+<h3 class="anchor anchorTargetStickyNavbar_IdaJ" id="oauth-client-credentials">OAuth Client Credentials<a href="#oauth-client-credentials" class="hash-link" aria-label="Direct link to OAuth Client Credentials" title="Direct link to OAuth Client Credentials" translate="no">​</a></h3>
+<p>Token-based, no user password ever leaves your secret store. The CLI fetches a fresh access token at the start of each run.</p>
+<h4 class="anchor anchorTargetStickyNavbar_IdaJ" id="environment-variables-1">Environment Variables<a href="#environment-variables-1" class="hash-link" aria-label="Direct link to Environment Variables" title="Direct link to Environment Variables" translate="no">​</a></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Variable</th><th>Required</th><th>Value</th></tr></thead><tbody><tr><td><code>SN_SDK_NODE_ENV</code></td><td>yes</td><td><code>SN_SDK_CI_INSTALL</code></td></tr><tr><td><code>SN_SDK_AUTH_TYPE</code></td><td>yes</td><td><code>oauth</code></td></tr><tr><td><code>SN_SDK_INSTANCE_URL</code></td><td>yes</td><td>Full instance URL</td></tr><tr><td><code>SN_SDK_OAUTH_CLIENT_ID</code></td><td>yes</td><td>OAuth Application Registry <code>client_id</code></td></tr><tr><td><code>SN_SDK_OAUTH_CLIENT_SECRET</code></td><td>yes</td><td>OAuth Application Registry <code>client_secret</code></td></tr></tbody></table>
+<h4 class="anchor anchorTargetStickyNavbar_IdaJ" id="example-1">Example<a href="#example-1" class="hash-link" aria-label="Direct link to Example" title="Direct link to Example" translate="no">​</a></h4>
+<div class="language-bash codeBlockContainer_dGla theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_zbX2"><pre tabindex="0" class="prism-code language-bash codeBlock_E32c thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_Jyti"><div class="token-line" style="color:#F8F8F2"><span class="token plain">export SN_SDK_NODE_ENV=SN_SDK_CI_INSTALL</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">export SN_SDK_AUTH_TYPE=oauth</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">export SN_SDK_INSTANCE_URL=https://your-instance.service-now.com</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">export SN_SDK_OAUTH_CLIENT_ID=...</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">export SN_SDK_OAUTH_CLIENT_SECRET=...</span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#F8F8F2"><span class="token plain">now-sdk install</span><br></div></code></pre></div></div>
+<p>The CLI calls <code>${SN_SDK_INSTANCE_URL}/oauth_token.do</code> once at startup with <code>grant_type=client_credentials</code>, then uses the returned access token for all subsequent requests. There is no refresh token in this grant — each invocation fetches a fresh token.</p>
+<h4 class="anchor anchorTargetStickyNavbar_IdaJ" id="servicenow-instance-configuration">ServiceNow Instance Configuration<a href="#servicenow-instance-configuration" class="hash-link" aria-label="Direct link to ServiceNow Instance Configuration" title="Direct link to ServiceNow Instance Configuration" translate="no">​</a></h4>
+<p>OAuth requires one-time setup on the instance. Complete all four steps or the token endpoint will reject the request.</p>
+<h5 class="anchor anchorTargetStickyNavbar_IdaJ" id="1-create-or-open-the-oauth-application-registry">1. Create or open the OAuth Application Registry<a href="#1-create-or-open-the-oauth-application-registry" class="hash-link" aria-label="Direct link to 1. Create or open the OAuth Application Registry" title="Direct link to 1. Create or open the OAuth Application Registry" translate="no">​</a></h5>
+<p><strong>System OAuth → Application Registry → New</strong> → <strong>Create an OAuth API endpoint for external clients</strong>. Do not use OIDC providers — they don&#x27;t issue tokens for this grant.</p>
+<ul>
+<li class="">Set &quot;Public Client&quot; to <code>false</code></li>
+<li class="">Set &quot;OAuth Application User&quot; to a sys_user in step 3</li>
+</ul>
+<p>Note the <strong>Client ID</strong> and <strong>Client Secret</strong> — these become <code>SN_SDK_OAUTH_CLIENT_ID</code> and <code>SN_SDK_OAUTH_CLIENT_SECRET</code>.</p>
+<h5 class="anchor anchorTargetStickyNavbar_IdaJ" id="2-enable-the-client_credentials-grant">2. Enable the <code>client_credentials</code> grant<a href="#2-enable-the-client_credentials-grant" class="hash-link" aria-label="Direct link to 2-enable-the-client_credentials-grant" title="Direct link to 2-enable-the-client_credentials-grant" translate="no">​</a></h5>
+<p>Two things must be in place:</p>
+<ul>
+<li class="">
+<p><strong>On the Application Registry record</strong>, <strong>Grant type</strong> must include <code>Client Credentials</code>.</p>
+</li>
+<li class="">
+<p><strong>System property <code>glide.oauth.inbound.client.credential.grant_type.enabled</code></strong> must exist and be set to <code>true</code>. If the property does not already exist on the instance, create it in <code>sys_properties</code> with:</p>
+<ul>
+<li class=""><strong>Name:</strong> <code>glide.oauth.inbound.client.credential.grant_type.enabled</code></li>
+<li class=""><strong>Type:</strong> <code>true | false</code></li>
+<li class=""><strong>Value:</strong> <code>true</code></li>
+</ul>
+<p>See ServiceNow KB1645212 for details: <a href="https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB1645212" target="_blank" rel="noopener noreferrer" class="">https://support.servicenow.com/kb?id=kb_article_view&amp;sysparm_article=KB1645212</a></p>
+</li>
+</ul>
+<p>Without the system property set to <code>true</code>, the token endpoint will reject <code>grant_type=client_credentials</code> regardless of how the OAuth app is configured.</p>
+<h5 class="anchor anchorTargetStickyNavbar_IdaJ" id="3-configure-the-service-user">3. Configure the Service User<a href="#3-configure-the-service-user" class="hash-link" aria-label="Direct link to 3. Configure the Service User" title="Direct link to 3. Configure the Service User" translate="no">​</a></h5>
+<p>The user mapped in step 1 must:</p>
+<ul>
+<li class=""><strong>Have roles</strong> sufficient to install your app — typically <code>admin</code>.</li>
+<li class=""><strong>Have <code>Identity Type = Human</code></strong> on the <code>sys_user</code> record. The SDK&#x27;s OAuth flow performs a CSRF dance against <code>/angular.do?sysparm_type=get_user</code> to obtain a UI session token; AngularProcessor blocks <code>machine</code> identities with <code>User &lt;name&gt; is not allowed to access com.glide.ui.ng.AngularProcessor</code>, even when the user has <code>admin</code>.</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_IdaJ" id="when-to-choose-oauth">When to Choose OAuth<a href="#when-to-choose-oauth" class="hash-link" aria-label="Direct link to When to Choose OAuth" title="Direct link to When to Choose OAuth" translate="no">​</a></h4>
+<ul>
+<li class="">Production CI/CD where credential rotation, audit, and least-privilege matter.</li>
+<li class="">Multi-pipeline environments where a single shared service account beats one password per pipeline.</li>
+<li class="">Compliance regimes that prohibit storing user passwords in CI secret stores.</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_IdaJ" id="choosing-an-auth-type">Choosing an Auth Type<a href="#choosing-an-auth-type" class="hash-link" aria-label="Direct link to Choosing an Auth Type" title="Direct link to Choosing an Auth Type" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th></th><th>Basic</th><th>OAuth Client Credentials</th></tr></thead><tbody><tr><td>Setup effort</td><td>None — uses existing user</td><td>One-time OAuth app + entity profile + service user setup</td></tr><tr><td>Credential rotation</td><td>Rotate user password</td><td>Rotate client secret (no password change)</td></tr><tr><td>Audit trail</td><td>User attribution</td><td>Service-account attribution (via mapped Default User)</td></tr><tr><td>Network surface</td><td>Password sent on every request</td><td>Password never sent; token fetched once per run</td></tr><tr><td>Best for</td><td>PDIs, sandbox, fast iteration</td><td>Production CI, regulated environments</td></tr></tbody></table>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_IdaJ" id="troubleshooting">Troubleshooting<a href="#troubleshooting" class="hash-link" aria-label="Direct link to Troubleshooting" title="Direct link to Troubleshooting" translate="no">​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Symptom</th><th>Likely Cause</th></tr></thead><tbody><tr><td><code>Keys file is out-of-date. To update it, run the build again without frozen keys.</code></td><td>Developer added or changed an identifier without committing the regenerated <code>keys.ts</code>. Run <code>now-sdk build</code> locally, commit the file, push.</td></tr><tr><td><code>Unsupported value for SN_SDK_AUTH_TYPE</code></td><td>Typo. Must be exactly <code>basic</code> or <code>oauth</code>.</td></tr><tr><td><code>CI basic auth is missing required environment variables: ...</code></td><td>One of <code>SN_SDK_INSTANCE_URL</code> / <code>SN_SDK_USER</code> / <code>SN_SDK_USER_PWD</code> is unset.</td></tr><tr><td><code>CI OAuth client_credentials is missing required environment variables: ...</code></td><td>One of <code>SN_SDK_INSTANCE_URL</code> / <code>SN_SDK_OAUTH_CLIENT_ID</code> / <code>SN_SDK_OAUTH_CLIENT_SECRET</code> is unset.</td></tr><tr><td><code>401 {&quot;error&quot;:&quot;server_error&quot;,&quot;error_description&quot;:&quot;access_denied&quot;}</code> from <code>/oauth_token.do</code></td><td>Missing Entity Profile + Default User on the OAuth app, <code>client_credentials</code> grant not enabled, or <code>glide.oauth.inbound.client.credential.grant_type.enabled</code> not set to <code>true</code>.</td></tr><tr><td><code>User &lt;name&gt; is not allowed to access com.glide.ui.ng.AngularProcessor</code> after token is issued</td><td>Mapped service user has <code>Identity Type = Machine</code>. Change to <code>Human</code> on the <code>sys_user</code> record.</td></tr><tr><td><code>401 invalid_client</code></td><td>Client ID or secret typo. Re-copy from the Application Registry record.</td></tr><tr><td><code>401 Unauthorized</code> on basic auth</td><td>Username/password incorrect, or the user lacks roles for the operation.</td></tr></tbody></table>
+<p>Check <strong>System Logs → All</strong> filtered to <code>Source = OAuth</code> (for OAuth) or <code>Source = Transaction</code> (for basic) for the precise platform-side error — response bodies are deliberately vague but the logs name the actual cause.</p>
+<h2 class="anchor anchorTargetStickyNavbar_IdaJ" id="security-notes">Security Notes<a href="#security-notes" class="hash-link" aria-label="Direct link to Security Notes" title="Direct link to Security Notes" translate="no">​</a></h2>
+<ul>
+<li class="">Never commit credentials to source control. Use your CI provider&#x27;s secret store (GitHub Actions secrets, GitLab CI variables, Jenkins Credentials, etc.).</li>
+<li class="">Use a dedicated service user rather than reusing a person&#x27;s account — auditing, rotation, and role narrowing are all easier.</li>
+<li class="">For OAuth, rotate the client secret regularly. The <code>client_credentials</code> grant has no refresh token, so each CLI run fetches a fresh access token from the secret.</li>
+<li class="">For basic, rotate the password regularly and prefer a service account with the minimum roles required for the operations performed.</li>
+</ul></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-tags-row"><div class="col"><b>Tags:</b><ul class="tags_umDT padding--none margin-left--sm"><li class="tag_hNSO"><a rel="tag" class="tag_EQI_ tagRegular_g31c" href="/sdk/tags/ci">ci</a></li><li class="tag_hNSO"><a rel="tag" class="tag_EQI_ tagRegular_g31c" href="/sdk/tags/cd">cd</a></li><li class="tag_hNSO"><a rel="tag" class="tag_EQI_ tagRegular_g31c" href="/sdk/tags/integration">integration</a></li><li class="tag_hNSO"><a rel="tag" class="tag_EQI_ tagRegular_g31c" href="/sdk/tags/install">install</a></li><li class="tag_hNSO"><a rel="tag" class="tag_EQI_ tagRegular_g31c" href="/sdk/tags/build">build</a></li><li class="tag_hNSO"><a rel="tag" class="tag_EQI_ tagRegular_g31c" href="/sdk/tags/deploy">deploy</a></li><li class="tag_hNSO"><a rel="tag" class="tag_EQI_ tagRegular_g31c" href="/sdk/tags/headless">headless</a></li><li class="tag_hNSO"><a rel="tag" class="tag_EQI_ tagRegular_g31c" href="/sdk/tags/automation">automation</a></li><li class="tag_hNSO"><a rel="tag" class="tag_EQI_ tagRegular_g31c" href="/sdk/tags/frozen-keys">frozenKeys</a></li><li class="tag_hNSO"><a rel="tag" class="tag_EQI_ tagRegular_g31c" href="/sdk/tags/frozen-keys">frozen-keys</a></li><li class="tag_hNSO"><a rel="tag" class="tag_EQI_ tagRegular_g31c" href="/sdk/tags/keys-ts">keys.ts</a></li><li class="tag_hNSO"><a rel="tag" class="tag_EQI_ tagRegular_g31c" href="/sdk/tags/auth">auth</a></li><li class="tag_hNSO"><a rel="tag" class="tag_EQI_ tagRegular_g31c" href="/sdk/tags/basic">basic</a></li><li class="tag_hNSO"><a rel="tag" class="tag_EQI_ tagRegular_g31c" href="/sdk/tags/oauth">oauth</a></li><li class="tag_hNSO"><a rel="tag" class="tag_EQI_ tagRegular_g31c" href="/sdk/tags/client-credentials">client-credentials</a></li><li class="tag_hNSO"><a rel="tag" class="tag_EQI_ tagRegular_g31c" href="/sdk/tags/sn-sdk-node-env">SN_SDK_NODE_ENV</a></li><li class="tag_hNSO"><a rel="tag" class="tag_EQI_ tagRegular_g31c" href="/sdk/tags/sn-sdk-auth-type">SN_SDK_AUTH_TYPE</a></li><li class="tag_hNSO"><a rel="tag" class="tag_EQI_ tagRegular_g31c" href="/sdk/tags/sn-sdk-instance-url">SN_SDK_INSTANCE_URL</a></li><li class="tag_hNSO"><a rel="tag" class="tag_EQI_ tagRegular_g31c" href="/sdk/tags/sn-sdk-user">SN_SDK_USER</a></li><li class="tag_hNSO"><a rel="tag" class="tag_EQI_ tagRegular_g31c" href="/sdk/tags/sn-sdk-user-pwd">SN_SDK_USER_PWD</a></li><li class="tag_hNSO"><a rel="tag" class="tag_EQI_ tagRegular_g31c" href="/sdk/tags/sn-sdk-oauth-client-id">SN_SDK_OAUTH_CLIENT_ID</a></li><li class="tag_hNSO"><a rel="tag" class="tag_EQI_ tagRegular_g31c" href="/sdk/tags/sn-sdk-oauth-client-secret">SN_SDK_OAUTH_CLIENT_SECRET</a></li></ul></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/sdk/config/keys-file"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Keys File</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/sdk/config/now-config-reference"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">now.config.json</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_WmM6 thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#when-to-use" class="table-of-contents__link toc-highlight">When to Use</a></li><li><a href="#builds---frozenkeys" class="table-of-contents__link toc-highlight">Builds: <code>--frozenKeys</code></a><ul><li><a href="#usage" class="table-of-contents__link toc-highlight">Usage</a></li><li><a href="#why-this-matters" class="table-of-contents__link toc-highlight">Why this matters</a></li><li><a href="#recommended-placement-in-the-pipeline" class="table-of-contents__link toc-highlight">Recommended placement in the pipeline</a></li></ul></li><li><a href="#authentication-for-now-sdk-install" class="table-of-contents__link toc-highlight">Authentication for <code>now-sdk install</code></a><ul><li><a href="#when-to-run-now-sdk-install-from-ci" class="table-of-contents__link toc-highlight">When to Run <code>now-sdk install</code> from CI</a></li><li><a href="#enabling-ci-mode" class="table-of-contents__link toc-highlight">Enabling CI Mode</a></li><li><a href="#basic-auth" class="table-of-contents__link toc-highlight">Basic Auth</a></li><li><a href="#oauth-client-credentials" class="table-of-contents__link toc-highlight">OAuth Client Credentials</a></li><li><a href="#choosing-an-auth-type" class="table-of-contents__link toc-highlight">Choosing an Auth Type</a></li></ul></li><li><a href="#troubleshooting" class="table-of-contents__link toc-highlight">Troubleshooting</a></li><li><a href="#security-notes" class="table-of-contents__link toc-highlight">Security Notes</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Resources</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://www.npmjs.com/package/@servicenow/sdk" target="_blank" rel="noopener noreferrer" class="footer__link-item">NPM Package<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_HvTi"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://github.com/servicenow/sdk-examples" target="_blank" rel="noopener noreferrer" class="footer__link-item">SDK Examples<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_HvTi"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://github.com/servicenow/sdk/releases" target="_blank" rel="noopener noreferrer" class="footer__link-item">Release Notes<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_HvTi"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Help &amp; Community</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/ServiceNow/sdk/discussions" target="_blank" rel="noopener noreferrer" class="footer__link-item">Discussions<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_HvTi"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2026 ServiceNow.</div></div></div></footer></div>
+</body>
+</html>

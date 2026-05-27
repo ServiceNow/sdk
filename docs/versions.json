@@ -1,14 +1,39 @@
 {
   "latest": {
-    "version": "4.7.0-alpha.3",
+    "version": "4.7.0",
     "url": "https://servicenow.github.io/sdk/",
     "llms": "https://servicenow.github.io/sdk/llms.txt"
   },
   "versions": [
     {
-      "version": "4.7.0-alpha.3",
-      "url": "https://servicenow.github.io/sdk/4.7.0-alpha.3/",
-      "llms": "https://servicenow.github.io/sdk/4.7.0-alpha.3/llms.txt"
+      "version": "4.7.0",
+      "url": "https://servicenow.github.io/sdk/4.7.0/",
+      "llms": "https://servicenow.github.io/sdk/4.7.0/llms.txt"
+    },
+    {
+      "version": "4.7.0-alpha.8",
+      "url": "https://servicenow.github.io/sdk/4.7.0-alpha.8/",
+      "llms": "https://servicenow.github.io/sdk/4.7.0-alpha.8/llms.txt"
+    },
+    {
+      "version": "4.7.0-alpha.7",
+      "url": "https://servicenow.github.io/sdk/4.7.0-alpha.7/",
+      "llms": "https://servicenow.github.io/sdk/4.7.0-alpha.7/llms.txt"
+    },
+    {
+      "version": "4.7.0-alpha.6",
+      "url": "https://servicenow.github.io/sdk/4.7.0-alpha.6/",
+      "llms": "https://servicenow.github.io/sdk/4.7.0-alpha.6/llms.txt"
+    },
+    {
+      "version": "4.7.0-alpha.5",
+      "url": "https://servicenow.github.io/sdk/4.7.0-alpha.5/",
+      "llms": "https://servicenow.github.io/sdk/4.7.0-alpha.5/llms.txt"
+    },
+    {
+      "version": "4.7.0-alpha.4",
+      "url": "https://servicenow.github.io/sdk/4.7.0-alpha.4/",
+      "llms": "https://servicenow.github.io/sdk/4.7.0-alpha.4/llms.txt"
     },
     {
       "version": "4.6.0",
