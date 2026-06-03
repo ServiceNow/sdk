@@ -14,7 +14,6 @@ This repository contains agent skills for creating, editing, and deploying Servi
 | Skill | Description |
 |---|---|
 | **now-sdk-explain** | Fetches SDK documentation via `npx @servicenow/sdk explain`. Covers API types, metadata conventions, skills, and project structure. Automatically triggered when working in a Fluent app or when ServiceNow/Fluent topics are mentioned. |
-| **now-sdk-setup** | Configures the environment (Node.js 20+, `@servicenow/sdk` v4.6.0+) so that `now-sdk explain` works. Run this if `now-sdk-explain` fails with environment errors. |
 
 ## Setup by Tool
 
@@ -31,12 +30,11 @@ This repository contains agent skills for creating, editing, and deploying Servi
 ### Codex
 
 1. Start a Codex session.
-2. Run the following two commands to directly install the skills:
+2. Run the following command to directly install the skill:
    ```
-   $skill-installer https://github.com/ServiceNow/sdk/tree/master/skills/now-sdk-setup
    $skill-installer https://github.com/ServiceNow/sdk/tree/master/skills/now-sdk-explain
    ```
-3. Restart Codex to load the skills.
+3. Restart Codex to load the skill.
 
 ### Cursor
 

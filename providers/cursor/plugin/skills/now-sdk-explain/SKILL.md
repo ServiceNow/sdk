@@ -38,7 +38,8 @@ npx @servicenow/sdk explain <topic> --format=raw
 ## Prerequisite knowledge and guidelines
 
 - The first time this skill is invoked in a session, please familiarize yourself with general fluent development by reading everything under `npx @servicenow/sdk explain quickstart --list --format=raw`. 
-- Always use the `npx @servicenow/sdk` cli commands whenever possible to create, build, and deploy fluent projects. 
+- Always use the `npx @servicenow/sdk` cli commands whenever possible to create, build, and deploy fluent projects.
+- If the `npx @servicenow/sdk explain` command fails, check the version of the SDK and upgrade if necessary- `explain` is **mandatory** for this skill and only available in versions >= `4.6.0`
 
 ## For any task — always start here
 
@@ -48,13 +49,6 @@ npx @servicenow/sdk explain <topic> --format=raw
 - Many items are spread out across multiple topics. As such, it is very important to read all relevant topics before making any changes.
 
 ## If a now-sdk command fails
-
-Invoke `/now-sdk-setup` if the error indicates an environment configuration problem:
-
-- `@servicenow/sdk is not in this registry` — `@servicenow/sdk` is not installed
-- Node.js version errors (e.g. `The engine "node" is incompatible`)
-
-Do **not** invoke `/now-sdk-setup` for other errors — these are not environment problems and that skill will not help:
 
 - `No documentation found for "<topic>"` — wrong topic name, try `--list`
 - `No match for "<topic>"` — use a different search term
