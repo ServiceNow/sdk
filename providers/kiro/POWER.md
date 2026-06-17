@@ -17,6 +17,7 @@ Fluent Skills: Use whenever the user mentions fluent, ServiceNow, or the now-sdk
 | Skill / Reference | Steering file | Description |
 | ----------------- | ------------- | ----------- |
 | **Now Sdk Explain** | `steering/now-sdk-explain.md` | Use whenever the user mentions fluent, ServiceNow, or the now-sdk, OR when the user prompts for edits within a fluent application (identified by a now.config.json at the project root). Fetches SDK do… |
+| **Now Sdk Query** | `steering/now-sdk-query.md` | Use when the user needs to look up live data from a ServiceNow instance during Fluent development — resolving sys_ids, inspecting table columns, checking existing records, fetching choice values, reading role or scope info, or verifying whether a record already exists. |
 
 ## License and support
 

@@ -14,6 +14,7 @@ This repository contains agent skills for creating, editing, and deploying Servi
 | Skill | Description |
 |---|---|
 | **now-sdk-explain** | Fetches SDK documentation via `npx @servicenow/sdk explain`. Covers API types, metadata conventions, skills, and project structure. Automatically triggered when working in a Fluent app or when ServiceNow/Fluent topics are mentioned. |
+| **now-sdk-query** | Queries live data from the authenticated ServiceNow instance via `npx @servicenow/sdk query`. Use to resolve sys_ids, inspect table schema, check for record collisions, or fetch choice values and role/scope info during Fluent development. |
 
 ## Setup by Tool
 
@@ -30,11 +31,12 @@ This repository contains agent skills for creating, editing, and deploying Servi
 ### Codex
 
 1. Start a Codex session.
-2. Run the following command to directly install the skill:
+2. Run the following commands to directly install the skills:
    ```
    $skill-installer https://github.com/ServiceNow/sdk/tree/master/skills/now-sdk-explain
+   $skill-installer https://github.com/ServiceNow/sdk/tree/master/skills/now-sdk-query
    ```
-3. Restart Codex to load the skill.
+3. Restart Codex to load the skills.
 
 ### Cursor
 
