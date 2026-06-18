@@ -78,10 +78,11 @@ Before writing any `query` call, run the subcommand help to get the exact flag n
 npx @servicenow/sdk query --help
 ```
 
-Then read the full usage guide for deeper context:
+Then read the full usage guide and encoded query format guide for deeper context:
 
 ```bash
 npx @servicenow/sdk explain query --format=raw
+npx @servicenow/sdk explain encoded-query-guide --format=raw
 ```
 
 The required flag for filtering is `-q` / `--query`. Every query call needs it along with the table name

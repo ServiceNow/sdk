@@ -30,11 +30,11 @@ This repository contains agent skills for creating, editing, and deploying Servi
 ### Codex
 
 1. Start a Codex session.
-2. Run the following commands to directly install the skills:
+2. Run the following command to directly install the skill:
    ```
    $skill-installer https://github.com/ServiceNow/sdk/tree/master/skills/now-sdk
    ```
-3. Restart Codex to load the skills.
+3. Restart Codex to load the skill.
 
 ### Cursor
 
