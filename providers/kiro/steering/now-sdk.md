@@ -13,7 +13,10 @@ npx @servicenow/sdk --help
 npx @servicenow/sdk explain quickstart --list --format=raw
 ```
 
+`npx @servicenow/sdk --help` lists available subcommands but does not show their flags. Before using any subcommand for the first time, always run `npx @servicenow/sdk <subcommand> --help` to see its full options. Never guess flag names — they vary by subcommand and guessing leads to errors.
+
 Then read each quickstart topic in full:
+
 ```bash
 npx @servicenow/sdk explain <quickstart-topic> --format=raw
 ```
@@ -23,21 +26,25 @@ npx @servicenow/sdk explain <quickstart-topic> --format=raw
 IMPORTANT: _Never_ open a full topic without first viewing the summary via the `--peek` option! This will prevent you from accidentally opening the wrong topic and wasting context space.
 
 To show all available topics with their related tags:
+
 ```bash
 npx @servicenow/sdk explain --list --format=raw
 ```
 
 To search for topics, showing the descriptions of all matches:
+
 ```bash
 npx @servicenow/sdk explain <topic> --list --peek --format=raw
 ```
 
 To preview a topic:
+
 ```bash
 npx @servicenow/sdk explain <topic> --peek --format=raw
 ```
 
 Once you are certain you want to read the full topic, open it like this:
+
 ```bash
 npx @servicenow/sdk explain <topic> --format=raw
 ```
@@ -63,11 +70,22 @@ npx @servicenow/sdk explain <topic> --format=raw
 
 ## Live Instance Queries (query)
 
-Before using `now-sdk query`, verify it is available and read the full usage guide:
+`query` is only available in `@servicenow/sdk` versions >= `4.8.0`. If the command is not found, check the installed version and inform the user to upgrade.
+
+Before writing any `query` call, run the subcommand help to get the exact flag names — the top-level `--help` does not show subcommand flags, so do not guess:
 
 ```bash
 npx @servicenow/sdk query --help
+```
+
+Then read the full usage guide for deeper context:
+
+```bash
 npx @servicenow/sdk explain query --format=raw
 ```
 
-`query` is only available in `@servicenow/sdk` versions >= `4.8.0`. If the command is not found, check the installed version and inform the user to upgrade.
+The required flag for filtering is `-q` / `--query`. Every query call needs it along with the table name
+
+```bash
+npx @servicenow/sdk query [table] -q '[query]'
+```
