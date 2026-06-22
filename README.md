@@ -45,6 +45,21 @@ This repository contains agent skills for creating, editing, and deploying Servi
 
 Alternatively, loading the skills into Claude Code will also allow Cursor to use them.
 
+### Grok
+
+1. Start a Grok session.
+2. Add the marketplace and install the plugin:
+   ```
+   grok plugin marketplace add servicenow/sdk
+   grok plugin install fluent --trust
+   ```
+3. Restart Grok or run `/plugins` and reload plugins to load the skill.
+
+Alternatively, install the plugin directly without adding the marketplace:
+```
+grok plugin install servicenow/sdk#providers/grok/plugin --trust
+```
+
 ### Kiro
 
 The [`providers/kiro/`](providers/kiro/) directory contains a Power with steering files for each skill.

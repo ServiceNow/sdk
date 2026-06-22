@@ -1,0 +1,17 @@
+{
+  "name": "servicenow",
+  "owner": {
+    "name": "ServiceNow"
+  },
+  "plugins": [
+    {
+      "name": "fluent",
+      "source": "./providers/grok/plugin/",
+      "description": "ServiceNow Fluent SDK",
+      "version": "1.0.2",
+      "author": {
+        "name": "ServiceNow"
+      }
+    }
+  ]
+}
