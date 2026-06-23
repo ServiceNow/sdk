@@ -88,5 +88,5 @@ npx @servicenow/sdk explain encoded-query-guide --format=raw
 The required flag for filtering is `-q` / `--query`. Every query call needs it along with the table name
 
 ```bash
-npx @servicenow/sdk query [table] -q '[query]'
+npx @servicenow/sdk query <table> -q '<query>'
 ```
