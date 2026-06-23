@@ -50,7 +50,7 @@ Alternatively, loading the skills into Claude Code will also allow Cursor to use
 2. Add the marketplace and install the plugin:
    ```
    grok plugin marketplace add servicenow/sdk
-   grok plugin install fluent --trust
+   grok plugin install servicenow --trust
    ```
 3. Restart Grok or run `/plugins` and reload plugins to load the skill.
 

@@ -6,7 +6,7 @@
   },
   "plugins": [
     {
-      "name": "fluent",
+      "name": "servicenow",
       "source": {
         "type": "local",
         "path": "./providers/grok/plugin"
