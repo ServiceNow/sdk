@@ -13,7 +13,7 @@ This repository contains agent skills for creating, editing, and deploying Servi
 
 | Skill | Description |
 |---|---|
-| **now-sdk-explain** | Fetches SDK documentation via `npx @servicenow/sdk explain`. Covers API types, metadata conventions, skills, and project structure. Automatically triggered when working in a Fluent app or when ServiceNow/Fluent topics are mentioned. |
+| **now-sdk** | Covers CLI discovery, SDK documentation, and live instance queries. Automatically triggered when working in a Fluent app or when ServiceNow/Fluent topics are mentioned. Uses `npx @servicenow/sdk --help` and `explain quickstart` to orient the agent, then provides guidance for the `explain` and `query` subcommands. |
 
 ## Setup by Tool
 
@@ -22,8 +22,7 @@ This repository contains agent skills for creating, editing, and deploying Servi
 1. Start a Claude Code session.
 2. Add the marketplace and install the plugin:
    ```
-   /plugin marketplace add servicenow/sdk
-   /plugin install fluent
+   /plugin install servicenow-sdk@claude-plugins-official
    /reload-plugins
    ```
 
@@ -32,7 +31,7 @@ This repository contains agent skills for creating, editing, and deploying Servi
 1. Start a Codex session.
 2. Run the following command to directly install the skill:
    ```
-   $skill-installer https://github.com/ServiceNow/sdk/tree/master/skills/now-sdk-explain
+   $skill-installer https://github.com/ServiceNow/sdk/tree/master/skills/now-sdk
    ```
 3. Restart Codex to load the skill.
 
@@ -44,6 +43,21 @@ This repository contains agent skills for creating, editing, and deploying Servi
 4. Select `Add to Cursor` for the `fluent` plugin.
 
 Alternatively, loading the skills into Claude Code will also allow Cursor to use them.
+
+### Grok
+
+1. Start a Grok session.
+2. Add the marketplace and install the plugin:
+   ```
+   grok plugin marketplace add servicenow/sdk
+   grok plugin install fluent --trust
+   ```
+3. Restart Grok or run `/plugins` and reload plugins to load the skill.
+
+Alternatively, install the plugin directly without adding the marketplace:
+```
+grok plugin install servicenow/sdk#providers/grok/plugin --trust
+```
 
 ### Kiro
 

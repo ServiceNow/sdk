@@ -1,0 +1,1 @@
+../../../../../skills/now-sdk/SKILL.md

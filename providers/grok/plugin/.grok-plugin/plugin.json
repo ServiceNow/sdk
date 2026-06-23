@@ -1,6 +1,6 @@
 {
   "name": "fluent",
-  "description": "Create, edit, and deploy ServiceNow applications with the Fluent SDK effortlessly through Claude AI",
+  "description": "Create, edit, and deploy ServiceNow applications with the Fluent SDK effortlessly through Grok",
   "version": "1.1.0",
   "author": {
     "name": "ServiceNow",
