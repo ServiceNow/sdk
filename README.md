@@ -22,8 +22,7 @@ This repository contains agent skills for creating, editing, and deploying Servi
 1. Start a Claude Code session.
 2. Add the marketplace and install the plugin:
    ```
-   /plugin marketplace add servicenow/sdk
-   /plugin install fluent
+   /plugin install servicenow-sdk@claude-plugins-official
    /reload-plugins
    ```
 
