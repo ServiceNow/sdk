@@ -68,6 +68,19 @@ The [`providers/kiro/`](providers/kiro/) directory contains a Power with steerin
 3. Enter this URL: `https://github.com/ServiceNow/sdk/tree/master/providers/kiro`.
 4. Select the power from the list.
 
+### Cline
+
+Cline's `.clinerules` files are static text, so rather than pasting in a copy of the skill that can go stale, add an instruction that tells Cline to fetch the latest version at the start of each session.
+
+1. Create a `.clinerules` file at the root of your project (or add this to your global **Custom Instructions** in Cline's settings to apply it to every project).
+2. Add the following:
+   ```
+   Before starting work on ServiceNow Fluent/SDK tasks, fetch the latest now-sdk skill from
+   https://raw.githubusercontent.com/ServiceNow/sdk/master/skills/now-sdk/SKILL.md
+   and follow those instructions for this session.
+   ```
+3. Cline will pull the current skill instructions each session, so updates to the skill in this repo are picked up automatically.
+
 ### Windsurf and Other Agents
 Some agents may not have built in support to install skills from Github. However, you can manually install the skills by following these steps:
 
