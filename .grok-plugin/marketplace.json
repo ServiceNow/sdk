@@ -6,7 +6,7 @@
   },
   "plugins": [
     {
-      "name": "servicenow",
+      "name": "servicenow-sdk",
       "source": {
         "type": "local",
         "path": "./providers/grok/plugin"

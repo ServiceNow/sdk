@@ -1,5 +1,5 @@
 {
-  "name": "fluent",
+  "name": "servicenow-sdk",
   "description": "Create, edit, and deploy ServiceNow applications with the Fluent SDK effortlessly through Claude AI",
   "version": "1.1.0",
   "author": {

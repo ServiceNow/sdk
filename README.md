@@ -40,7 +40,7 @@ This repository contains agent skills for creating, editing, and deploying Servi
 1. Open Cursor Settings (Cmd+Shift+J).
 2. Navigate to **Plugins**.
 3. Paste in the link to the repo: `https://github.com/ServiceNow/sdk.git`
-4. Select `Add to Cursor` for the `fluent` plugin.
+4. Select `Add to Cursor` for the `servicenow-sdk` plugin.
 
 Alternatively, loading the skills into Claude Code will also allow Cursor to use them.
 
