@@ -1,14 +1,14 @@
 {
   "latest": {
-    "version": "4.11.0-alpha.3",
+    "version": "4.11.0",
     "url": "https://servicenow.github.io/sdk/",
     "llms": "https://servicenow.github.io/sdk/llms.txt"
   },
   "versions": [
     {
-      "version": "4.11.0-alpha.3",
-      "url": "https://servicenow.github.io/sdk/4.11.0-alpha.3/",
-      "llms": "https://servicenow.github.io/sdk/4.11.0-alpha.3/llms.txt"
+      "version": "4.11.0",
+      "url": "https://servicenow.github.io/sdk/4.11.0/",
+      "llms": "https://servicenow.github.io/sdk/4.11.0/llms.txt"
     },
     {
       "version": "4.10.2",
