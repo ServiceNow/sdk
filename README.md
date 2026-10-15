@@ -4,9 +4,9 @@ The ServiceNow SDK brings modern developer workflows to the Now Platform: build 
 
 ## Getting Started
 
-New to the ServiceNow SDK and Fluent? Install the SDK, initialize a project, and build your first Fluent application by following the [Getting Started guide](https://code.devsnc.com/pages/dev/fluent/getting-started?utm_source=github&utm_medium=readme&utm_campaign=sdk).
+New to the ServiceNow SDK and Fluent? Install the SDK, initialize a project, and build your first Fluent application by following the [Getting Started guide](https://servicenow.github.io/sdk/getting-started?utm_source=github&utm_medium=readme&utm_campaign=sdk).
 
-Ready to bring Fluent into your team's development lifecycle? See the [SDLC guide](https://code.devsnc.com/pages/dev/fluent/guides/sdlc-guide?utm_source=github&utm_medium=readme&utm_campaign=sdk) for recommended source control, environment, and release practices.
+Ready to bring Fluent into your team's development lifecycle? See the [SDLC guide](https://servicenow.github.io/sdk/guides/sdlc-guide?utm_source=github&utm_medium=readme&utm_campaign=sdk) for recommended source control, environment, and release practices.
 
 ## AI Skills
 
