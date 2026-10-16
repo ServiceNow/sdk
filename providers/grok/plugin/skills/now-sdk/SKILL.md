@@ -78,6 +78,17 @@ Step order: search (`--list`) → peek (`--peek`) → read full topic. Repeat fo
 - Peek: `npx @servicenow/sdk explain <topic> --peek --format=raw`
 - Read (only if peek confirms relevance): `npx @servicenow/sdk explain <topic> --format=raw`
 
+### Choosing a mechanism
+
+Many requests can be built with more than one Fluent mechanism. Treat the mechanism as undecided until you have read the docs.
+
+1. In your plan, describe what the request needs (triggers, records touched, actions, rules to enforce), not which mechanism will build it.
+2. Before you write the first file, read the guide of each mechanism that could build it, including the one you first thought of. A guide's *When NOT to Use* is binding: if one of its lines matches the request, that mechanism is out, and the line names what to use instead.
+3. That your first idea can also do the job is not a reason to keep it, and neither is "simpler" or "more direct".
+4. Say which mechanism you chose and the guide line that decided it. If the docs change your choice, update the plan, then build.
+
+Why: the guides record what each mechanism is for, and they are more current than what you learned before.
+
 ### If explain fails
 
 - `explain` is only available in `@servicenow/sdk` versions >= `4.6.0` — upgrade if the command is not found.
