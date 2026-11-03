@@ -93,6 +93,14 @@ The [`providers/kiro/`](providers/kiro/) directory contains a Power with steerin
 3. Enter this URL: `https://github.com/ServiceNow/sdk/tree/master/providers/kiro`.
 4. Select the power from the list.
 
+### Antigravity
+
+1. Run the following command to install the plugin:
+   ```
+   agy plugin install https://github.com/ServiceNow/sdk/tree/master/providers/antigravity
+   ```
+2. Restart Antigravity to load the plugin.
+
 ### Windsurf and Other Agents
 
 Some agents may not have built in support to install skills from Github. However, you can manually install the skills by following these steps:
