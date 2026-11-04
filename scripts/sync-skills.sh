@@ -15,6 +15,7 @@ targets=(
   "$repo_root/providers/claude/plugin/skills/now-sdk/SKILL.md"
   "$repo_root/providers/cursor/plugin/skills/now-sdk/SKILL.md"
   "$repo_root/providers/grok/plugin/skills/now-sdk/SKILL.md"
+  "$repo_root/providers/antigravity/plugin/skills/now-sdk/SKILL.md"
 )
 
 for target in "${targets[@]}"; do
