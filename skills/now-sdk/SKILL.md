@@ -36,6 +36,15 @@ Rule: before using any subcommand for the first time, run `npx @servicenow/sdk <
 
 ## SDK Documentation (explain)
 
+Rule: before the first `explain` call in a project, run `npx @servicenow/sdk --version` and pick the flow below. Fuzzy search landed in `4.14.1`; earlier versions treat a search phrase as a topic name and fail.
+
+- **`>= 4.14.1`** — use **Search-based lookup**.
+- **`>= 4.6.0` and `< 4.14.1`** — use **Legacy lookup**. A search phrase fails on these versions with `No matching topics for "<phrase>"`, which is also what a newer version returns for a query that scored nothing — the error alone does not tell you which case you are in, so check the version rather than inferring it from a failure.
+- **Version unknown** — use **Legacy lookup**; its `--list` / `--peek` / read sequence works on every version, including the newest.
+- **`< 4.6.0`** — `explain` does not exist; tell the user to upgrade `@servicenow/sdk`.
+
+### Search-based lookup (`>= 4.14.1`)
+
 `explain` resolves its argument in one of three ways, and the output tells you which:
 
 - **An exact topic name** returns that full document.
@@ -56,7 +65,7 @@ A query that only describes an outcome tends to match documents that merely disc
 
 Split a task with two halves into two searches. "A catalog item that kicks off a flow on submit" is a catalog question and a trigger question; searched separately each returns its own guide and API pair, where one combined query has to rank against both at once.
 
-To see further down the ranking, or to get the complete ranked list instead of the top 5:
+To see further down the ranking, or to get a longer ranked list instead of the top 5:
 
 ```bash
 npx @servicenow/sdk explain "<search phrase>" --range 6-10 --format=raw
@@ -75,11 +84,13 @@ To read a topic in full, by name:
 npx @servicenow/sdk explain <topic-name> --format=raw
 ```
 
+Rule: compare the returned descriptions against each other before opening anything. Rank 1 is frequently a vocabulary match rather than the artifact you need — the answering topic is reliably inside the top 5, but often not at the top of it.
+
 Rule: ranked search output is for **choosing** a topic, never for answering. Each entry is a description plus a few truncated lines with the surrounding conditions, caveats, and required properties stripped out. Never write code from an excerpt or quote one back as guidance — once the search identifies the topic, read that topic in full.
 
 Rule: a search phrase already returns each candidate's description, so `--peek` adds nothing after a search. Use `--peek` only when you reached a topic name by guesswork rather than from search results, to avoid opening the wrong full document.
 
-### What to search for
+#### What to search for
 
 - **Tasks plus mechanism** — "block a delete with a script", "restrict read access with an acl", "make a field mandatory with a policy"
 - **Mechanism words worth adding** — `script`, `acl`, `role`, `policy`, `notification`, `schedule`, `flow`, `form`, `list`, `table`, `column`, `test`
@@ -87,7 +98,7 @@ Rule: a search phrase already returns each candidate's description, so `--peek` 
 - **Skills** — workflows like `build`, `transform`, `deploy`, `auth`
 - **Conventions** — `naming`, `structure`, `scoping`, `file-layout`
 
-### For any task — always start here
+#### For any task — always start here
 
 Step order: search with task + mechanism → discriminate from the descriptions → read every relevant topic in full. Fluent behavior is often split across multiple topics, so stopping at one risks an incomplete picture.
 
@@ -98,12 +109,62 @@ Step order: search with task + mechanism → discriminate from the descriptions 
 - Be suspicious of a top hit that merely repeats your wording. The characteristic failure is a document that shares vocabulary with the query but solves a different problem — confirm from the description that the topic produces the artifact you need.
 - If nothing in the top 5 fits, search again naming a different mechanism, or use `--list`. Paging with `--range` on a bad query rarely helps.
 
-### If explain fails
+#### If explain fails
 
 - `explain` is only available in `@servicenow/sdk` versions >= `4.6.0` — upgrade if the command is not found.
 - `No matching topics for "<query>"` — nothing scored high enough; rephrase with a different mechanism word, or run `--list` to browse all topics.
 - A query close to a topic name returns ranked suggestions instead of an error, so a near-miss or misspelled name is self-correcting — take the right name from the list and read that.
 - An irrelevant result set does not mean the behavior is unsupported or unconstrained. The ranking always returns its nearest neighbours, so the absence of a matching topic is not evidence that no rule exists. Confirm from a document body before telling the user something is not supported.
+
+### Legacy lookup (`4.6.0` to `< 4.14.1`)
+
+Rule: never open a full topic without `--peek` first, except quickstart topics (covered in Getting oriented above — read those directly, no peek needed).
+
+`explain` (including `--peek` and `--list`) is read-only documentation lookup with no side effects. Do not ask the user for confirmation before running it — peek and read relevant topics automatically as part of the task.
+
+To show all available topics with their related tags:
+
+```bash
+npx @servicenow/sdk explain --list --format=raw
+```
+
+To search for topics, showing the descriptions of all matches:
+
+```bash
+npx @servicenow/sdk explain <topic> --list --peek --format=raw
+```
+
+To preview a topic:
+
+```bash
+npx @servicenow/sdk explain <topic> --peek --format=raw
+```
+
+Once you are certain you want to read the full topic, open it like this:
+
+```bash
+npx @servicenow/sdk explain <topic> --format=raw
+```
+
+#### What to search for
+
+- **Metadata types** — `BusinessRule`, `Table`, `Acl`, `Flow`, `ScriptInclude`, `ClientScript`, `UiPolicy`
+- **Skills** — workflows like `build`, `transform`, `deploy`, `auth`
+- **Conventions** — `naming`, `structure`, `scoping`, `file-layout`
+
+#### For any task — always start here
+
+Step order: search (`--list`) → peek (`--peek`) → read full topic. Repeat for every relevant topic — fluent behavior is often split across multiple topics, so stopping at one risks an incomplete picture.
+
+- Search: `npx @servicenow/sdk explain <search-term> --list --format=raw`
+- Peek: `npx @servicenow/sdk explain <topic> --peek --format=raw`
+- Read (only if peek confirms relevance): `npx @servicenow/sdk explain <topic> --format=raw`
+
+#### If explain fails
+
+- `explain` is only available in `@servicenow/sdk` versions >= `4.6.0` — upgrade if the command is not found.
+- `No matching topics for "<topic>"` — the topic name or search term did not match anything; run `--list` to browse all topics and take the name from there.
+- A search phrase will always fail on these versions. Use a single term or a topic name, not a sentence.
 
 ## Live Instance Queries (query)
 
